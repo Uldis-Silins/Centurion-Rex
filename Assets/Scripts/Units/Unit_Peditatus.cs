@@ -1,14 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class Unit_Peditatus : Unit_Base, ISelecteble
 {
-    public SelectableManager selectableManager;
-
-    public NavMeshAgent agent;
-
     private Color m_startColor;
     private readonly int m_colorPropID = Shader.PropertyToID("_Color");
 
@@ -21,21 +16,10 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
         m_startColor = m_soldierRenderer.material.GetColor(m_colorPropID);
     }
 
-    private void Start()
-    {
-        selectableManager.RegisterSelectable(this, gameObject);
-        Debug.Log("Registering " + name);
-    }
-
     protected override void LateUpdate()
     {
         base.LateUpdate();
     }
-
-    //private void OnDisable()
-    //{
-    //    selectableManager.UnregisterSelectable(this);
-    //}
 
     public void Select()
     {

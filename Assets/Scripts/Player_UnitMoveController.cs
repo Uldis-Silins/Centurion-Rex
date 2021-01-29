@@ -32,7 +32,7 @@ public class Player_UnitMoveController : MonoBehaviour
 
                 for (int i = 0; i < curSelectedUnits.Count; i++)
                 {
-                    curSelectedUnits[i].GetComponent<Unit_Peditatus>().agent.SetDestination(hitPos);
+                    curSelectedUnits[i].GetComponent<Unit_Base>().agent.SetDestination(hitPos);
                 }
             }
         }

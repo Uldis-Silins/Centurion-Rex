@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public abstract class Unit_Base : MonoBehaviour
 {
+    public NavMeshAgent agent;
+
     [SerializeField] protected SpriteRenderer m_soldierRenderer;
 
     protected Camera m_mainCam;
