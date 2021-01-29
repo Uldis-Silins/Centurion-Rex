@@ -6,14 +6,9 @@ public class Building_UnitSpawner : MonoBehaviour
 {
     public UnitData[] units;
 
-    [SerializeField] private SelectableManager selectableManager;
+    public Transform moveTarget;
 
-    private List<Unit_Base> m_spawnedUnits;
-
-    private void Awake()
-    {
-        m_spawnedUnits = new List<Unit_Base>();
-    }
+    [SerializeField] private Player_Controller playerController;
 
     private void Start()
     {
@@ -23,9 +18,9 @@ public class Building_UnitSpawner : MonoBehaviour
     public void SpawnUnit()
     {
         var spawned = SpawnUnit(UnitData.UnitType.Soldier);
-        m_spawnedUnits.Add(spawned);
-        selectableManager.RegisterSelectable(spawned.GetComponent<ISelecteble>(), spawned.gameObject);
-        spawned.agent.SetDestination(transform.position + new Vector3(Random.insideUnitCircle.x * 5f, 0f, Random.insideUnitCircle.y * 5f));
+        playerController.AddToOwnedUnits(spawned);
+        
+        spawned.agent.SetDestination(moveTarget.position);
     }
 
     private Unit_Base SpawnUnit(UnitData.UnitType type)
