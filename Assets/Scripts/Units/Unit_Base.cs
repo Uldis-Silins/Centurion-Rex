@@ -11,9 +11,25 @@ public abstract class Unit_Base : MonoBehaviour
 
     protected Camera m_mainCam;
 
+    private Vector3 m_startScale;
+
     protected virtual void Awake()
     {
         m_mainCam = Camera.main;
+
+        m_startScale = transform.localScale;
+    }
+
+    private void Update()
+    {
+        if(Vector3.Dot(Vector3.right, agent.velocity) < 0)
+        {
+            transform.localScale = new Vector3(-m_startScale.x, m_startScale.y, m_startScale.z);
+        }
+        else
+        {
+            transform.localScale = new Vector3(m_startScale.x, m_startScale.y, m_startScale.z);
+        }
     }
 
     protected virtual void LateUpdate()

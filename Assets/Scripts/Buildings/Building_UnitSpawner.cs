@@ -12,12 +12,12 @@ public class Building_UnitSpawner : MonoBehaviour
 
     private void Start()
     {
-        SpawnUnit();
+        
     }
 
-    public void SpawnUnit()
+    public void OnSpawnUnitClick(int unitIndex)
     {
-        var spawned = SpawnUnit(UnitData.UnitType.Soldier);
+        var spawned = SpawnUnit(units[unitIndex].type);
         playerController.AddToOwnedUnits(spawned);
         
         spawned.agent.SetDestination(moveTarget.position);
