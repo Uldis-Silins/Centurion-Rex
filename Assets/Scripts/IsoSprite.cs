@@ -10,7 +10,7 @@ public class IsoSprite : MonoBehaviour
     private void Awake()
     {
         m_spriteRenderer = GetComponent<SpriteRenderer>();
-        //transform.localScale += Scale();
+        //transform.localScale = new Vector3(transform.localScale.z * ScaleX(), transform.localScale.y, transform.localScale.z);
     }
 
     private void Update()
@@ -18,10 +18,8 @@ public class IsoSprite : MonoBehaviour
         m_spriteRenderer.sortingOrder = (int)transform.position.z * -10;
     }
 
-    private Vector3 Scale()
+    private float ScaleX()
     {
-        return new Vector3(Mathf.Atan(Mathf.Sin(Camera.main.transform.eulerAngles.x * Mathf.Deg2Rad)),
-            Mathf.Atan(Mathf.Sin(Camera.main.transform.eulerAngles.x * Mathf.Deg2Rad)),
-            transform.localScale.z);
+        return Mathf.Atan(Mathf.Sin(Camera.main.transform.eulerAngles.x * Mathf.Deg2Rad));
     }
 }
