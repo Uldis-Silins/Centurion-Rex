@@ -10,7 +10,7 @@ public class Player_UnitSelectController : MonoBehaviour
 
     private Vector2 m_startDragPosition;
 
-    private readonly float m_singleSelectDistance = 5.0f;
+    private readonly float m_singleSelectDistance = 15.0f;
     private readonly float m_dragThreshold = 5;
     private bool m_inDrag;
 

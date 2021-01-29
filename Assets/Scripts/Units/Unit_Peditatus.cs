@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Unit_Peditatus : Unit_Base, ISelecteble
 {
     public SelectableManager selectableManager;
+
+    public NavMeshAgent agent;
 
     private Color m_startColor;
     private readonly int m_colorPropID = Shader.PropertyToID("_Color");

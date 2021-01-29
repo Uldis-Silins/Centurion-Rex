@@ -104,4 +104,19 @@ public class SelectableManager : MonoBehaviour
     {
         return m_registeredObjects[index];
     }
+
+    public IEnumerable<GameObject> GetCurrentSelectedObjects()
+    {
+        Stack<GameObject> selected = new Stack<GameObject>();
+
+        for (int i = 0; i < m_registeredSelectables.Count; i++)
+        {
+            if(m_registeredSelectables[i].IsSelected)
+            {
+                selected.Push(GetObjectAt(i));
+            }
+        }
+
+        return selected;
+    }
 }
