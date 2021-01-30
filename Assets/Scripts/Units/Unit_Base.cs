@@ -7,6 +7,7 @@ public abstract class Unit_Base : MonoBehaviour
 {
     public NavMeshAgent agent;
     public NavMeshObstacle obstacle;
+    public Animator anim;
 
     [SerializeField] protected SpriteRenderer m_soldierRenderer;
 
@@ -14,6 +15,8 @@ public abstract class Unit_Base : MonoBehaviour
 
     private Vector3 m_startScale;
     protected KeyValuePair<GameObject, IDamageable> m_currentTarget;
+
+    private readonly int m_velocityAnimID = Animator.StringToHash("velocity");
 
     public bool HasAttackTarget { get { return m_currentTarget.Key != null && m_currentTarget.Value != null; } }
 
@@ -24,22 +27,27 @@ public abstract class Unit_Base : MonoBehaviour
         m_startScale = transform.localScale;
     }
 
-    private void Update()
+    protected virtual void Update()
     {
-        if(Vector3.Dot(Vector3.right, agent.velocity) < 0)
+        if (agent.velocity.magnitude > 0.25f)
         {
-            transform.localScale = new Vector3(-m_startScale.x, m_startScale.y, m_startScale.z);
-        }
-        else
-        {
-            transform.localScale = new Vector3(m_startScale.x, m_startScale.y, m_startScale.z);
+            if (Vector3.Dot(Vector3.right, agent.velocity) < 0)
+            {
+                transform.localScale = new Vector3(-m_startScale.x, m_startScale.y, m_startScale.z);
+            }
+            else
+            {
+                transform.localScale = new Vector3(m_startScale.x, m_startScale.y, m_startScale.z);
+            }
         }
 
-        if(!agent.isStopped && agent.velocity.sqrMagnitude < 0.5f && agent.remainingDistance <= agent.stoppingDistance)
-        {
-            agent.enabled = false;
-            //obstacle.enabled = true;
-        }
+        //if(agent.enabled &&!agent.isStopped && agent.velocity.sqrMagnitude < 0.5f && agent.remainingDistance <= agent.stoppingDistance)
+        //{
+        //    agent.enabled = false;
+        //    //obstacle.enabled = true;
+        //}
+
+        anim.SetFloat(m_velocityAnimID, Mathf.Clamp(agent.velocity.magnitude, 0.25f, 1f));
     }
 
     protected virtual void LateUpdate()

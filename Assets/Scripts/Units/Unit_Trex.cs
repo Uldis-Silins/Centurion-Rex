@@ -21,8 +21,10 @@ public class Unit_Trex : Unit_Base, ISelecteble
         m_startColor = m_soldierRenderer.material.GetColor(m_colorPropID);
     }
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
+
         if (m_currentTarget.Key != null && m_currentTarget.Value != null)
         {
             Vector3 targetPos = m_currentTarget.Key.transform.position;
@@ -31,7 +33,7 @@ public class Unit_Trex : Unit_Base, ISelecteble
             if (Vector3.Distance(targetPos, transform.position) > attackDistance)
             {
                 agent.enabled = true;
-                //obstacle.enabled = false;
+                obstacle.enabled = false;
 
                 Vector3 dir = (transform.position - m_currentTarget.Key.transform.position).normalized;
                 agent.SetDestination(m_currentTarget.Key.transform.position + dir * attackDistance);

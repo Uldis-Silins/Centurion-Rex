@@ -22,8 +22,10 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
         m_startColor = m_soldierRenderer.material.GetColor(m_colorPropID);
     }
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
+
         if(m_currentTarget.Key != null && m_currentTarget.Value != null)
         {
             Vector3 targetPos = m_currentTarget.Key.transform.position;
