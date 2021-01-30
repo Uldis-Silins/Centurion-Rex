@@ -135,7 +135,7 @@ MonoBehaviour:
   soldierRenderer: {fileID: 4220708612654221336}
   visionDistance: 5
   fovTransform: {fileID: 4220708610805117433}
-  attackDistance: 2
+  attackDistance: 1
   attackDamage: 5
   attacksDelay: 0.5
 --- !u!195 &2764863755123161844
@@ -148,11 +148,11 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 2
   m_Acceleration: 20
   avoidancePriority: 50
   m_AngularSpeed: 0
-  m_StoppingDistance: 1
+  m_StoppingDistance: 0.5
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
   m_AutoRepath: 1

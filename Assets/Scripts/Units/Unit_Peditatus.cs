@@ -27,7 +27,9 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
     {
         base.Update();
 
-        if(m_currentTarget.Key != null && m_currentTarget.Value != null)
+        anim.SetBool("attack", false);
+
+        if (m_currentTarget.Key != null && m_currentTarget.Value != null)
         {
             Vector3 targetPos = m_currentTarget.Key.transform.position;
             targetPos.y = transform.position.y;
@@ -38,13 +40,18 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
                 //obstacle.enabled = false;
 
                 Vector3 dir = (targetPos - transform.position).normalized;
-                agent.SetDestination(targetPos - dir * attackDistance);
+                agent.SetDestination(targetPos - dir * attackDistance * 0.5f);
             }
             else
             {
-                if(m_attackTimer < 0f)
+                if (m_attackTimer < 0.2f)
                 {
                     agent.isStopped = true;
+                    anim.SetBool("attack", true);
+                }
+
+                if (m_attackTimer < 0f)
+                {
                     m_currentTarget.Value.SetDamage(attackDamage);
                     m_attackTimer = attacksDelay;
                 }
