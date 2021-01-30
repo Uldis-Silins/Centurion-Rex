@@ -25,9 +25,25 @@ public class Player_UnitMoveController : MonoBehaviour
             return;
         }
 
-        float dist;
-
         Ray camRay = m_mainCam.ScreenPointToRay(Input.mousePosition);
+
+        // Force attack cursor on building hack
+        RaycastHit hit;
+
+        if (Physics.Raycast(camRay, out hit, 1000f, 1 << LayerMask.NameToLayer("Building")))
+        {
+            var health = hit.collider.gameObject.GetComponent<Building_Health>();
+
+            if (health != null && health.Faction == FactionType.Enemy)
+            {
+                hudManager.ChangeCursor(UI_HudManager.CursorType.Attack);
+            }
+
+            return;
+        }
+        // ~hack
+
+        float dist;
 
         if (m_groundPlane.Raycast(camRay, out dist))
         {

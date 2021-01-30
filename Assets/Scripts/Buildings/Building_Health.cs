@@ -9,12 +9,17 @@ public class Building_Health : MonoBehaviour, IDamageable
 
     public BuildingType buildingType;
 
+    public SpriteRenderer[] fireSprites;
+
     [Range(1f, 100f)] public float maxHealth;
     public FactionType owningFaction;
     public DamageableManager damageableManager;
 
     [SerializeField] private SpriteRenderer m_sprite;
     private float m_damageTimer;
+
+    private float m_damagePerFireSprite;
+    private int m_curActiveFireSprites;
 
     public float CurrentHealth { get; protected set; }
     public FactionType Faction { get { return owningFaction; } }
@@ -23,6 +28,14 @@ public class Building_Health : MonoBehaviour, IDamageable
     {
         CurrentHealth = maxHealth;
         damageableManager.RegisterDamageable(this, gameObject);
+
+        m_damagePerFireSprite = maxHealth / fireSprites.Length;
+        m_curActiveFireSprites = 0;
+
+        for (int i = 0; i < fireSprites.Length; i++)
+        {
+            fireSprites[i].gameObject.SetActive(false);
+        }
     }
 
     private void Update()
@@ -41,7 +54,13 @@ public class Building_Health : MonoBehaviour, IDamageable
         m_damageTimer = 0.5f;
         m_sprite.color = Color.red;
 
-        if (CurrentHealth < 0)
+        if(CurrentHealth < m_damagePerFireSprite * (fireSprites.Length - (m_curActiveFireSprites + 1)))
+        {
+            fireSprites[m_curActiveFireSprites].gameObject.SetActive(true);
+            m_curActiveFireSprites++;
+        }
+
+        if (CurrentHealth <= 0)
         {
             Kill();
         }
