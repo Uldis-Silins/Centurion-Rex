@@ -19,6 +19,9 @@ public class Player_Controller : MonoBehaviour
 
     public static GameState currentGameState;
 
+    public float currentResources;
+    public UnitData[] unitData;
+
     private List<Unit_Base> m_ownedUnits;
 
     private Stack<IDamageable> m_waitingForKill;
@@ -55,7 +58,11 @@ public class Player_Controller : MonoBehaviour
 
     private void Start()
     {
-        currentGameState = GameState.Playing;
+        if (ownedByPlayer)
+        {
+            currentGameState = GameState.Playing;
+            uiManager.wineAmountText.text = currentResources.ToString();
+        }
     }
 
     private void Update()
@@ -132,6 +139,22 @@ public class Player_Controller : MonoBehaviour
         if(ownedByPlayer && selectableManager != null)
         {
             selectableManager.RegisterSelectable(unit.GetComponent<ISelecteble>(), unit.gameObject);
+        }
+    }
+
+    public void AddResource(float amount)
+    {
+        currentResources += amount;
+
+        if (ownedByPlayer)
+        {
+            uiManager.wineAmountText.text = currentResources.ToString();
+        }
+
+        for (int i = 0; i < unitData.Length; i++)
+        {
+            uiManager.buyUnitsButtons[i].interactable = unitData[i].price <= currentResources;
+            uiManager.buyUnitsButtons[i].transform.GetChild(0).GetComponent<UnityEngine.UI.Image>().color = unitData[i].price <= currentResources ? Color.white : Color.gray;
         }
     }
 

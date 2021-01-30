@@ -16,9 +16,12 @@ public class Building_UnitSpawner : MonoBehaviour, ISelecteble
     public void OnSpawnUnitClick(int unitIndex)
     {
         var spawned = SpawnUnit(units[unitIndex].type);
-        playerController.AddToOwnedUnits(spawned);
-        
-        spawned.agent.SetDestination(moveTarget.position);
+
+        if (spawned != null)
+        {
+            playerController.AddToOwnedUnits(spawned);
+            spawned.agent.SetDestination(moveTarget.position);
+        }
     }
 
     private Unit_Base SpawnUnit(UnitData.UnitType type)
@@ -27,9 +30,13 @@ public class Building_UnitSpawner : MonoBehaviour, ISelecteble
         {
             if(units[i].type == type)
             {
-                var instance = Instantiate(units[i].unitPrefab, spawnPoint.position, Quaternion.identity) as GameObject;
-                instance.name = units[i].unitPrefab.name + playerController.CurrentPopulation;
-                return instance.GetComponent<Unit_Base>();
+                if (playerController.currentResources >= units[i].price)
+                {
+                    var instance = Instantiate(units[i].unitPrefab, spawnPoint.position, Quaternion.identity) as GameObject;
+                    instance.name = units[i].unitPrefab.name + playerController.CurrentPopulation;
+                    playerController.AddResource(-units[i].price);
+                    return instance.GetComponent<Unit_Base>();
+                }
             }
         }
 

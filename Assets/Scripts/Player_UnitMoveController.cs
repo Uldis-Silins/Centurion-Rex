@@ -37,6 +37,29 @@ public class Player_UnitMoveController : MonoBehaviour
             if (health != null && health.Faction == FactionType.Enemy)
             {
                 hudManager.ChangeCursor(UI_HudManager.CursorType.Attack);
+
+                List<GameObject> curSelectedUnits = new List<GameObject>(m_selectableManager.GetCurrentSelectedObjects());
+
+                for (int i = 0; i < curSelectedUnits.Count; i++)
+                {
+                    curSelectedUnits[i].GetComponent<Unit_Base>().SetAttackState(health, health.gameObject);
+                }
+            }
+            else
+            {
+                Building_Resource resourceBuilding = hit.collider.gameObject.GetComponent<Building_Resource>();
+
+                if (resourceBuilding != null && resourceBuilding.ownerFaction != FactionType.Player)
+                {
+                    hudManager.ChangeCursor(UI_HudManager.CursorType.Capture);
+
+                    List<GameObject> curSelectedUnits = new List<GameObject>(m_selectableManager.GetCurrentSelectedObjects());
+
+                    for (int i = 0; i < curSelectedUnits.Count; i++)
+                    {
+                        curSelectedUnits[i].GetComponent<Unit_Base>().agent.SetDestination(resourceBuilding.transform.position);
+                    }
+                }
             }
 
             return;

@@ -16,6 +16,11 @@ public class UI_GameManager : MonoBehaviour
     public RectTransform pauseMenu;
     public RectTransform winMenu;
     public RectTransform gameOverMenu;
+    public RectTransform resourcePanel;
+
+    public Button[] buyUnitsButtons;
+
+    public Text wineAmountText;
 
     private BuildingPanel m_curBuildingPanel;
 

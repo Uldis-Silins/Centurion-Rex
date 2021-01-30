@@ -10,4 +10,5 @@ public class UnitData : ScriptableObject
     //TODO: Faction?
     public UnitType type;
     public GameObject unitPrefab;
+    public float price;
 }

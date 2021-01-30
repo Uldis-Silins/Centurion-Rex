@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3865417517234925166}
   - component: {fileID: 3289417120487988620}
   - component: {fileID: 4036118042232991758}
+  - component: {fileID: 1738158366612608940}
   m_Layer: 10
   m_Name: EnemyRaptor
   m_TagString: Untagged
@@ -57,6 +58,7 @@ MonoBehaviour:
   attackDistance: 10
   attackDamage: 5
   attacksDelay: 0.5
+  accuracy: 1
   projectilePrefab: {fileID: 8186089749701993020, guid: 65e3b98f1b3600847b4a220bfc85334a,
     type: 3}
 --- !u!195 &8276301299091314716
@@ -125,6 +127,22 @@ MonoBehaviour:
   maxHealth: 100
   owningFaction: 2
   m_sprite: {fileID: 7932924578973166320}
+--- !u!54 &1738158366612608940
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7932924578175232700}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &7932924578973166326
 GameObject:
   m_ObjectHideFlags: 0

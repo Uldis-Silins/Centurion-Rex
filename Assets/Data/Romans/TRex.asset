@@ -15,3 +15,4 @@ MonoBehaviour:
   type: 3
   unitPrefab: {fileID: 4095252137840500702, guid: 7f36f31d670f539419aaaacfd3562186,
     type: 3}
+  price: 500

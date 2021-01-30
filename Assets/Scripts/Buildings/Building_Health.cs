@@ -11,7 +11,7 @@ public class Building_Health : MonoBehaviour, IDamageable
 
     public SpriteRenderer[] fireSprites;
 
-    [Range(1f, 100f)] public float maxHealth;
+    [Range(1f, 5000f)] public float maxHealth;
     public FactionType owningFaction;
     public DamageableManager damageableManager;
 
