@@ -56,7 +56,7 @@ public abstract class Unit_Base : MonoBehaviour
         //    //obstacle.enabled = true;
         //}
 
-        anim.SetFloat(m_velocityAnimID, Mathf.Clamp(agent.velocity.magnitude, 0.25f, 1f));
+        anim.SetFloat(m_velocityAnimID, Mathf.Clamp(agent.velocity.magnitude, 0.2f, 1f));
     }
 
     protected virtual void LateUpdate()
