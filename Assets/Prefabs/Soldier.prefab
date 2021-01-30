@@ -132,6 +132,8 @@ MonoBehaviour:
   obstacle: {fileID: 8729044461071417188}
   anim: {fileID: 5771514512995546459}
   soldierRenderer: {fileID: 4220708612654221336}
+  visionDistance: 5
+  fovTransform: {fileID: 4220708610805117433}
   attackDistance: 2
   attackDamage: 5
   attacksDelay: 0.5
@@ -200,7 +202,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   owningFaction: 1
-  damageableManager: {fileID: 0}
   m_sprite: {fileID: 4220708612654221336}
 --- !u!1 &4220708612654221342
 GameObject:

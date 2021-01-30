@@ -11,6 +11,9 @@ public abstract class Unit_Base : MonoBehaviour
 
     public SpriteRenderer soldierRenderer;
 
+    public float visionDistance;
+    public Transform fovTransform;
+
     protected Camera m_mainCam;
 
     private Vector3 m_startScale;
@@ -19,12 +22,18 @@ public abstract class Unit_Base : MonoBehaviour
     private readonly int m_velocityAnimID = Animator.StringToHash("velocity");
 
     public bool HasAttackTarget { get { return m_currentTarget.Key != null && m_currentTarget.Value != null; } }
+    public virtual float AttackDistance { get; }
 
     protected virtual void Awake()
     {
         m_mainCam = Camera.main;
 
         m_startScale = soldierRenderer.transform.localScale;
+        
+        if(fovTransform != null)
+        {
+            fovTransform.localScale = new Vector3(visionDistance * 2f, 1f, visionDistance * 2f);
+        }
     }
 
     protected virtual void Update()

@@ -7,7 +7,7 @@ public class AI_Awareness : MonoBehaviour
     public DamageableManager damageableManager;
     public SelectableManager selectableManager;
 
-    public float minAttackDistance = 3f, maxAttackDistance = 6f;
+    public float minAgroDistance = 3f, maxAgroDistance = 6f;
 
     public float tickRate = 1.5f;
     public float tickDelay = 0.5f;
@@ -29,16 +29,33 @@ public class AI_Awareness : MonoBehaviour
 
             foreach (var unit in units)
             {
-                if (unit.HasAttackTarget) continue;
-                if (playerController.enemyFaction == FactionType.Enemy && selectableManager.GetSelectable(unit.gameObject).IsSelected) continue;
+                bool isSelectedByPlayer = false;
+
+                if (playerController.enemyFaction == FactionType.Enemy && selectableManager.GetSelectable(unit.gameObject).IsSelected)
+                {
+                    isSelectedByPlayer = true;   
+                }
 
                 if(unit != null)
                 {
-                    var closestEnemies = new List<KeyValuePair<GameObject, IDamageable> >(damageableManager.GetAtPosition(unit.transform.position, Random.Range(minAttackDistance, maxAttackDistance), playerController.enemyFaction));
+                    var closestEnemies = new List<KeyValuePair<GameObject, IDamageable> >(damageableManager.GetAtPosition(unit.transform.position, unit.visionDistance, playerController.enemyFaction));
 
                     if(closestEnemies.Count > 0)
                     {
-                        unit.SetAttackState(closestEnemies[0].Value, closestEnemies[0].Key);
+                        if (isSelectedByPlayer)
+                        {
+                            Vector3 closestDist = closestEnemies[0].Key.transform.position;
+                            closestDist.y = unit.transform.position.y;
+
+                            if (Vector3.Distance(closestDist, unit.transform.position) <= unit.AttackDistance)
+                            {
+                                unit.SetAttackState(closestEnemies[0].Value, closestEnemies[0].Key);
+                            }
+                        }
+                        else
+                        {
+                            unit.SetAttackState(closestEnemies[0].Value, closestEnemies[0].Key);
+                        }
                     }
                 }
             }

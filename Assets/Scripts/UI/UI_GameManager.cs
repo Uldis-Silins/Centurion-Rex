@@ -30,14 +30,6 @@ public class UI_GameManager : MonoBehaviour
         gameOverMenu.gameObject.SetActive(false);
     }
 
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
-            pauseMenu.gameObject.SetActive(true);
-        }
-    }
-
     public void CloseBuildingMenu()
     {
         if(m_curBuildingPanel != null)

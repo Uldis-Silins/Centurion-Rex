@@ -132,7 +132,9 @@ MonoBehaviour:
   obstacle: {fileID: 1206992757224882042}
   anim: {fileID: 7140702506972534062}
   soldierRenderer: {fileID: 4095252138988724114}
-  attackDistance: 2
+  visionDistance: 15
+  fovTransform: {fileID: 4095252137087575667}
+  attackDistance: 5
   attackDamage: 5
   attacksDelay: 0.5
 --- !u!195 &2601249821520883070
@@ -187,7 +189,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   owningFaction: 1
-  damageableManager: {fileID: 0}
   m_sprite: {fileID: 4095252138988724114}
 --- !u!65 &1265318266632764339
 BoxCollider:

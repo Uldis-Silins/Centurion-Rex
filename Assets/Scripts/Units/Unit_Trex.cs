@@ -13,6 +13,7 @@ public class Unit_Trex : Unit_Base, ISelecteble
     private float m_attackTimer;
 
     public bool IsSelected { get; private set; }
+    public override float AttackDistance { get { return attackDistance; } }
 
     protected override void Awake()
     {

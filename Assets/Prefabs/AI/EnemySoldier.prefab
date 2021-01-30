@@ -52,6 +52,8 @@ MonoBehaviour:
   obstacle: {fileID: 4792825981156484757}
   anim: {fileID: 2988519878768431652}
   soldierRenderer: {fileID: 4220708612654221336}
+  visionDistance: 5
+  fovTransform: {fileID: 0}
   attackDistance: 2
   attackDamage: 5
   attacksDelay: 0.5
@@ -104,7 +106,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   owningFaction: 2
-  damageableManager: {fileID: 0}
   m_sprite: {fileID: 4220708612654221336}
 --- !u!208 &4792825981156484757
 NavMeshObstacle:

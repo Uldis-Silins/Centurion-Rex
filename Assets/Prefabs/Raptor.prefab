@@ -53,9 +53,13 @@ MonoBehaviour:
   obstacle: {fileID: 33970281365719659}
   anim: {fileID: 7128793913912133396}
   soldierRenderer: {fileID: 4884607227775040791}
-  attackDistance: 2
+  visionDistance: 10
+  fovTransform: {fileID: 4884607226922222838}
+  attackDistance: 10
   attackDamage: 5
   attacksDelay: 0.5
+  projectilePrefab: {fileID: 8186089749701993020, guid: 65e3b98f1b3600847b4a220bfc85334a,
+    type: 3}
 --- !u!195 &6847055372898668539
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -121,7 +125,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   owningFaction: 1
-  damageableManager: {fileID: 0}
   m_sprite: {fileID: 4884607227775040791}
 --- !u!1 &4884607226922222833
 GameObject:

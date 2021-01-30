@@ -16,6 +16,8 @@ public class Player_Controller : MonoBehaviour
     [SerializeField] private SelectableManager selectableManager;
     [SerializeField] private DamageableManager damageableManager;
 
+    private GameState currentGameState;
+
     private List<Unit_Base> m_ownedUnits;
 
     private Stack<IDamageable> m_waitingForKill;
@@ -37,6 +39,7 @@ public class Player_Controller : MonoBehaviour
 
         m_waitingForKill = new Stack<IDamageable>();
         m_mainCam = Camera.main;
+
     }
 
     private void OnEnable()
@@ -49,13 +52,35 @@ public class Player_Controller : MonoBehaviour
         Building_Health.onBuildingDestroyed -= HandleBuildingDestroyed;
     }
 
+    private void Start()
+    {
+        currentGameState = GameState.Playing;
+    }
+
     private void Update()
     {
+        if (ownedByPlayer && Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (currentGameState == GameState.Playing)
+            {
+                uiManager.pauseMenu.gameObject.SetActive(true);
+                currentGameState = GameState.Pause;
+                Time.timeScale = 0f;
+            }
+            else if(currentGameState == GameState.Pause)
+            {
+                uiManager.pauseMenu.gameObject.SetActive(false);
+                currentGameState = GameState.Playing;
+                Time.timeScale = 1f;
+            }
+        }
+
         while (m_waitingForKill.Count > 0)
         {
             IDamageable kill = m_waitingForKill.Pop();
-            damageableManager.UnregisterDamageable(kill);
+            
             GameObject killedObj = damageableManager.GetObject(kill);
+            damageableManager.UnregisterDamageable(kill);
             kill.onKilled -= HandleUnitKilled;
             Destroy(killedObj);
         }
@@ -120,6 +145,8 @@ public class Player_Controller : MonoBehaviour
                     selectableManager.UnregisterSelectable(killedObj);
                 }
 
+                m_waitingForKill.Push(damageable);
+
                 m_ownedUnits.RemoveAt(i);
                 break;
             }
@@ -128,15 +155,17 @@ public class Player_Controller : MonoBehaviour
 
     private void HandleBuildingDestroyed(Building_Health health)
     {
-        if(ownedByPlayer && health.buildingType == BuildingType.Base)
+        if(ownedByPlayer && currentGameState == GameState.Playing && health.buildingType == BuildingType.Base)
         {
             if(health.owningFaction == FactionType.Enemy)
             {
                 uiManager.ShowWinMenu();
+                currentGameState = GameState.Win;
             }
             else if(health.owningFaction == FactionType.Player)
             {
                 uiManager.ShowGameOverMenu();
+                currentGameState = GameState.GameOver;
             }
         }
     }
@@ -151,3 +180,4 @@ public class Player_Controller : MonoBehaviour
 
 public enum FactionType { None, Player, Enemy }
 public enum BuildingType { None, Base, UnitSpawn, ResourceProduction }
+public enum GameState { None, Playing, Pause, Win, GameOver }

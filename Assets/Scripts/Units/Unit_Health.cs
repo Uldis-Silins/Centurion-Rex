@@ -8,7 +8,6 @@ public class Unit_Health : MonoBehaviour, IDamageable
 
     [Range(1f, 100f)] public float maxHealth;
     public FactionType owningFaction;
-    public DamageableManager damageableManager;
 
     [SerializeField] private SpriteRenderer m_sprite;
     private float m_damageTimer;

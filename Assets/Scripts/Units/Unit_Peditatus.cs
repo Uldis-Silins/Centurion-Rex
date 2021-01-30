@@ -14,6 +14,7 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
     private float m_attackTimer;
 
     public bool IsSelected { get; private set; }
+    public override float AttackDistance { get { return attackDistance; } }
 
     protected override void Awake()
     {
@@ -36,7 +37,7 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
                 agent.enabled = true;
                 //obstacle.enabled = false;
 
-                Vector3 dir = (transform.position - m_currentTarget.Key.transform.position).normalized;
+                Vector3 dir = (m_currentTarget.Key.transform.position - transform.position).normalized;
                 agent.SetDestination(m_currentTarget.Key.transform.position + dir * attackDistance);
             }
             else
