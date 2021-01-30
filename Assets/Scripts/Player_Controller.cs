@@ -1,11 +1,17 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
 
 public class Player_Controller : MonoBehaviour
 {
     public bool ownedByPlayer;
     public FactionType enemyFaction;
+
+    public UI_GameManager uiManager;
+    public List<Building> spawnedBuildings;
+
+    public LayerMask buildingLayer;
 
     [SerializeField] private SelectableManager selectableManager;
     [SerializeField] private DamageableManager damageableManager;
@@ -13,6 +19,8 @@ public class Player_Controller : MonoBehaviour
     private List<Unit_Base> m_ownedUnits;
 
     private Stack<IDamageable> m_waitingForKill;
+
+    private Camera m_mainCam;
 
     public List<Unit_Base> OwnedUnits { get { return m_ownedUnits; } }
 
@@ -28,6 +36,17 @@ public class Player_Controller : MonoBehaviour
         }
 
         m_waitingForKill = new Stack<IDamageable>();
+        m_mainCam = Camera.main;
+    }
+
+    private void OnEnable()
+    {
+        Building_Health.onBuildingDestroyed += HandleBuildingDestroyed;
+    }
+
+    private void OnDisable()
+    {
+        Building_Health.onBuildingDestroyed -= HandleBuildingDestroyed;
     }
 
     private void Update()
@@ -39,6 +58,32 @@ public class Player_Controller : MonoBehaviour
             GameObject killedObj = damageableManager.GetObject(kill);
             kill.onKilled -= HandleUnitKilled;
             Destroy(killedObj);
+        }
+
+        if (ownedByPlayer && Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+        {
+            Ray ray = m_mainCam.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, buildingLayer))
+            {
+                GameObject selectable = hit.collider.gameObject;
+
+                if (selectable.GetComponent<ISelecteble>() != null)
+                {
+                    for (int i = 0; i < spawnedBuildings.Count; i++)
+                    {
+                        if (spawnedBuildings[i].selecteble == selectable)
+                        {
+                            uiManager.ShowBuildingMenu(spawnedBuildings[i].type);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                uiManager.CloseBuildingMenu();
+            }
         }
     }
 
@@ -80,6 +125,29 @@ public class Player_Controller : MonoBehaviour
             }
         }
     }
+
+    private void HandleBuildingDestroyed(Building_Health health)
+    {
+        if(ownedByPlayer && health.buildingType == BuildingType.Base)
+        {
+            if(health.owningFaction == FactionType.Enemy)
+            {
+                uiManager.ShowWinMenu();
+            }
+            else if(health.owningFaction == FactionType.Player)
+            {
+                uiManager.ShowGameOverMenu();
+            }
+        }
+    }
+
+    [System.Serializable]
+    public class Building
+    {
+        public GameObject selecteble;
+        public BuildingType type;
+    }
 }
 
 public enum FactionType { None, Player, Enemy }
+public enum BuildingType { None, Base, UnitSpawn, ResourceProduction }
