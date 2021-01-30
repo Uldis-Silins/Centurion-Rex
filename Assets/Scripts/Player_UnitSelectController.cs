@@ -10,9 +10,15 @@ public class Player_UnitSelectController : MonoBehaviour
 
     private Vector2 m_startDragPosition;
 
-    private readonly float m_singleSelectDistance = 15.0f;
     private readonly float m_dragThreshold = 5;
     private bool m_inDrag;
+
+    private int m_unitLayer;
+
+    private void Awake()
+    {
+        m_unitLayer = LayerMask.NameToLayer("Unit");
+    }
 
     private void Update()
     {
@@ -24,13 +30,21 @@ public class Player_UnitSelectController : MonoBehaviour
 
             for (int i = 0; i < unitScreenPositions.Length; i++)
             {
-                if(Vector2.Distance(Input.mousePosition, unitScreenPositions[i]) < m_singleSelectDistance)
+                selectableManager.GetSelectableAt(i).Deselect();
+            }
+
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            Debug.DrawRay(ray.origin, ray.direction * 30f, Color.red, 10f);
+
+            if (Physics.Raycast(ray, out hit, 1000f, 1 << m_unitLayer))
+            {
+                var hitSelectable = hit.collider.gameObject.GetComponent<ISelecteble>();
+
+                if (hitSelectable != null)
                 {
-                    selectableManager.GetSelectableAt(i).Select();
-                }
-                else
-                {
-                    selectableManager.GetSelectableAt(i).Deselect();
+                    hitSelectable.Select();
                 }
             }
         }

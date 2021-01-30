@@ -6,14 +6,10 @@ public class Building_UnitSpawner : MonoBehaviour
 {
     public UnitData[] units;
 
+    public Transform spawnPoint;
     public Transform moveTarget;
 
     [SerializeField] private Player_Controller playerController;
-
-    private void Start()
-    {
-        
-    }
 
     public void OnSpawnUnitClick(int unitIndex)
     {
@@ -29,7 +25,7 @@ public class Building_UnitSpawner : MonoBehaviour
         {
             if(units[i].type == type)
             {
-                var instance = Instantiate(units[i].unitPrefab, transform.position, transform.rotation) as GameObject;
+                var instance = Instantiate(units[i].unitPrefab, spawnPoint.position, Quaternion.identity) as GameObject;
                 return instance.GetComponent<Unit_Base>();
             }
         }

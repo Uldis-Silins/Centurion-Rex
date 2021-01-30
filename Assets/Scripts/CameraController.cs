@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    public Transform startTarget;
     public bool mouseMove = true;
     public bool keyboardMove = true;
 
@@ -24,7 +25,7 @@ public class CameraController : MonoBehaviour
             m_levelBounds = m_levelRenderer.bounds;
         }
 
-        m_targetCamPosition = transform.position;
+        m_targetCamPosition = new Vector3(startTarget.position.x, transform.position.y, startTarget.position.z);
         m_prevCamPosition = transform.position;
 
         m_screenBounds = new Vector2(Screen.width * (m_screenDragBounds * 0.01f), Screen.height * (m_screenDragBounds * 0.01f));
@@ -49,7 +50,10 @@ public class CameraController : MonoBehaviour
             dir = dir.normalized * m_cameraSpeed;
         }
 
-        m_targetCamPosition = transform.position + dir;
+        if (dir.magnitude > 0f)
+        {
+            m_targetCamPosition = transform.position + dir;
+        }
 
         m_targetCamPosition.x = Mathf.Clamp(m_targetCamPosition.x, m_levelBounds.min.x, m_levelBounds.max.x);
         m_targetCamPosition.z = Mathf.Clamp(m_targetCamPosition.z, m_levelBounds.min.z, m_levelBounds.max.z);

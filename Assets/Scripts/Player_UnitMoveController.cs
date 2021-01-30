@@ -4,7 +4,9 @@ using UnityEngine;
 public class Player_UnitMoveController : MonoBehaviour
 {
     [SerializeField] private SelectableManager m_selectableManager;
+    [SerializeField] private DamageableManager m_damageableManager;
     [SerializeField] private Renderer m_mapRenderer;
+    [SerializeField] private LayerMask attackableLayers;
 
     private Camera m_mainCam;
     private Plane m_groundPlane;
@@ -19,20 +21,43 @@ public class Player_UnitMoveController : MonoBehaviour
     {
         if(Input.GetMouseButtonUp(1))
         {
-            float dist;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
 
-            Ray camRay = m_mainCam.ScreenPointToRay(Input.mousePosition);
+            Debug.DrawRay(ray.origin, ray.direction * 30f, Color.red, 10f);
 
-            if(m_groundPlane.Raycast(camRay, out dist))
+            if (Physics.Raycast(ray, out hit, 1000f, attackableLayers))
             {
-                Vector3 hitPos = camRay.GetPoint(dist);
-                hitPos.y = 0;
+                var hitDamageable = m_damageableManager.GetDamageable(hit.collider.gameObject);
 
-                List<GameObject> curSelectedUnits = new List<GameObject>(m_selectableManager.GetCurrentSelectedObjects());
-
-                for (int i = 0; i < curSelectedUnits.Count; i++)
+                if (hitDamageable.Faction == FactionType.Enemy)
                 {
-                    curSelectedUnits[i].GetComponent<Unit_Base>().agent.SetDestination(hitPos);
+                    List<GameObject> curSelectedUnits = new List<GameObject>(m_selectableManager.GetCurrentSelectedObjects());
+
+                    for (int i = 0; i < curSelectedUnits.Count; i++)
+                    {
+                        m_selectableManager.GetObjectAt(i).GetComponent<Unit_Base>().SetAttackState(hitDamageable, hit.collider.gameObject);
+                    }
+                }
+            }
+            else
+            {
+                float dist;
+
+                Ray camRay = m_mainCam.ScreenPointToRay(Input.mousePosition);
+
+                if (m_groundPlane.Raycast(camRay, out dist))
+                {
+                    Vector3 hitPos = camRay.GetPoint(dist);
+                    hitPos.y = 0;
+
+                    List<GameObject> curSelectedUnits = new List<GameObject>(m_selectableManager.GetCurrentSelectedObjects());
+
+                    for (int i = 0; i < curSelectedUnits.Count; i++)
+                    {
+                        curSelectedUnits[i].GetComponent<Unit_Base>().SetAttackState(null, null);
+                        curSelectedUnits[i].GetComponent<Unit_Base>().agent.SetDestination(hitPos);
+                    }
                 }
             }
         }

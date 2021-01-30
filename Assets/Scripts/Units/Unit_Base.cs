@@ -12,6 +12,7 @@ public abstract class Unit_Base : MonoBehaviour
     protected Camera m_mainCam;
 
     private Vector3 m_startScale;
+    protected KeyValuePair<GameObject, IDamageable> m_currentTarget;
 
     protected virtual void Awake()
     {
@@ -36,5 +37,10 @@ public abstract class Unit_Base : MonoBehaviour
     {
         // billboard
         m_soldierRenderer.transform.rotation = m_mainCam.transform.rotation;
+    }
+
+    public virtual void SetAttackState(IDamageable target, GameObject obj)
+    {
+        m_currentTarget = new KeyValuePair<GameObject, IDamageable>(obj, target);
     }
 }

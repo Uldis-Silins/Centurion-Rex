@@ -22,3 +22,5 @@ public class Player_Controller : MonoBehaviour
         }
     }
 }
+
+public enum FactionType { None, Player, Enemy }
