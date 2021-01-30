@@ -29,6 +29,8 @@ public class Unit_Raptor : Unit_Base, ISelecteble
     {
         base.Update();
 
+        anim.SetBool("attack", false);
+
         if (m_currentTarget.Key != null && m_currentTarget.Value != null)
         {
             Vector3 targetPos = m_currentTarget.Key.transform.position;
@@ -39,11 +41,17 @@ public class Unit_Raptor : Unit_Base, ISelecteble
                 agent.enabled = true;
                 //obstacle.enabled = false;
 
-                Vector3 dir = (m_currentTarget.Key.transform.position - transform.position).normalized;
-                agent.SetDestination(m_currentTarget.Key.transform.position - dir * attackDistance);
+                Vector3 dir = (targetPos - transform.position).normalized;
+                agent.SetDestination(targetPos - dir * attackDistance);
             }
             else
             {
+                if(m_attackTimer < 0.2f)
+                {
+                    agent.isStopped = true;
+                    anim.SetBool("attack", true);
+                }
+
                 if (m_attackTimer < 0f)
                 {
                     Quaternion lookRot = Quaternion.LookRotation(m_currentTarget.Key.transform.position - transform.position);

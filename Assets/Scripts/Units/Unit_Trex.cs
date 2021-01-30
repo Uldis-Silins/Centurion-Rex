@@ -36,11 +36,13 @@ public class Unit_Trex : Unit_Base, ISelecteble
                 agent.enabled = true;
                 obstacle.enabled = false;
 
-                Vector3 dir = (m_currentTarget.Key.transform.position - transform.position).normalized;
-                agent.SetDestination(m_currentTarget.Key.transform.position - dir * attackDistance);
+                Vector3 dir = (targetPos - transform.position).normalized;
+                agent.SetDestination(targetPos - dir * attackDistance);
             }
             else
             {
+                agent.isStopped = true;
+
                 if (m_attackTimer < 0f)
                 {
                     m_currentTarget.Value.SetDamage(attackDamage);
