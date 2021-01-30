@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Building_UnitSpawner : MonoBehaviour
+public class Building_UnitSpawner : MonoBehaviour, ISelecteble
 {
     public UnitData[] units;
 
@@ -10,6 +10,8 @@ public class Building_UnitSpawner : MonoBehaviour
     public Transform moveTarget;
 
     [SerializeField] private Player_Controller playerController;
+
+    public bool IsSelected { get; protected set; }
 
     public void OnSpawnUnitClick(int unitIndex)
     {
@@ -32,5 +34,15 @@ public class Building_UnitSpawner : MonoBehaviour
         }
 
         return null;
+    }
+
+    public void Select()
+    {
+        IsSelected = true;
+    }
+
+    public void Deselect()
+    {
+        IsSelected = false;
     }
 }

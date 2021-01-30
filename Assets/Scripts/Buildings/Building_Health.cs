@@ -4,7 +4,10 @@ using System;
 
 public class Building_Health : MonoBehaviour, IDamageable
 {
+    public static event Action<Building_Health> onBuildingDestroyed = delegate { };
     public event Action<IDamageable> onKilled = delegate { };
+
+    public BuildingType buildingType;
 
     [Range(1f, 100f)] public float maxHealth;
     public FactionType owningFaction;
@@ -46,6 +49,8 @@ public class Building_Health : MonoBehaviour, IDamageable
 
     public void Kill()
     {
+        onBuildingDestroyed.Invoke(this);
+        onKilled.Invoke(this);
         damageableManager.UnregisterDamageable(this);
         Destroy(gameObject);
     }
