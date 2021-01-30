@@ -49,29 +49,27 @@ public class Player_UnitMoveController : MonoBehaviour
 
                 if (m_groundPlane.Raycast(camRay, out dist))
                 {
+                    List<GameObject> curSelectedUnits = new List<GameObject>(m_selectableManager.GetCurrentSelectedObjects());
+
                     Vector3 hitPos = camRay.GetPoint(dist);
                     hitPos.y = 0;
 
-                    List<KeyValuePair<GameObject, IDamageable> > hits = new List<KeyValuePair<GameObject, IDamageable>>(m_damageableManager.GetAtPosition(hitPos, 5f));
+                    List<KeyValuePair<GameObject, IDamageable> > hits = new List<KeyValuePair<GameObject, IDamageable>>(m_damageableManager.GetAtPosition(hitPos, 5f, FactionType.Enemy));
 
                     if (hits.Count > 0)
                     {
-                            List<GameObject> curSelectedUnits = new List<GameObject>(m_selectableManager.GetCurrentSelectedObjects());
-
-                            for (int i = 0; i < curSelectedUnits.Count; i++)
-                            {
-                                m_selectableManager.GetObjectAt(i).GetComponent<Unit_Base>().SetAttackState(hits[0].Value, hits[0].Key);
-                            }
+                        for (int i = 0; i < curSelectedUnits.Count; i++)
+                        {
+                            curSelectedUnits[i].GetComponent<Unit_Base>().SetAttackState(hits[0].Value, hits[0].Key);
+                        }
                     }
                     else
                     {
-                        List<GameObject> curSelectedUnits = new List<GameObject>(m_selectableManager.GetCurrentSelectedObjects());
-
                         for (int i = 0; i < curSelectedUnits.Count; i++)
                         {
                             Unit_Base unit = curSelectedUnits[i].GetComponent<Unit_Base>();
                             unit.agent.enabled = true;
-                            unit.obstacle.enabled = false;
+                            //unit.obstacle.enabled = false;
                             unit.SetAttackState(null, null);
                             unit.agent.SetDestination(hitPos);
                         }

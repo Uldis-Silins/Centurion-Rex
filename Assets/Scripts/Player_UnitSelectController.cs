@@ -8,17 +8,12 @@ public class Player_UnitSelectController : MonoBehaviour
     public SelectableManager selectableManager;
     public RectTransform selectionBox;
 
+    public LayerMask hitTestLayers;
+
     private Vector2 m_startDragPosition;
 
     private readonly float m_dragThreshold = 5;
     private bool m_inDrag;
-
-    private int m_unitLayer;
-
-    private void Awake()
-    {
-        m_unitLayer = LayerMask.NameToLayer("Unit");
-    }
 
     private void Update()
     {
@@ -26,23 +21,19 @@ public class Player_UnitSelectController : MonoBehaviour
         {
             m_startDragPosition = Input.mousePosition;
 
-            var unitScreenPositions = selectableManager.GetAllScreenPositions();
 
-            for (int i = 0; i < unitScreenPositions.Length; i++)
-            {
-                selectableManager.GetSelectableAt(i).Deselect();
-            }
+            selectableManager.DeselectAll();
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            Debug.DrawRay(ray.origin, ray.direction * 30f, Color.red, 10f);
+            //Debug.DrawRay(ray.origin, ray.direction * 30f, Color.red, 10f);
 
-            if (Physics.Raycast(ray, out hit, 1000f, 1 << m_unitLayer))
+            if (Physics.Raycast(ray, out hit, 1000f, hitTestLayers))
             {
                 var hitSelectable = hit.collider.gameObject.GetComponent<ISelecteble>();
 
-                if (hitSelectable != null)
+                if (hitSelectable != null && selectableManager.IsObjectSelectable(hit.collider.gameObject))
                 {
                     hitSelectable.Select();
                 }

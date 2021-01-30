@@ -26,6 +26,7 @@ public class Building_UnitSpawner : MonoBehaviour
             if(units[i].type == type)
             {
                 var instance = Instantiate(units[i].unitPrefab, spawnPoint.position, Quaternion.identity) as GameObject;
+                instance.name = units[i].unitPrefab.name + playerController.CurrentPopulation;
                 return instance.GetComponent<Unit_Base>();
             }
         }

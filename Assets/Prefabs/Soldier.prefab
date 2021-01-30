@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 2764863755123161844}
   - component: {fileID: 6998919283713166470}
   - component: {fileID: 8729044461071417188}
+  - component: {fileID: 7820143654597645030}
   m_Layer: 10
   m_Name: Soldier
   m_TagString: Untagged
@@ -184,6 +185,22 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0.45, z: 0}
   m_TimeToStationary: 0.5
+--- !u!114 &7820143654597645030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4220708611386460244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c40d5d16be0323e43bbde5c082548c98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  owningFaction: 1
+  damageableManager: {fileID: 0}
+  m_sprite: {fileID: 4220708612654221336}
 --- !u!1 &4220708612654221342
 GameObject:
   m_ObjectHideFlags: 0

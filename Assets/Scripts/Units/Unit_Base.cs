@@ -15,6 +15,8 @@ public abstract class Unit_Base : MonoBehaviour
     private Vector3 m_startScale;
     protected KeyValuePair<GameObject, IDamageable> m_currentTarget;
 
+    public bool HasAttackTarget { get { return m_currentTarget.Key != null && m_currentTarget.Value != null; } }
+
     protected virtual void Awake()
     {
         m_mainCam = Camera.main;
@@ -36,7 +38,7 @@ public abstract class Unit_Base : MonoBehaviour
         if(!agent.isStopped && agent.velocity.sqrMagnitude < 0.5f && agent.remainingDistance <= agent.stoppingDistance)
         {
             agent.enabled = false;
-            obstacle.enabled = true;
+            //obstacle.enabled = true;
         }
     }
 

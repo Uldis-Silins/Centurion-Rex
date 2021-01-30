@@ -72,7 +72,7 @@ public class DamageableManager : MonoBehaviour
         Assert.AreEqual(m_registeredObjects.Count, m_registeredDamageables.Count);
     }
 
-    public IEnumerable<KeyValuePair<GameObject, IDamageable> > GetAtPosition(Vector3 position, float radius)
+    public IEnumerable<KeyValuePair<GameObject, IDamageable> > GetAtPosition(Vector3 position, float radius, FactionType faction)
     {
         List<KeyValuePair<GameObject, IDamageable> > hits = new List<KeyValuePair<GameObject, IDamageable>>();
 
@@ -80,7 +80,7 @@ public class DamageableManager : MonoBehaviour
         {
             position.y = m_registeredObjects[i].transform.position.y;
 
-            if(Vector3.Distance(position, m_registeredObjects[i].transform.position) <= radius)
+            if(m_registeredDamageables[i].Faction == faction && Vector3.Distance(position, m_registeredObjects[i].transform.position) <= radius)
             {
                 hits.Add(new KeyValuePair<GameObject, IDamageable>(m_registeredObjects[i], m_registeredDamageables[i]));
             }

@@ -31,7 +31,7 @@ public class Unit_Trex : Unit_Base, ISelecteble
             if (Vector3.Distance(targetPos, transform.position) > attackDistance)
             {
                 agent.enabled = true;
-                obstacle.enabled = false;
+                //obstacle.enabled = false;
 
                 Vector3 dir = (transform.position - m_currentTarget.Key.transform.position).normalized;
                 agent.SetDestination(m_currentTarget.Key.transform.position + dir * attackDistance);

@@ -105,6 +105,27 @@ public class SelectableManager : MonoBehaviour
         return m_registeredObjects[index];
     }
 
+    public bool IsObjectSelectable(GameObject obj)
+    {
+        return m_registeredObjects.Contains(obj);
+    }
+
+    public ISelecteble GetSelectable(GameObject obj)
+    {
+        Assert.IsTrue(m_registeredObjects.Contains(obj));
+
+        int index = m_registeredObjects.IndexOf(obj);
+        return m_registeredSelectables[index];
+    }
+
+    public void DeselectAll()
+    {
+        for (int i = 0; i < m_registeredSelectables.Count; i++)
+        {
+            m_registeredSelectables[i].Deselect();
+        }
+    }
+
     public IEnumerable<GameObject> GetCurrentSelectedObjects()
     {
         Stack<GameObject> selected = new Stack<GameObject>();
