@@ -72,6 +72,25 @@ public class DamageableManager : MonoBehaviour
         Assert.AreEqual(m_registeredObjects.Count, m_registeredDamageables.Count);
     }
 
+    public IEnumerable<KeyValuePair<GameObject, IDamageable> > GetAtPosition(Vector3 position, float radius)
+    {
+        List<KeyValuePair<GameObject, IDamageable> > hits = new List<KeyValuePair<GameObject, IDamageable>>();
+
+        for (int i = 0; i < m_registeredObjects.Count; i++)
+        {
+            position.y = m_registeredObjects[i].transform.position.y;
+
+            if(Vector3.Distance(position, m_registeredObjects[i].transform.position) <= radius)
+            {
+                hits.Add(new KeyValuePair<GameObject, IDamageable>(m_registeredObjects[i], m_registeredDamageables[i]));
+            }
+        }
+
+        hits.Sort(new DistanceComparer(position));
+
+        return hits;
+    }
+
     public IDamageable GetDamageable(GameObject obj)
     {
         if(m_registeredObjects.Contains(obj))
@@ -81,5 +100,42 @@ public class DamageableManager : MonoBehaviour
         }
 
         return null;
+    }
+
+    public GameObject GetObject(IDamageable damageable)
+    {
+        if(m_registeredDamageables.Contains(damageable))
+        {
+            int index = m_registeredDamageables.IndexOf(damageable);
+            return m_registeredObjects[index];
+        }
+
+        return null;
+    }
+
+    public class DistanceComparer : IComparer<KeyValuePair<GameObject, IDamageable>>
+    {
+        private Vector3 m_pos;
+
+        public DistanceComparer(Vector3 pos)
+        {
+            m_pos = pos;
+        }
+
+        public int Compare(KeyValuePair<GameObject, IDamageable> x, KeyValuePair<GameObject, IDamageable> y)
+        {
+            m_pos.y = x.Key.transform.position.y;
+
+            if (Vector3.Distance(x.Key.transform.position, m_pos) < Vector3.Distance(y.Key.transform.position, m_pos))
+            {
+                return -1;
+            }
+            else if (Vector3.Distance(x.Key.transform.position, m_pos) > Vector3.Distance(y.Key.transform.position, m_pos))
+            {
+                return 1;
+            }
+
+            return 0;
+        }
     }
 }

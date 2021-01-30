@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public abstract class Unit_Base : MonoBehaviour
 {
     public NavMeshAgent agent;
+    public NavMeshObstacle obstacle;
 
     [SerializeField] protected SpriteRenderer m_soldierRenderer;
 
@@ -30,6 +31,12 @@ public abstract class Unit_Base : MonoBehaviour
         else
         {
             transform.localScale = new Vector3(m_startScale.x, m_startScale.y, m_startScale.z);
+        }
+
+        if(!agent.isStopped && agent.velocity.sqrMagnitude < 0.5f && agent.remainingDistance <= agent.stoppingDistance)
+        {
+            agent.enabled = false;
+            obstacle.enabled = true;
         }
     }
 

@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using UnityEngine;
+using System;
 
 public class Building_Health : MonoBehaviour, IDamageable
 {
+    public event Action<IDamageable> onKilled = delegate { };
+
     [Range(1f, 100f)] public float maxHealth;
     public FactionType owningFaction;
     public DamageableManager damageableManager;
@@ -23,7 +26,7 @@ public class Building_Health : MonoBehaviour, IDamageable
     {
         if(m_damageTimer > 0f)
         {
-            m_sprite.color = Color.Lerp(Color.red, Color.white, m_damageTimer / 0.5f);
+            m_sprite.color = Color.Lerp(Color.white, Color.red, m_damageTimer / 0.5f);
             m_damageTimer -= Time.deltaTime;
         }
     }
