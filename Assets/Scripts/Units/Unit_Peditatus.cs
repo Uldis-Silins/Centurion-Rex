@@ -38,7 +38,7 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
                 //obstacle.enabled = false;
 
                 Vector3 dir = (m_currentTarget.Key.transform.position - transform.position).normalized;
-                agent.SetDestination(m_currentTarget.Key.transform.position + dir * attackDistance);
+                agent.SetDestination(m_currentTarget.Key.transform.position - dir * attackDistance);
             }
             else
             {

@@ -39,8 +39,8 @@ public class Unit_Raptor : Unit_Base, ISelecteble
                 agent.enabled = true;
                 //obstacle.enabled = false;
 
-                Vector3 dir = (transform.position - m_currentTarget.Key.transform.position).normalized;
-                agent.SetDestination(m_currentTarget.Key.transform.position + dir * attackDistance);
+                Vector3 dir = (m_currentTarget.Key.transform.position - transform.position).normalized;
+                agent.SetDestination(m_currentTarget.Key.transform.position - dir * attackDistance);
             }
             else
             {
