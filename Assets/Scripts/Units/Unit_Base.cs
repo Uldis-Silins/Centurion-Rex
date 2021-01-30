@@ -9,7 +9,7 @@ public abstract class Unit_Base : MonoBehaviour
     public NavMeshObstacle obstacle;
     public Animator anim;
 
-    [SerializeField] protected SpriteRenderer m_soldierRenderer;
+    public SpriteRenderer soldierRenderer;
 
     protected Camera m_mainCam;
 
@@ -24,7 +24,7 @@ public abstract class Unit_Base : MonoBehaviour
     {
         m_mainCam = Camera.main;
 
-        m_startScale = transform.localScale;
+        m_startScale = soldierRenderer.transform.localScale;
     }
 
     protected virtual void Update()
@@ -33,11 +33,11 @@ public abstract class Unit_Base : MonoBehaviour
         {
             if (Vector3.Dot(Vector3.right, agent.velocity) < 0)
             {
-                transform.localScale = new Vector3(-m_startScale.x, m_startScale.y, m_startScale.z);
+                soldierRenderer.transform.localScale = new Vector3(-m_startScale.x, m_startScale.y, m_startScale.z);
             }
             else
             {
-                transform.localScale = new Vector3(m_startScale.x, m_startScale.y, m_startScale.z);
+                soldierRenderer.transform.localScale = new Vector3(m_startScale.x, m_startScale.y, m_startScale.z);
             }
         }
 
@@ -53,7 +53,7 @@ public abstract class Unit_Base : MonoBehaviour
     protected virtual void LateUpdate()
     {
         // billboard
-        m_soldierRenderer.transform.rotation = m_mainCam.transform.rotation;
+        soldierRenderer.transform.rotation = m_mainCam.transform.rotation;
     }
 
     public virtual void SetAttackState(IDamageable target, GameObject obj)

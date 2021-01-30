@@ -20,6 +20,8 @@ public class SelectableManager : MonoBehaviour
     //    }
     //}
 
+    public int CurrentSelectedCount { get { return GetCurrentSelectedObjects().Count; } }
+
     private void Awake()
     {
         if(m_instance != null)
@@ -126,15 +128,15 @@ public class SelectableManager : MonoBehaviour
         }
     }
 
-    public IEnumerable<GameObject> GetCurrentSelectedObjects()
+    public List<GameObject> GetCurrentSelectedObjects()
     {
-        Stack<GameObject> selected = new Stack<GameObject>();
+        List<GameObject> selected = new List<GameObject>();
 
         for (int i = 0; i < m_registeredSelectables.Count; i++)
         {
             if(m_registeredSelectables[i].IsSelected)
             {
-                selected.Push(GetObjectAt(i));
+                selected.Add(GetObjectAt(i));
             }
         }
 

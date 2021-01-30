@@ -19,7 +19,7 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
     {
         base.Awake();
 
-        m_startColor = m_soldierRenderer.material.GetColor(m_colorPropID);
+        m_startColor = soldierRenderer.material.GetColor(m_colorPropID);
     }
 
     protected override void Update()
@@ -60,13 +60,13 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
     public void Select()
     {
         IsSelected = true;
-        m_soldierRenderer.material.SetColor(m_colorPropID, Color.green);
+        //m_soldierRenderer.material.SetColor(m_colorPropID, Color.green);
     }
 
     public void Deselect()
     {
         IsSelected = false;
-        m_soldierRenderer.material.SetColor(m_colorPropID, m_startColor);
+        //m_soldierRenderer.material.SetColor(m_colorPropID, m_startColor);
     }
 
     public override void SetAttackState(IDamageable target, GameObject obj)

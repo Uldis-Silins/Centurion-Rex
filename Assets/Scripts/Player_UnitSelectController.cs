@@ -7,6 +7,7 @@ public class Player_UnitSelectController : MonoBehaviour
 {
     public SelectableManager selectableManager;
     public RectTransform selectionBox;
+    public UI_HudManager hudManager;
 
     public LayerMask hitTestLayers;
 
@@ -38,6 +39,8 @@ public class Player_UnitSelectController : MonoBehaviour
                     hitSelectable.Select();
                 }
             }
+
+            hudManager.OnSelectionChanged();
         }
         else if(Input.GetMouseButtonUp(0))
         {
@@ -88,6 +91,8 @@ public class Player_UnitSelectController : MonoBehaviour
                         selectableManager.GetSelectableAt(i).Deselect();
                     }
                 }
+
+                hudManager.OnSelectionChanged();
             }
         }
     }

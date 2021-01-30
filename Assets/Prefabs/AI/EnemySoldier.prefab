@@ -51,7 +51,7 @@ MonoBehaviour:
   agent: {fileID: 2764863755123161844}
   obstacle: {fileID: 4792825981156484757}
   anim: {fileID: 2988519878768431652}
-  m_soldierRenderer: {fileID: 4220708612654221336}
+  soldierRenderer: {fileID: 4220708612654221336}
   attackDistance: 2
   attackDamage: 5
   attacksDelay: 0.5

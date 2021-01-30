@@ -51,7 +51,7 @@ MonoBehaviour:
   agent: {fileID: 2601249821520883070}
   obstacle: {fileID: 6691992293901007333}
   anim: {fileID: 1268546659493846379}
-  m_soldierRenderer: {fileID: 4095252138988724114}
+  soldierRenderer: {fileID: 4095252138988724114}
   attackDistance: 2
   attackDamage: 5
   attacksDelay: 0.5
@@ -104,8 +104,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.5, y: 1, z: 1}
-  m_Center: {x: 0, y: 0.5, z: 0}
+  m_Size: {x: 1.5, y: 1.58, z: 1}
+  m_Center: {x: 0, y: 0.92, z: 0}
 --- !u!208 &6691992293901007333
 NavMeshObstacle:
   m_ObjectHideFlags: 0
