@@ -114,7 +114,7 @@ public class UI_HudManager : MonoBehaviour
             {
                 if(cursorSprites[i].type == type)
                 {
-                    Cursor.SetCursor(cursorSprites[i].tex, Vector2.zero, CursorMode.Auto);
+                    Cursor.SetCursor(cursorSprites[i].tex, Vector2.zero, CursorMode.ForceSoftware);
                     break;
                 }
             }
