@@ -48,9 +48,9 @@ public class Unit_Raptor : Unit_Base, ISelecteble
                 {
                     Quaternion lookRot = Quaternion.LookRotation(m_currentTarget.Key.transform.position - transform.position);
                     Projectile instance = Instantiate(projectilePrefab, transform.position, lookRot);
-                    instance.Spawn(transform.position, m_currentTarget.Key.transform.position + new Vector3(Random.insideUnitCircle.x * accuracy, 0f, Random.insideUnitCircle.y * accuracy));
+                    instance.Spawn(transform.position, m_currentTarget.Key.transform.position + new Vector3(Random.insideUnitCircle.x * accuracy, 0f, Random.insideUnitCircle.y * accuracy), attackDamage, m_currentTarget.Value);
 
-                    m_currentTarget.Value.SetDamage(attackDamage);
+                    //m_currentTarget.Value.SetDamage(attackDamage);
                     m_attackTimer = attacksDelay;
                 }
 

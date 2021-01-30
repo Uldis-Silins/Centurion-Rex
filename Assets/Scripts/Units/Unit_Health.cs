@@ -36,7 +36,7 @@ public class Unit_Health : MonoBehaviour, IDamageable
         m_damageTimer = 0.5f;
         m_sprite.color = Color.red;
 
-        if (CurrentHealth < 0)
+        if (CurrentHealth <= 0)
         {
             Kill();
         }
