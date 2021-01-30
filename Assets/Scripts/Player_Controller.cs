@@ -9,6 +9,7 @@ public class Player_Controller : MonoBehaviour
     public FactionType enemyFaction;
 
     public UI_GameManager uiManager;
+    public UI_HudManager hudManager;
     public List<Building> spawnedBuildings;
 
     public LayerMask buildingLayer;
@@ -16,7 +17,7 @@ public class Player_Controller : MonoBehaviour
     [SerializeField] private SelectableManager selectableManager;
     [SerializeField] private DamageableManager damageableManager;
 
-    private GameState currentGameState;
+    public static GameState currentGameState;
 
     private List<Unit_Base> m_ownedUnits;
 
@@ -63,12 +64,14 @@ public class Player_Controller : MonoBehaviour
         {
             if (currentGameState == GameState.Playing)
             {
+                hudManager.ChangeCursor(UI_HudManager.CursorType.None);
                 uiManager.pauseMenu.gameObject.SetActive(true);
                 currentGameState = GameState.Pause;
                 Time.timeScale = 0f;
             }
             else if(currentGameState == GameState.Pause)
             {
+                hudManager.ChangeCursor(UI_HudManager.CursorType.Default);
                 uiManager.pauseMenu.gameObject.SetActive(false);
                 currentGameState = GameState.Playing;
                 Time.timeScale = 1f;

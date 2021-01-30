@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Player_UnitMoveController : MonoBehaviour
 {
+    public UI_HudManager hudManager;
     [SerializeField] private SelectableManager m_selectableManager;
     [SerializeField] private DamageableManager m_damageableManager;
     [SerializeField] private Renderer m_mapRenderer;
@@ -19,60 +20,52 @@ public class Player_UnitMoveController : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetMouseButtonUp(1))
+        if(Player_Controller.currentGameState != GameState.Playing)
         {
-            //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            //RaycastHit hit;
+            return;
+        }
 
-            //Debug.DrawRay(ray.origin, ray.direction * 30f, Color.red, 10f);
+        float dist;
 
-            //if (Physics.Raycast(ray, out hit, 1000f, attackableLayers))
-            //{
-            //    var hitDamageable = m_damageableManager.GetDamageable(hit.collider.gameObject);
+        Ray camRay = m_mainCam.ScreenPointToRay(Input.mousePosition);
 
-            //    if (hitDamageable.Faction == FactionType.Enemy)
-            //    {
-            //        List<GameObject> curSelectedUnits = new List<GameObject>(m_selectableManager.GetCurrentSelectedObjects());
+        if (m_groundPlane.Raycast(camRay, out dist))
+        {
+            List<GameObject> curSelectedUnits = new List<GameObject>(m_selectableManager.GetCurrentSelectedObjects());
 
-            //        for (int i = 0; i < curSelectedUnits.Count; i++)
-            //        {
-            //            m_selectableManager.GetObjectAt(i).GetComponent<Unit_Base>().SetAttackState(hitDamageable, hit.collider.gameObject);
-            //        }
-            //    }
-            //}
-            //else
+            Vector3 hitPos = camRay.GetPoint(dist);
+            hitPos.y = 0;
 
+            List<KeyValuePair<GameObject, IDamageable>> hits = new List<KeyValuePair<GameObject, IDamageable>>(m_damageableManager.GetAtPosition(hitPos, 1f, FactionType.Enemy));
+
+            if (hits.Count > 0)
             {
-                float dist;
-
-                Ray camRay = m_mainCam.ScreenPointToRay(Input.mousePosition);
-
-                if (m_groundPlane.Raycast(camRay, out dist))
+                if (curSelectedUnits.Count > 0)
                 {
-                    List<GameObject> curSelectedUnits = new List<GameObject>(m_selectableManager.GetCurrentSelectedObjects());
+                    hudManager.ChangeCursor(UI_HudManager.CursorType.Attack);
+                }
 
-                    Vector3 hitPos = camRay.GetPoint(dist);
-                    hitPos.y = 0;
-
-                    List<KeyValuePair<GameObject, IDamageable> > hits = new List<KeyValuePair<GameObject, IDamageable>>(m_damageableManager.GetAtPosition(hitPos, 5f, FactionType.Enemy));
-
-                    if (hits.Count > 0)
+                if (Input.GetMouseButtonUp(1))
+                {
+                    for (int i = 0; i < curSelectedUnits.Count; i++)
                     {
-                        for (int i = 0; i < curSelectedUnits.Count; i++)
-                        {
-                            curSelectedUnits[i].GetComponent<Unit_Base>().SetAttackState(hits[0].Value, hits[0].Key);
-                        }
+                        curSelectedUnits[i].GetComponent<Unit_Base>().SetAttackState(hits[0].Value, hits[0].Key);
                     }
-                    else
+                }
+            }
+            else
+            {
+                hudManager.ChangeCursor(UI_HudManager.CursorType.Default);
+
+                if (Input.GetMouseButtonUp(1))
+                {
+                    for (int i = 0; i < curSelectedUnits.Count; i++)
                     {
-                        for (int i = 0; i < curSelectedUnits.Count; i++)
-                        {
-                            Unit_Base unit = curSelectedUnits[i].GetComponent<Unit_Base>();
-                            unit.agent.enabled = true;
-                            //unit.obstacle.enabled = false;
-                            unit.SetAttackState(null, null);
-                            unit.agent.SetDestination(hitPos);
-                        }
+                        Unit_Base unit = curSelectedUnits[i].GetComponent<Unit_Base>();
+                        unit.agent.enabled = true;
+                        //unit.obstacle.enabled = false;
+                        unit.SetAttackState(null, null);
+                        unit.agent.SetDestination(hitPos);
                     }
                 }
             }

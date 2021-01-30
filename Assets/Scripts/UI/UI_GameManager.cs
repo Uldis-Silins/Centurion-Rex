@@ -11,6 +11,7 @@ public class UI_GameManager : MonoBehaviour
         public BuildingType buildingType;
     }
 
+    public UI_HudManager hudManager;
     public BuildingPanel[] buildingPanels;
     public RectTransform pauseMenu;
     public RectTransform winMenu;
@@ -54,11 +55,13 @@ public class UI_GameManager : MonoBehaviour
     public void ShowGameOverMenu()
     {
         gameOverMenu.gameObject.SetActive(true);
+        hudManager.ChangeCursor(UI_HudManager.CursorType.None);
     }
 
     public void ShowWinMenu()
     {
         winMenu.gameObject.SetActive(true);
+        hudManager.ChangeCursor(UI_HudManager.CursorType.None);
     }
 
     public void OnRestartClick()

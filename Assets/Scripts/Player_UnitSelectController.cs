@@ -18,6 +18,11 @@ public class Player_UnitSelectController : MonoBehaviour
 
     private void Update()
     {
+        if(Player_Controller.currentGameState != GameState.Playing)
+        {
+            return;
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
             m_startDragPosition = Input.mousePosition;

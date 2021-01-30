@@ -3,15 +3,28 @@ using UnityEngine;
 
 public class UI_HudManager : MonoBehaviour
 {
+    public enum CursorType { None, Default, Attack, Capture }
+
+    [System.Serializable]
+    public class CursorSprite
+    {
+        public CursorType type;
+        public Texture2D tex;
+    }
+
     public Canvas hudCanvas;
     public RectTransform selectionRectPrefab;
 
     public SelectableManager selectableManager;
 
+    public CursorSprite[] cursorSprites;
+
     private List<RectTransform> m_spawnedSelectionRects;
     private List<Unit_Base> m_currentSelectebles;
 
     private Camera m_mainCam;
+
+    private CursorType m_curCursorType;
 
     private void Awake()
     {
@@ -88,6 +101,23 @@ public class UI_HudManager : MonoBehaviour
         else
         {
             SelectUnits(null);
+        }
+    }
+
+    public void ChangeCursor(CursorType type)
+    {
+        if(m_curCursorType != type)
+        {
+            m_curCursorType = type;
+
+            for (int i = 0; i < cursorSprites.Length; i++)
+            {
+                if(cursorSprites[i].type == type)
+                {
+                    Cursor.SetCursor(cursorSprites[i].tex, Vector2.zero, CursorMode.Auto);
+                    break;
+                }
+            }
         }
     }
 
