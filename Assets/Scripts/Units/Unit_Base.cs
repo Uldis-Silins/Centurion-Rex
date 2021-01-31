@@ -16,6 +16,10 @@ public abstract class Unit_Base : MonoBehaviour
 
     public SpriteRenderer soldierRenderer;
 
+    public AudioSource soundSource;
+    public AudioClip walkClip;
+    public AudioClip attackClip;
+
     public float visionDistance;
     public Transform fovTransform;
 
@@ -55,10 +59,18 @@ public abstract class Unit_Base : MonoBehaviour
             }
 
             anim.SetFloat(m_velocityAnimID, 1f);
+
+            if(!soundSource.isPlaying)
+            {
+                soundSource.clip = walkClip;
+                soundSource.loop = true;
+                soundSource.Play();
+            }
         }
         else
         {
             anim.SetFloat(m_velocityAnimID, 0f);
+            soundSource.loop = false;
         }
     }
 

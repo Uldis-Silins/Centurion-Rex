@@ -42,11 +42,17 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
             {
                 seeker.Stop();
 
-                if (m_attackTimer < 0.25f)
+                if (!anim.GetBool("attack") && m_attackTimer < attacksDelay / 2f)
                 {
                     anim.SetBool("attack", true);
-                }
 
+                    if (!soundSource.isPlaying)
+                    {
+                        soundSource.clip = attackClip;
+                        soundSource.loop = false;
+                        soundSource.Play();
+                    }
+                }
                 if (m_attackTimer < 0f)
                 {
                     m_currentTarget.Value.SetDamage(attackDamage, gameObject);
