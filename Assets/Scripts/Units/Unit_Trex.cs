@@ -37,7 +37,7 @@ public class Unit_Trex : Unit_Base, ISelecteble
             {
                 anim.SetBool("attack", false);
                 Vector3 dir = (targetPos - transform.position).normalized;
-                seeker.SetDestination(targetPos - dir * attackDistance * 0.5f);
+                seeker.SetDestination(targetPos + dir * attackDistance * 0.5f);
             }
             else
             {

@@ -35,7 +35,8 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
 
             if (Vector3.Distance(targetPos, transform.position) > attackDistance)
             {
-                seeker.SetDestination(targetPos);
+                Vector3 dir = (targetPos - transform.position).normalized;
+                seeker.SetDestination(targetPos + dir * attackDistance);
             }
             else
             {

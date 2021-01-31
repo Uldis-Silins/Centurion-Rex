@@ -38,13 +38,22 @@ public class Unit_Raptor : Unit_Base, ISelecteble
             {
                 anim.SetBool("attack", false);
                 Vector3 dir = (targetPos - transform.position).normalized;
-                seeker.SetDestination(targetPos - dir * attackDistance * 0.75f);
+                seeker.SetDestination(transform.position + (targetPos + dir * attackDistance * 0.75f));
             }
             else
             {
                 seeker.Stop();
 
-                if (!anim.GetBool("attack") && m_attackTimer < attacksDelay / 2f)
+                if (Vector3.Dot(Vector3.right, targetPos) < 0)
+                {
+                    soldierRenderer.transform.localScale = new Vector3(-m_startScale.x, m_startScale.y, m_startScale.z);
+                }
+                else
+                {
+                    soldierRenderer.transform.localScale = new Vector3(m_startScale.x, m_startScale.y, m_startScale.z);
+                }
+
+                if (!anim.GetBool("attack") && m_attackTimer < 0.15f)
                 {
                     anim.SetBool("attack", true);
 
