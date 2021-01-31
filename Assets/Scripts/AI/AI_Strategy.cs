@@ -24,6 +24,8 @@ public class AI_Strategy : MonoBehaviour
     private Action m_currentPhase;
     private int m_phaseCounter;
 
+    private float m_tickTimer = 1.23f;
+
     private void Awake()
     {
         m_reserveUnits = new List<Unit_Base>();
@@ -50,10 +52,15 @@ public class AI_Strategy : MonoBehaviour
             Debug.Log("Switched phase to " + currentStrategy.ToString() + " t: " + Time.time);
         }
 
-        SetReserveForPhase((int)currentStrategy);
-        m_currentPhase();
+        if (m_tickTimer <= 0f)
+        {
+            SetReserveForPhase((int)currentStrategy);
+            m_currentPhase();
+            m_tickTimer = Random.Range(1f, 3f);
+        }
 
         m_switchPhaseTimer -= Time.deltaTime;
+        m_tickTimer -= Time.deltaTime;
     }
 
     private Building_Health TryGetPlayerBaseBuilding()

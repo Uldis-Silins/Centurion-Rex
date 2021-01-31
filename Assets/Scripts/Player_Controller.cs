@@ -66,7 +66,7 @@ public class Player_Controller : MonoBehaviour
             uiManager.wineAmountText.text = currentResources.ToString();
         }
 
-        //StartCoroutine(CheckUnitOverlap());
+        StartCoroutine(CheckUnitOverlap());
     }
 
     private void Update()
@@ -204,8 +204,9 @@ public class Player_Controller : MonoBehaviour
         {
             for (int i = 0; i < m_ownedUnits.Count; i++)
             {
-                List<Arrive> overlapped = CheckUnitOverlap(m_ownedUnits[i].seeker.MoveTarget);
-                List<Vector3> targetPositions = GetPositionListCircle(m_ownedUnits[i].transform.position, new float[] { 1f, 2f, 3f, 4f, 5f }, new int[] { 5, 10, 20, 40, 60 });
+                Vector3 pos = m_ownedUnits[i].seeker.IsMoving ? m_ownedUnits[i].seeker.MoveTarget : m_ownedUnits[i].transform.position;
+                List<Arrive> overlapped = CheckUnitOverlap(pos, m_ownedUnits[i]);
+                List<Vector3> targetPositions = GetPositionListCircle(pos, new float[] { 0.5f, 1f, 2f }, new int[] { 5, 10, 20 });
 
                 if (overlapped.Count > 0)
                 {
@@ -216,7 +217,7 @@ public class Player_Controller : MonoBehaviour
                             unit.SetDestination(targetPositions[i % targetPositions.Count]);
                         }
                     }
-                    yield return new WaitForSeconds(0.25f);
+                    yield return new WaitForSeconds(0.2f);
                 }
             }
 
@@ -224,13 +225,20 @@ public class Player_Controller : MonoBehaviour
         }
     }
 
-    private List<Arrive> CheckUnitOverlap(Vector3 pos)
+    private List<Arrive> CheckUnitOverlap(Vector3 pos, Unit_Base caller)
     {
-        Collider[] hits = Physics.OverlapSphere(pos, 1f, 1 << LayerMask.NameToLayer("Unit"));
+        Collider[] hits = Physics.OverlapSphere(pos, 0.25f, 1 << LayerMask.NameToLayer("Unit"));
         List<Arrive> overlappedUnits = new List<Arrive>();
+
+        if (hits.Length > 2)
+        {
+            hits = Physics.OverlapSphere(pos, 2.5f, 1 << LayerMask.NameToLayer("Unit"));
+        }
 
         for (int i = 0; i < hits.Length; i++)
         {
+            if (hits[i].gameObject == caller.gameObject) continue;
+
             Arrive hitAgent = hits[i].gameObject.GetComponent<Arrive>();
             if (hitAgent != null && !hitAgent.IsMoving && hitAgent.gameObject.GetComponent<Unit_Health>().Faction == ownerFaction)
             {

@@ -48,15 +48,22 @@ public class Building_UnitSpawner : MonoBehaviour, ISelecteble
 
     public void OnSpawnUnitClick(int unitIndex)
     {
-        if (playerController.ownedByPlayer && playerController.currentResources >= units[unitIndex].price)
+        if (playerController.ownedByPlayer)
         {
-            if(m_buildQueue.Count == 0)
+            if (playerController.currentResources >= units[unitIndex].price)
             {
-                m_buildTimer = units[unitIndex].buildTime;
-            }
+                if (m_buildQueue.Count == 0)
+                {
+                    m_buildTimer = units[unitIndex].buildTime;
+                }
 
-            m_buildQueue.Enqueue(unitIndex);
-            playerController.uiManager.AddUnitToQueue(unitIndex);
+                m_buildQueue.Enqueue(unitIndex);
+                playerController.uiManager.AddUnitToQueue(unitIndex);
+            }
+        }
+        else
+        {
+            Spawn(unitIndex);
         }
     }
 
