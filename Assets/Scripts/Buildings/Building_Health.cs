@@ -9,6 +9,8 @@ public class Building_Health : MonoBehaviour, IDamageable
 
     public BuildingType buildingType;
 
+    public GameObject buildingRuinsPrefab;
+
     public SpriteRenderer[] fireSprites;
 
     [Range(1f, 5000f)] public float maxHealth;
@@ -71,6 +73,7 @@ public class Building_Health : MonoBehaviour, IDamageable
         onBuildingDestroyed.Invoke(this);
         onKilled.Invoke(this);
         damageableManager.UnregisterDamageable(this);
+        Instantiate(buildingRuinsPrefab, transform.position, transform.rotation);
         Destroy(gameObject);
     }
 }

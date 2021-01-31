@@ -3,7 +3,17 @@ using UnityEngine;
 
 public class Building_Resource : MonoBehaviour
 {
+    [System.Serializable]
+    public class FactionSprite
+    {
+        public FactionType type;
+        public Sprite sprite;
+    }
+
     public List<Player_Controller> playerControllers;
+
+    public SpriteRenderer spriteRenderer;
+    public FactionSprite[] factionSprites;
 
     public FactionType ownerFaction;
     public GameObject fovObject;
@@ -46,17 +56,29 @@ public class Building_Resource : MonoBehaviour
             if(playerControllers[i].ownedByPlayer && faction == FactionType.Player)
             {
                 fovObject.SetActive(true);
-                m_currentPlayerController = playerControllers[i];
-                ownerFaction = faction;
-                break;
             }
             else if(playerControllers[i].ownedByPlayer && faction == FactionType.Enemy)
             {
                 fovObject.SetActive(false);
-                m_currentPlayerController = playerControllers[i];
-                ownerFaction = faction;
-                break;
+            }
+
+            m_currentPlayerController = playerControllers[i];
+        }
+
+        ownerFaction = faction;
+        spriteRenderer.sprite = GetFactionSprite(faction);
+    }
+
+    private Sprite GetFactionSprite(FactionType type)
+    {
+        for (int i = 0; i < factionSprites.Length; i++)
+        {
+            if(factionSprites[i].type == type)
+            {
+                return factionSprites[i].sprite;
             }
         }
+
+        return null;
     }
 }

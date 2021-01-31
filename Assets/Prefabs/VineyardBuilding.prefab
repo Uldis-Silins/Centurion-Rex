@@ -504,6 +504,12 @@ MonoBehaviour:
   playerControllers:
   - {fileID: 0}
   - {fileID: 0}
+  spriteRenderer: {fileID: 5468107633921148253}
+  factionSprites:
+  - type: 1
+    sprite: {fileID: 21300000, guid: 9b8a7ed57094ec64ba6855d52da4f056, type: 3}
+  - type: 2
+    sprite: {fileID: 21300000, guid: 2249b6fcdbb91d643958374ab3957c0f, type: 3}
   ownerFaction: 2
   fovObject: {fileID: 3510212823518789265}
   captureRadius: 5
