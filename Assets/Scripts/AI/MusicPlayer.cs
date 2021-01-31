@@ -39,7 +39,6 @@ public class MusicPlayer : MonoBehaviour
             {
                 gameMusic.volume = Mathf.Lerp(1f, 0f, m_fadeTimer / m_fadeTime);
                 menuMusic.volume = Mathf.Lerp(0f, 1f, m_fadeTimer / m_fadeTime);
-                Debug.Log("Should change vol; timer: " + m_fadeTimer);
             }
 
             if (m_fadeTimer >= m_fadeTime)
