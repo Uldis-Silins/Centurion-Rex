@@ -77,6 +77,8 @@ public class UI_GameManager : MonoBehaviour
 
     public void OnRestartClick()
     {
+        Player_Controller.currentGameState = GameState.Playing;
+        Time.timeScale = 1f;
         string currentSceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
         UnityEngine.SceneManagement.SceneManager.LoadScene(currentSceneName);
     }
