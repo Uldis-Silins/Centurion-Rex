@@ -27,10 +27,9 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
     {
         base.Update();
 
-        anim.SetBool("attack", false);
-
         if (m_currentTarget.Key != null && m_currentTarget.Value != null)
         {
+            anim.SetBool("attack", false);
             Vector3 targetPos = m_currentTarget.Key.transform.position;
             targetPos.y = transform.position.y;
 
@@ -43,7 +42,7 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
             {
                 seeker.Stop();
 
-                if (m_attackTimer < 0.2f)
+                if (m_attackTimer < 0.25f)
                 {
                     anim.SetBool("attack", true);
                 }
@@ -52,10 +51,15 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
                 {
                     m_currentTarget.Value.SetDamage(attackDamage, gameObject);
                     m_attackTimer = attacksDelay;
+                    anim.SetBool("attack", false);
                 }
 
                 m_attackTimer -= Time.deltaTime;
             }
+        }
+        else
+        {
+            anim.SetBool("attack", false);
         }
     }
 

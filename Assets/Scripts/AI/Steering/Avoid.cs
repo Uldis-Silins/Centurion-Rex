@@ -9,9 +9,9 @@ public class Avoid : AgentBehaviour
     private List<GameObject> targets;
     private float m_tickTimer;
 
-    public override void Start()
+    public override void Awake()
     {
-        base.Start();
+        base.Awake();
         targets = new List<GameObject>();
         m_tickTimer = Random.Range(0f, tickRate);
     }

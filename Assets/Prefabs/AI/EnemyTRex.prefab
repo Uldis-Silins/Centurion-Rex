@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 4646269761789159966}
   - component: {fileID: 4854790174741087096}
   - component: {fileID: 8722644879541080341}
-  - component: {fileID: 1031209662919772649}
   - component: {fileID: 8538733233170244040}
   - component: {fileID: 4353974679995329707}
+  - component: {fileID: 6846421801156533200}
   m_Layer: 10
   m_Name: EnemyTRex
   m_TagString: Untagged
@@ -56,6 +56,7 @@ MonoBehaviour:
   seeker: {fileID: 4353974679995329707}
   anim: {fileID: 1268546659493846379}
   health: {fileID: 8387221090912806377}
+  unitType: 0
   soldierRenderer: {fileID: 4095252138988724114}
   visionDistance: 15
   fovTransform: {fileID: 0}
@@ -128,25 +129,6 @@ MonoBehaviour:
   velocity: {x: 0, y: 0, z: 0}
   maxRotation: 45
   maxAngularAccel: 45
---- !u!114 &1031209662919772649
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4095252137840500702}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18402e472a7375d43b23c6462bde5d06, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weight: 1
-  m_moveTarget: {x: 0, y: 0, z: 0}
-  dest: {x: 0, y: 0, z: 0}
-  maxSpeed: 50
-  maxAccel: 50
-  maxRotation: 5
-  maxAngularAccel: 5
 --- !u!114 &8538733233170244040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,7 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03632dcb928328f4bab9d9e6a88dc6f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weight: 0.1
+  weight: 0.2
   m_moveTarget: {x: 0, y: 0, z: 0}
   dest: {x: 0, y: 0, z: 0}
   maxSpeed: 10
@@ -190,6 +172,30 @@ MonoBehaviour:
   targetRadius: 0.1
   slowRadius: 0.1
   timeToTarget: 0.1
+--- !u!114 &6846421801156533200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4095252137840500702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76d5b9276ba3d0143a443c5126af0766, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weight: 1.5
+  m_moveTarget: {x: 0, y: 0, z: 0}
+  dest: {x: 0, y: 0, z: 0}
+  maxSpeed: 50
+  maxAccel: 50
+  maxRotation: 5
+  maxAngularAccel: 5
+  avoidDistance: 2
+  lookAhead: 3.5
+  avoidanceLayers:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1 &4095252138988724116
 GameObject:
   m_ObjectHideFlags: 0

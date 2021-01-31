@@ -28,8 +28,6 @@ public class Unit_Trex : Unit_Base, ISelecteble
     {
         base.Update();
 
-        anim.SetBool("attack", false);
-
         if (m_currentTarget.Key != null && m_currentTarget.Value != null)
         {
             Vector3 targetPos = m_currentTarget.Key.transform.position;
@@ -37,6 +35,7 @@ public class Unit_Trex : Unit_Base, ISelecteble
 
             if (Vector3.Distance(targetPos, transform.position) > attackDistance)
             {
+                anim.SetBool("attack", false);
                 Vector3 dir = (targetPos - transform.position).normalized;
                 seeker.SetDestination(targetPos - dir * attackDistance * 0.5f);
             }
@@ -55,10 +54,15 @@ public class Unit_Trex : Unit_Base, ISelecteble
                     m_attackTimer = attacksDelay;
                     fireParticles.transform.position = m_currentTarget.Key.transform.position;
                     fireParticles.Play();
+                    anim.SetBool("attack", false);
                 }
 
                 m_attackTimer -= Time.deltaTime;
             }
+        }
+        else
+        {
+            anim.SetBool("attack", false);
         }
     }
 

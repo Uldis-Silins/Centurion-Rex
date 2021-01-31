@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 3391315334237148504}
   - component: {fileID: 2596944400481546662}
   - component: {fileID: 4710290147687922626}
-  - component: {fileID: 1225257643491843227}
   - component: {fileID: 2224277810102205562}
   - component: {fileID: 1735651278587361565}
+  - component: {fileID: -8051217637460513258}
   m_Layer: 10
   m_Name: EnemySoldier
   m_TagString: Untagged
@@ -55,6 +55,7 @@ MonoBehaviour:
   seeker: {fileID: 1735651278587361565}
   anim: {fileID: 2988519878768431652}
   health: {fileID: 3391315334237148504}
+  unitType: 0
   soldierRenderer: {fileID: 4220708612654221336}
   visionDistance: 5
   fovTransform: {fileID: 0}
@@ -118,7 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99d8509a74c85174f810da26e7cbd070, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 1
+  maxSpeed: 2
   trueMaxSpeed: 0
   maxAccel: 30
   orientation: 0
@@ -126,25 +127,6 @@ MonoBehaviour:
   velocity: {x: 0, y: 0, z: 0}
   maxRotation: 45
   maxAngularAccel: 45
---- !u!114 &1225257643491843227
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4220708611386460244}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18402e472a7375d43b23c6462bde5d06, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weight: 0.5
-  m_moveTarget: {x: 0, y: 0, z: 0}
-  dest: {x: 0, y: 0, z: 0}
-  maxSpeed: 50
-  maxAccel: 50
-  maxRotation: 5
-  maxAngularAccel: 5
 --- !u!114 &2224277810102205562
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,7 +139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03632dcb928328f4bab9d9e6a88dc6f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weight: 0.1
+  weight: 0.2
   m_moveTarget: {x: 0, y: 0, z: 0}
   dest: {x: 0, y: 0, z: 0}
   maxSpeed: 10
@@ -188,6 +170,30 @@ MonoBehaviour:
   targetRadius: 0.1
   slowRadius: 0.1
   timeToTarget: 0.1
+--- !u!114 &-8051217637460513258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4220708611386460244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76d5b9276ba3d0143a443c5126af0766, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weight: 1.5
+  m_moveTarget: {x: 0, y: 0, z: 0}
+  dest: {x: 0, y: 0, z: 0}
+  maxSpeed: 50
+  maxAccel: 50
+  maxRotation: 5
+  maxAngularAccel: 5
+  avoidDistance: 2
+  lookAhead: 3.5
+  avoidanceLayers:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1 &4220708612654221342
 GameObject:
   m_ObjectHideFlags: 0

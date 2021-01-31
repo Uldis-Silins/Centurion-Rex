@@ -73,6 +73,7 @@ public class Building_UnitSpawner : MonoBehaviour, ISelecteble
 
         if (spawned != null)
         {
+            spawned.unitType = units[unitIndex].type;
             playerController.AddToOwnedUnits(spawned);
             spawned.seeker.SetDestination(moveTarget.position);
         }

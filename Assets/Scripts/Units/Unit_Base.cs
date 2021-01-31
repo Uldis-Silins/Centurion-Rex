@@ -12,6 +12,8 @@ public abstract class Unit_Base : MonoBehaviour
     public Animator anim;
     public Unit_Health health;
 
+    public UnitData.UnitType unitType;
+
     public SpriteRenderer soldierRenderer;
 
     public float visionDistance;

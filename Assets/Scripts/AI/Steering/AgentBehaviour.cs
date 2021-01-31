@@ -17,9 +17,9 @@ public class AgentBehaviour : MonoBehaviour
     public Vector3 MoveTarget { get { return m_moveTarget; } }
     public float RemainingDistance { get { return Vector3.Distance(m_moveTarget, transform.position); } }
 
-    public virtual void Start()
+    public virtual void Awake()
     {
-        agent = GetComponent<Agent>();
+        agent = gameObject.GetComponent<Agent>();
     }
 
     public virtual void Update()

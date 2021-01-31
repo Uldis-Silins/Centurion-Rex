@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 4036118042232991758}
   - component: {fileID: 1738158366612608940}
   - component: {fileID: 9145141018364628441}
-  - component: {fileID: 2291744717003933}
   - component: {fileID: 7599243530163670001}
   - component: {fileID: 1852923002565480216}
+  - component: {fileID: -5915530817883424669}
   m_Layer: 10
   m_Name: EnemyRaptor
   m_TagString: Untagged
@@ -55,6 +55,7 @@ MonoBehaviour:
   seeker: {fileID: 1852923002565480216}
   anim: {fileID: 8313288778661166067}
   health: {fileID: 4036118042232991758}
+  unitType: 0
   soldierRenderer: {fileID: 7932924578973166320}
   visionDistance: 10
   fovTransform: {fileID: 0}
@@ -129,25 +130,6 @@ MonoBehaviour:
   velocity: {x: 0, y: 0, z: 0}
   maxRotation: 45
   maxAngularAccel: 45
---- !u!114 &2291744717003933
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7932924578175232700}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18402e472a7375d43b23c6462bde5d06, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weight: 1
-  m_moveTarget: {x: 0, y: 0, z: 0}
-  dest: {x: 0, y: 0, z: 0}
-  maxSpeed: 50
-  maxAccel: 50
-  maxRotation: 5
-  maxAngularAccel: 5
 --- !u!114 &7599243530163670001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,7 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03632dcb928328f4bab9d9e6a88dc6f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weight: 0.1
+  weight: 0.2
   m_moveTarget: {x: 0, y: 0, z: 0}
   dest: {x: 0, y: 0, z: 0}
   maxSpeed: 10
@@ -191,6 +173,30 @@ MonoBehaviour:
   targetRadius: 0.1
   slowRadius: 0.1
   timeToTarget: 0.1
+--- !u!114 &-5915530817883424669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7932924578175232700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76d5b9276ba3d0143a443c5126af0766, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weight: 1.5
+  m_moveTarget: {x: 0, y: 0, z: 0}
+  dest: {x: 0, y: 0, z: 0}
+  maxSpeed: 50
+  maxAccel: 50
+  maxRotation: 5
+  maxAngularAccel: 5
+  avoidDistance: 2
+  lookAhead: 3.5
+  avoidanceLayers:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1 &7932924578973166326
 GameObject:
   m_ObjectHideFlags: 0

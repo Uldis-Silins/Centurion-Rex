@@ -29,8 +29,6 @@ public class Unit_Raptor : Unit_Base, ISelecteble
     {
         base.Update();
 
-        anim.SetBool("attack", false);
-
         if (m_currentTarget.Key != null && m_currentTarget.Value != null)
         {
             Vector3 targetPos = m_currentTarget.Key.transform.position;
@@ -38,6 +36,7 @@ public class Unit_Raptor : Unit_Base, ISelecteble
 
             if (Vector3.Distance(targetPos, transform.position) > attackDistance)
             {
+                anim.SetBool("attack", false);
                 Vector3 dir = (targetPos - transform.position).normalized;
                 seeker.SetDestination(targetPos - dir * attackDistance * 0.75f);
             }
@@ -58,10 +57,15 @@ public class Unit_Raptor : Unit_Base, ISelecteble
 
                     //m_currentTarget.Value.SetDamage(attackDamage);
                     m_attackTimer = attacksDelay;
+                    anim.SetBool("attack", false);
                 }
 
                 m_attackTimer -= Time.deltaTime;
             }
+        }
+        else
+        {
+            anim.SetBool("attack", false);
         }
     }
 
