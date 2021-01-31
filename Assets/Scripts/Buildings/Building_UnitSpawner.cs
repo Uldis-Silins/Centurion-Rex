@@ -29,7 +29,7 @@ public class Building_UnitSpawner : MonoBehaviour, ISelecteble
             {
                 int unitIndex = m_buildQueue.Dequeue();
                 Spawn(unitIndex);
-                playerController.uiManager.AddUnitToQueue(unitIndex);
+                playerController.uiManager.RemoveUnitToQueue(unitIndex);
 
                 if (m_buildQueue.Count > 0)
                 {
