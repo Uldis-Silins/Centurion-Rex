@@ -89,39 +89,61 @@ public class AI_Strategy : MonoBehaviour
             }
         }
 
-        var reserveSoldiers = GetByType(m_reserveUnits, UnitData.UnitType.Soldier);
+        var lostBuildings = GetLostResourceBuildings();
 
-        if(reserveSoldiers.Count > 0)
+        if (lostBuildings.Count == 0)
         {
-            var pos = GetFormationPositions(reserveSoldiers[0].transform.position, reserveSoldiers.Count);
-
-            for (int i = 0; i < reserveSoldiers.Count; i++)
+            for (int i = m_reserveUnits.Count - 1; i >= 0; i--)
             {
-                reserveSoldiers[i].seeker.SetDestination(pos[i]);
+                if (m_reserveUnits[i] == null || m_reserveUnits[i].seeker == null)
+                {
+                    m_reserveUnits.RemoveAt(i);
+                }
+            }
+
+            var reserveSoldiers = GetByType(m_reserveUnits, UnitData.UnitType.Soldier);
+
+            if (reserveSoldiers.Count > 0)
+            {
+                var pos = GetFormationPositions(reserveSoldiers[0].transform.position, reserveSoldiers.Count);
+
+                for (int i = 0; i < reserveSoldiers.Count; i++)
+                {
+                    reserveSoldiers[i].seeker.SetDestination(pos[i]);
+                }
+            }
+
+            var reserveRanged = GetByType(m_reserveUnits, UnitData.UnitType.Ranged);
+
+            if (reserveRanged.Count > 0)
+            {
+                var pos = GetFormationPositions(reserveRanged[0].transform.position, reserveRanged.Count);
+
+                for (int i = 0; i < reserveRanged.Count; i++)
+                {
+                    reserveRanged[i].seeker.SetDestination(pos[i]);
+                }
+            }
+
+            var reserveCavalry = GetByType(m_reserveUnits, UnitData.UnitType.Cavalry);
+
+            if (reserveCavalry.Count > 0)
+            {
+                var pos = GetFormationPositions(reserveCavalry[0].transform.position, reserveCavalry.Count);
+
+                for (int i = 0; i < reserveCavalry.Count; i++)
+                {
+                    reserveCavalry[i].seeker.SetDestination(pos[i]);
+                }
             }
         }
-
-        var reserveRanged = GetByType(m_reserveUnits, UnitData.UnitType.Ranged);
-
-        if (reserveRanged.Count > 0)
+        else
         {
-            var pos = GetFormationPositions(reserveRanged[0].transform.position, reserveRanged.Count);
+            int sentUnits = m_reserveUnits.Count / 2;
 
-            for (int i = 0; i < reserveRanged.Count; i++)
+            for (int i = 0; i < sentUnits; i++)
             {
-                reserveRanged[i].seeker.SetDestination(pos[i]);
-            }
-        }
-
-        var reserveCavalry = GetByType(m_reserveUnits, UnitData.UnitType.Cavalry);
-
-        if (reserveCavalry.Count > 0)
-        {
-            var pos = GetFormationPositions(reserveCavalry[0].transform.position, reserveCavalry.Count);
-
-            for (int i = 0; i < reserveCavalry.Count; i++)
-            {
-                reserveCavalry[i].seeker.SetDestination(pos[i]);
+                m_reserveUnits[i].seeker.SetDestination(lostBuildings[Random.Range(0, lostBuildings.Count)].transform.position);
             }
         }
     }
@@ -241,7 +263,7 @@ public class AI_Strategy : MonoBehaviour
     {
         if(discoveredPlayerBuildings.Count > 0)
         {
-            pos = (discoveredPlayerBuildings[0].transform.position - playerController.spawnedBuildings[0].selecteble.transform.position) / 2f;
+            pos = playerController.spawnedBuildings[0].selecteble.transform.position + (discoveredPlayerBuildings[0].transform.position - playerController.spawnedBuildings[0].selecteble.transform.position) / 2f;
             pos += new Vector3(Random.insideUnitCircle.x * 20f, 0f, Random.insideUnitCircle.y * 20f);
 
             return true;
@@ -304,5 +326,22 @@ public class AI_Strategy : MonoBehaviour
         }
 
         return positions;
+    }
+
+    private List<Building_Resource> GetLostResourceBuildings()
+    {
+        List<Building_Resource> lostBuildings = new List<Building_Resource>();
+
+        for (int i = 0; i < playerController.spawnedBuildings.Count; i++)
+        {
+            Building_Resource building = playerController.spawnedBuildings[i].selecteble.GetComponent<Building_Resource>();
+
+            if(building != null && building.ownerFaction != FactionType.Enemy)
+            {
+                lostBuildings.Add(building);
+            }
+        }
+
+        return lostBuildings;
     }
 }

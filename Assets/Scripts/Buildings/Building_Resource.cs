@@ -56,13 +56,13 @@ public class Building_Resource : MonoBehaviour
             if(playerControllers[i].ownedByPlayer && faction == FactionType.Player)
             {
                 fovObject.SetActive(true);
+                m_currentPlayerController = playerControllers[i];
             }
             else if(playerControllers[i].ownedByPlayer && faction == FactionType.Enemy)
             {
                 fovObject.SetActive(false);
+                m_currentPlayerController = playerControllers[i];
             }
-
-            m_currentPlayerController = playerControllers[i];
         }
 
         ownerFaction = faction;

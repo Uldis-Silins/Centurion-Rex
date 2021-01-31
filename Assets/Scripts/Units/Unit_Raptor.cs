@@ -38,7 +38,7 @@ public class Unit_Raptor : Unit_Base, ISelecteble
             {
                 anim.SetBool("attack", false);
                 Vector3 dir = (targetPos - transform.position).normalized;
-                seeker.SetDestination(targetPos - dir * attackDistance * 0.75f);
+                seeker.SetDestination(transform.position + (targetPos + dir * attackDistance * 0.75f));
             }
             else
             {
