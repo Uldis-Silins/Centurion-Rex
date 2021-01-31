@@ -20,7 +20,7 @@ public class Building_UnitSpawner : MonoBehaviour, ISelecteble
         if (spawned != null)
         {
             playerController.AddToOwnedUnits(spawned);
-            spawned.agent.SetDestination(moveTarget.position);
+            spawned.seeker.SetDestination(moveTarget.position);
         }
     }
 

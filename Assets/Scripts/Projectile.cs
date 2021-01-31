@@ -20,6 +20,8 @@ public class Projectile : MonoBehaviour
 
     private Vector3 m_prevPosition;
 
+    private GameObject m_owner;
+
     private Vector3 m_startPosition, m_targetPosition;
     private Vector3 m_defaultScale;
 
@@ -34,7 +36,7 @@ public class Projectile : MonoBehaviour
             {
                 if (m_target.CurrentHealth > 0)
                 {
-                    m_target.SetDamage(m_damage);
+                    m_target.SetDamage(m_damage, m_owner);
                 }
 
                 m_isFlying = false;
@@ -69,7 +71,7 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    public void Spawn(Vector3 startPosition, Vector3 targetPosition, float damage, IDamageable target)
+    public void Spawn(Vector3 startPosition, Vector3 targetPosition, float damage, IDamageable target, GameObject owner)
     {
         m_startPosition = startPosition;
         m_targetPosition = targetPosition;
@@ -83,6 +85,8 @@ public class Projectile : MonoBehaviour
 
         m_damage = damage;
         m_target = target;
+
+        m_owner = owner;
 
         m_prevPosition = startPosition;
 

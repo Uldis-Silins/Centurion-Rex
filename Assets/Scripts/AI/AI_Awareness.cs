@@ -42,7 +42,7 @@ public class AI_Awareness : MonoBehaviour
 
                     if(closestEnemies.Count > 0)
                     {
-                        if (isSelectedByPlayer)
+                        if (isSelectedByPlayer && (unit.agent.velocity.magnitude < 0.1f))
                         {
                             Vector3 closestDist = closestEnemies[0].Key.transform.position;
                             closestDist.y = unit.transform.position.y;
@@ -56,6 +56,18 @@ public class AI_Awareness : MonoBehaviour
                         {
                             unit.SetAttackState(closestEnemies[0].Value, closestEnemies[0].Key);
                         }
+                    }
+                }
+
+                GameObject attacker = unit.health.Attacker;
+
+                if(attacker != null && !unit.HasAttackTarget)
+                {
+                    IDamageable damageable = attacker.GetComponent<IDamageable>();
+
+                    if(damageable != null)
+                    {
+                        unit.SetAttackState(damageable, attacker);
                     }
                 }
             }

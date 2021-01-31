@@ -57,7 +57,7 @@ public class Player_UnitMoveController : MonoBehaviour
 
                     for (int i = 0; i < curSelectedUnits.Count; i++)
                     {
-                        curSelectedUnits[i].GetComponent<Unit_Base>().agent.SetDestination(resourceBuilding.transform.position);
+                        curSelectedUnits[i].GetComponent<Unit_Base>().seeker.SetDestination(resourceBuilding.transform.position);
                     }
                 }
             }
@@ -86,9 +86,12 @@ public class Player_UnitMoveController : MonoBehaviour
 
                 if (Input.GetMouseButtonUp(1))
                 {
+                    List<Vector3> targetPositions = GetPositionListCircle(hitPos, new float[] { 1f, 2f, 3f, 4f, 5f }, new int[] { 5, 10, 20, 40, 60 });
+
                     for (int i = 0; i < curSelectedUnits.Count; i++)
                     {
                         curSelectedUnits[i].GetComponent<Unit_Base>().SetAttackState(hits[0].Value, hits[0].Key);
+                        curSelectedUnits[i].GetComponent<Unit_Base>().seeker.SetDestination(targetPositions[i % targetPositions.Count]);
                     }
                 }
             }
@@ -98,16 +101,46 @@ public class Player_UnitMoveController : MonoBehaviour
 
                 if (Input.GetMouseButtonUp(1))
                 {
+                    List<Vector3> targetPositions = GetPositionListCircle(hitPos, new float[] { 1f, 2f, 3f, 4f, 5f }, new int[] { 5, 10, 20, 40, 60 });
+
                     for (int i = 0; i < curSelectedUnits.Count; i++)
                     {
                         Unit_Base unit = curSelectedUnits[i].GetComponent<Unit_Base>();
                         unit.agent.enabled = true;
                         //unit.obstacle.enabled = false;
                         unit.SetAttackState(null, null);
-                        unit.agent.SetDestination(hitPos);
+
+                        unit.seeker.SetDestination(targetPositions[i % targetPositions.Count]);
                     }
                 }
             }
         }
+    }
+
+    private List<Vector3> GetPositionListCircle(Vector3 startPos, float[] dist, int[] posCount)
+    {
+        List<Vector3> positions = new List<Vector3>();
+        positions.Add(startPos);
+
+        for (int i = 0; i < dist.Length; i++)
+        {
+            positions.AddRange(GetPositionListCircle(startPos, dist[i], posCount[i]));
+        }
+
+        return positions;
+    }
+
+    private List<Vector3> GetPositionListCircle(Vector3 startPos, float dist, int posCount)
+    {
+        List<Vector3> positions = new List<Vector3>();
+
+        for (int i = 0; i < posCount; i++)
+        {
+            float angle = i * (360f / posCount);
+            Vector3 dir = Quaternion.Euler(0f, angle, 0f) * Vector3.right;
+            positions.Add(startPos + dir * dist);
+        }
+
+        return positions;
     }
 }

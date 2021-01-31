@@ -5,9 +5,12 @@ using UnityEngine.AI;
 
 public abstract class Unit_Base : MonoBehaviour
 {
-    public NavMeshAgent agent;
-    public NavMeshObstacle obstacle;
+    //public NavMeshAgent agent;
+    //public NavMeshObstacle obstacle;
+    public Agent agent;
+    public Arrive seeker;
     public Animator anim;
+    public Unit_Health health;
 
     public SpriteRenderer soldierRenderer;
 
@@ -38,7 +41,7 @@ public abstract class Unit_Base : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (agent.velocity.magnitude > 0.25f)
+        if (seeker.IsMoving)
         {
             if (Vector3.Dot(Vector3.right, agent.velocity) < 0)
             {
@@ -48,15 +51,13 @@ public abstract class Unit_Base : MonoBehaviour
             {
                 soldierRenderer.transform.localScale = new Vector3(m_startScale.x, m_startScale.y, m_startScale.z);
             }
+
+            anim.SetFloat(m_velocityAnimID, 1f);
         }
-
-        //if(agent.enabled &&!agent.isStopped && agent.velocity.sqrMagnitude < 0.5f && agent.remainingDistance <= agent.stoppingDistance)
-        //{
-        //    agent.enabled = false;
-        //    //obstacle.enabled = true;
-        //}
-
-        anim.SetFloat(m_velocityAnimID, Mathf.Clamp(agent.velocity.magnitude, 0.2f, 1f));
+        else
+        {
+            anim.SetFloat(m_velocityAnimID, 0f);
+        }
     }
 
     protected virtual void LateUpdate()

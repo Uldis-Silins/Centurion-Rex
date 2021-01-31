@@ -47,7 +47,7 @@ public class Building_Health : MonoBehaviour, IDamageable
         }
     }
 
-    public void SetDamage(float damage)
+    public void SetDamage(float damage, GameObject attacker)
     {
         CurrentHealth -= damage;
 

@@ -9,11 +9,28 @@ public class Unit_Health : MonoBehaviour, IDamageable
     [Range(1f, 100f)] public float maxHealth;
     public FactionType owningFaction;
 
+    public GameObject ragdoll;
+
     [SerializeField] private SpriteRenderer m_sprite;
     private float m_damageTimer;
 
+    private GameObject m_lastAttacker;
+
     public float CurrentHealth { get; protected set; }
     public FactionType Faction { get { return owningFaction; } }
+
+    /// <summary>
+    /// SideFX auto clear
+    /// </summary>
+    public GameObject Attacker
+    {
+        get
+        {
+            GameObject attacker = m_lastAttacker;
+            m_lastAttacker = null;
+            return attacker;
+        }
+    }
 
     private void Start()
     {
@@ -29,12 +46,14 @@ public class Unit_Health : MonoBehaviour, IDamageable
         }
     }
 
-    public void SetDamage(float damage)
+    public void SetDamage(float damage, GameObject attacker)
     {
         CurrentHealth -= damage;
 
         m_damageTimer = 0.5f;
         m_sprite.color = Color.red;
+
+        m_lastAttacker = attacker;
 
         if (CurrentHealth <= 0)
         {
@@ -45,5 +64,10 @@ public class Unit_Health : MonoBehaviour, IDamageable
     public void Kill()
     {
         onKilled.Invoke(this);
+
+        if (ragdoll != null)
+        {
+            Instantiate(ragdoll, transform.position, transform.rotation);
+        }
     }
 }

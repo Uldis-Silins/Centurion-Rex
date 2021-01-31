@@ -34,25 +34,23 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
             Vector3 targetPos = m_currentTarget.Key.transform.position;
             targetPos.y = transform.position.y;
 
-            if (Vector3.Distance(targetPos, transform.position) > attackDistance)
+            if (Vector3.Distance(targetPos, transform.position) > attackDistance && !seeker.IsMoving)
             {
-                agent.enabled = true;
-                //obstacle.enabled = false;
-
                 Vector3 dir = (targetPos - transform.position).normalized;
-                agent.SetDestination(targetPos - dir * attackDistance * 0.5f);
+                seeker.SetDestination(targetPos - dir * attackDistance * 0.5f);
             }
             else
             {
+                seeker.Stop();
+
                 if (m_attackTimer < 0.2f)
                 {
-                    agent.isStopped = true;
                     anim.SetBool("attack", true);
                 }
 
                 if (m_attackTimer < 0f)
                 {
-                    m_currentTarget.Value.SetDamage(attackDamage);
+                    m_currentTarget.Value.SetDamage(attackDamage, gameObject);
                     m_attackTimer = attacksDelay;
                 }
 

@@ -36,19 +36,17 @@ public class Unit_Raptor : Unit_Base, ISelecteble
             Vector3 targetPos = m_currentTarget.Key.transform.position;
             targetPos.y = transform.position.y;
 
-            if (Vector3.Distance(targetPos, transform.position) > attackDistance)
+            if (Vector3.Distance(targetPos, transform.position) > attackDistance && !seeker.IsMoving)
             {
-                agent.enabled = true;
-                //obstacle.enabled = false;
-
                 Vector3 dir = (targetPos - transform.position).normalized;
-                agent.SetDestination(targetPos - dir * attackDistance);
+                seeker.SetDestination(targetPos - dir * attackDistance * 0.75f);
             }
             else
             {
-                if(m_attackTimer < 0.2f)
+                seeker.Stop();
+
+                if (m_attackTimer < 0.2f)
                 {
-                    agent.isStopped = true;
                     anim.SetBool("attack", true);
                 }
 
@@ -56,7 +54,7 @@ public class Unit_Raptor : Unit_Base, ISelecteble
                 {
                     Quaternion lookRot = Quaternion.LookRotation(m_currentTarget.Key.transform.position - transform.position);
                     Projectile instance = Instantiate(projectilePrefab, transform.position, lookRot);
-                    instance.Spawn(transform.position, m_currentTarget.Key.transform.position + new Vector3(Random.insideUnitCircle.x * accuracy, 0f, Random.insideUnitCircle.y * accuracy), attackDamage, m_currentTarget.Value);
+                    instance.Spawn(transform.position, m_currentTarget.Key.transform.position + new Vector3(Random.insideUnitCircle.x * accuracy, 0f, Random.insideUnitCircle.y * accuracy), attackDamage, m_currentTarget.Value, gameObject);
 
                     //m_currentTarget.Value.SetDamage(attackDamage);
                     m_attackTimer = attacksDelay;

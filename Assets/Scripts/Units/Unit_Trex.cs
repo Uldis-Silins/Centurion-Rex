@@ -7,6 +7,8 @@ public class Unit_Trex : Unit_Base, ISelecteble
     public float attackDamage = 5f;
     public float attacksDelay = 0.5f;
 
+    public ParticleSystem fireParticles;
+
     private Color m_startColor;
     private readonly int m_colorPropID = Shader.PropertyToID("_Color");
 
@@ -26,27 +28,33 @@ public class Unit_Trex : Unit_Base, ISelecteble
     {
         base.Update();
 
+        anim.SetBool("attack", false);
+
         if (m_currentTarget.Key != null && m_currentTarget.Value != null)
         {
             Vector3 targetPos = m_currentTarget.Key.transform.position;
             targetPos.y = transform.position.y;
 
-            if (Vector3.Distance(targetPos, transform.position) > attackDistance)
+            if (Vector3.Distance(targetPos, transform.position) > attackDistance && !seeker.IsMoving)
             {
-                agent.enabled = true;
-                obstacle.enabled = false;
-
                 Vector3 dir = (targetPos - transform.position).normalized;
-                agent.SetDestination(targetPos - dir * attackDistance);
+                seeker.SetDestination(targetPos - dir * attackDistance * 0.5f);
             }
             else
             {
-                agent.isStopped = true;
+                seeker.Stop();
+
+                if (m_attackTimer < 0.25f)
+                {
+                    anim.SetBool("attack", true);
+                }
 
                 if (m_attackTimer < 0f)
                 {
-                    m_currentTarget.Value.SetDamage(attackDamage);
+                    m_currentTarget.Value.SetDamage(attackDamage, gameObject);
                     m_attackTimer = attacksDelay;
+                    fireParticles.transform.position = m_currentTarget.Key.transform.position;
+                    fireParticles.Play();
                 }
 
                 m_attackTimer -= Time.deltaTime;

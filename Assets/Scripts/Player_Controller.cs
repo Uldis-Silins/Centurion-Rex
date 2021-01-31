@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
@@ -6,6 +7,7 @@ using UnityEngine.EventSystems;
 public class Player_Controller : MonoBehaviour
 {
     public bool ownedByPlayer;
+    public FactionType ownerFaction;
     public FactionType enemyFaction;
 
     public UI_GameManager uiManager;
@@ -63,6 +65,8 @@ public class Player_Controller : MonoBehaviour
             currentGameState = GameState.Playing;
             uiManager.wineAmountText.text = currentResources.ToString();
         }
+
+        //StartCoroutine(CheckUnitOverlap());
     }
 
     private void Update()
@@ -128,8 +132,6 @@ public class Player_Controller : MonoBehaviour
 
         var health = unit.GetComponent<Unit_Health>();
 
-        unit.agent.avoidancePriority = m_ownedUnits.Count * 5;
-
         if (health != null)
         {
             health.onKilled += HandleUnitKilled;
@@ -194,6 +196,76 @@ public class Player_Controller : MonoBehaviour
                 currentGameState = GameState.GameOver;
             }
         }
+    }
+
+    private IEnumerator CheckUnitOverlap()
+    {
+        while (true)
+        {
+            for (int i = 0; i < m_ownedUnits.Count; i++)
+            {
+                List<Arrive> overlapped = CheckUnitOverlap(m_ownedUnits[i].seeker.MoveTarget);
+                List<Vector3> targetPositions = GetPositionListCircle(m_ownedUnits[i].transform.position, new float[] { 1f, 2f, 3f, 4f, 5f }, new int[] { 5, 10, 20, 40, 60 });
+
+                if (overlapped.Count > 0)
+                {
+                    foreach (var unit in overlapped)
+                    {
+                        if (unit != m_ownedUnits[i])
+                        {
+                            unit.SetDestination(targetPositions[i % targetPositions.Count]);
+                        }
+                    }
+                    yield return new WaitForSeconds(0.25f);
+                }
+            }
+
+            yield return null;
+        }
+    }
+
+    private List<Arrive> CheckUnitOverlap(Vector3 pos)
+    {
+        Collider[] hits = Physics.OverlapSphere(pos, 1f, 1 << LayerMask.NameToLayer("Unit"));
+        List<Arrive> overlappedUnits = new List<Arrive>();
+
+        for (int i = 0; i < hits.Length; i++)
+        {
+            Arrive hitAgent = hits[i].gameObject.GetComponent<Arrive>();
+            if (hitAgent != null && !hitAgent.IsMoving && hitAgent.gameObject.GetComponent<Unit_Health>().Faction == ownerFaction)
+            {
+                overlappedUnits.Add(hitAgent);
+            }
+        }
+
+        return overlappedUnits;
+    }
+
+    private List<Vector3> GetPositionListCircle(Vector3 startPos, float[] dist, int[] posCount)
+    {
+        List<Vector3> positions = new List<Vector3>();
+        positions.Add(startPos);
+
+        for (int i = 0; i < dist.Length; i++)
+        {
+            positions.AddRange(GetPositionListCircle(startPos, dist[i], posCount[i]));
+        }
+
+        return positions;
+    }
+
+    private List<Vector3> GetPositionListCircle(Vector3 startPos, float dist, int posCount)
+    {
+        List<Vector3> positions = new List<Vector3>();
+
+        for (int i = 0; i < posCount; i++)
+        {
+            float angle = i * (360f / posCount);
+            Vector3 dir = Quaternion.Euler(0f, angle, 0f) * Vector3.right;
+            positions.Add(startPos + dir * dist);
+        }
+
+        return positions;
     }
 
     [System.Serializable]
