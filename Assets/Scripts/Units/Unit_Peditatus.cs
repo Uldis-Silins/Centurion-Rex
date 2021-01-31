@@ -35,12 +35,20 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
 
             if (Vector3.Distance(targetPos, transform.position) > attackDistance)
             {
-                Vector3 dir = (targetPos - transform.position).normalized;
-                seeker.SetDestination(targetPos - dir * attackDistance * 0.5f);
+                seeker.SetDestination(targetPos);
             }
             else
             {
                 seeker.Stop();
+
+                if (Vector3.Dot(Vector3.right, targetPos) < 0)
+                {
+                    soldierRenderer.transform.localScale = new Vector3(-m_startScale.x, m_startScale.y, m_startScale.z);
+                }
+                else
+                {
+                    soldierRenderer.transform.localScale = new Vector3(m_startScale.x, m_startScale.y, m_startScale.z);
+                }
 
                 if (!anim.GetBool("attack") && m_attackTimer < attacksDelay / 2f)
                 {

@@ -25,7 +25,7 @@ public abstract class Unit_Base : MonoBehaviour
 
     protected Camera m_mainCam;
 
-    private Vector3 m_startScale;
+    protected Vector3 m_startScale;
     protected KeyValuePair<GameObject, IDamageable> m_currentTarget;
 
     private readonly int m_velocityAnimID = Animator.StringToHash("velocity");
@@ -60,7 +60,7 @@ public abstract class Unit_Base : MonoBehaviour
 
             anim.SetFloat(m_velocityAnimID, 1f);
 
-            if(!soundSource.isPlaying)
+            if(health.Faction == FactionType.Player && !soundSource.isPlaying)
             {
                 soundSource.clip = walkClip;
                 soundSource.loop = true;

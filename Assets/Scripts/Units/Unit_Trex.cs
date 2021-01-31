@@ -43,6 +43,15 @@ public class Unit_Trex : Unit_Base, ISelecteble
             {
                 seeker.Stop();
 
+                if (Vector3.Dot(Vector3.right, targetPos) < 0)
+                {
+                    soldierRenderer.transform.localScale = new Vector3(-m_startScale.x, m_startScale.y, m_startScale.z);
+                }
+                else
+                {
+                    soldierRenderer.transform.localScale = new Vector3(m_startScale.x, m_startScale.y, m_startScale.z);
+                }
+
                 if (!anim.GetBool("attack") && m_attackTimer < attacksDelay / 2f)
                 {
                     anim.SetBool("attack", true);

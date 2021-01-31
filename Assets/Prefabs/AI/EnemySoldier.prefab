@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 1735651278587361565}
   - component: {fileID: -8051217637460513258}
   - component: {fileID: 6963665858929961176}
+  - component: {fileID: 2599926167375743803}
   m_Layer: 10
   m_Name: EnemySoldier
   m_TagString: Untagged
@@ -143,7 +144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03632dcb928328f4bab9d9e6a88dc6f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weight: 0.2
+  weight: 0.1
   m_moveTarget: {x: 0, y: 0, z: 0}
   dest: {x: 0, y: 0, z: 0}
   maxSpeed: 10
@@ -216,7 +217,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 104
+  Priority: 256
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 50
@@ -265,8 +266,8 @@ AudioSource:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.31572753
-      value: 0.034210205
+      time: 0.3135913
+      value: 0.015350342
       inSlope: -0.19539031
       outSlope: -0.19539031
       tangentMode: 0
@@ -275,7 +276,7 @@ AudioSource:
       outWeight: 0
     - serializedVersion: 3
       time: 0.64
-      value: 0.012390137
+      value: 0.002960205
       inSlope: -0.04884758
       outSlope: -0.04884758
       tangentMode: 0
@@ -284,12 +285,12 @@ AudioSource:
       outWeight: 0
     - serializedVersion: 3
       time: 1
-      value: 0.0074267574
-      inSlope: -0.020007975
-      outSlope: -0.020007975
+      value: 0
+      inSlope: -0.056571424
+      outSlope: -0.056571424
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.30864194
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -339,6 +340,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2599926167375743803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4220708611386460244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f9d8fc5466b36c40965f2d803e60cb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pitchRange: 0.1
 --- !u!1 &4220708612654221342
 GameObject:
   m_ObjectHideFlags: 0
