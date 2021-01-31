@@ -280,7 +280,7 @@ MonoBehaviour:
   lookAhead: 3.5
   avoidanceLayers:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 4608
 --- !u!82 &-4826342710931229513
 AudioSource:
   m_ObjectHideFlags: 0
