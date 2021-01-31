@@ -84,4 +84,9 @@ public abstract class Unit_Base : MonoBehaviour
     {
         m_currentTarget = new KeyValuePair<GameObject, IDamageable>(obj, target);
     }
+
+    public bool CanSeeUnit(Unit_Base unit)
+    {
+        return Vector3.Distance(transform.position, unit.transform.position) <= visionDistance;
+    }
 }
