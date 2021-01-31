@@ -9,6 +9,8 @@ public class Building_UnitSpawner : MonoBehaviour, ISelecteble
     public Transform spawnPoint;
     public Transform moveTarget;
 
+    public AudioSource audioSource;
+
     [SerializeField] private Player_Controller playerController;
 
     private Queue<int> m_buildQueue;
@@ -76,6 +78,11 @@ public class Building_UnitSpawner : MonoBehaviour, ISelecteble
             spawned.unitType = units[unitIndex].type;
             playerController.AddToOwnedUnits(spawned);
             spawned.seeker.SetDestination(moveTarget.position);
+
+            if(playerController.ownedByPlayer)
+            {
+                audioSource.Play();
+            }
         }
     }
 

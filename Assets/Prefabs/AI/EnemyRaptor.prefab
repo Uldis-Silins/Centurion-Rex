@@ -92,7 +92,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   owningFaction: 2
-  ragdoll: {fileID: 0}
+  ragdoll: {fileID: 2120004536777161031, guid: 7aaf4255082511d43b63d7ce109c9392, type: 3}
   m_sprite: {fileID: 7932924578973166320}
 --- !u!54 &1738158366612608940
 Rigidbody:
