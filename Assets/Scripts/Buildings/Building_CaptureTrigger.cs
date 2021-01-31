@@ -5,6 +5,7 @@ using UnityEngine;
 public class Building_CaptureTrigger : MonoBehaviour
 {
     public Building_Resource building;
+    public AudioSource audio;
 
     private int m_unitLayer;
 
@@ -26,6 +27,11 @@ public class Building_CaptureTrigger : MonoBehaviour
             if(unitHealth != null)
             {
                 building.SetOwner(unitHealth.Faction);
+
+                if(unitHealth.Faction == FactionType.Player)
+                {
+                    audio.Play();
+                }
             }
         }
     }
