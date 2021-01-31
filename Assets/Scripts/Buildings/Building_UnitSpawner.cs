@@ -11,9 +11,56 @@ public class Building_UnitSpawner : MonoBehaviour, ISelecteble
 
     [SerializeField] private Player_Controller playerController;
 
+    private Queue<int> m_buildQueue;
+    private float m_buildTimer;
+
     public bool IsSelected { get; protected set; }
 
+    private void Awake()
+    {
+        m_buildQueue = new Queue<int>();
+    }
+
+    private void Update()
+    {
+        if (playerController.ownedByPlayer && m_buildQueue.Count > 0)
+        {
+            if (m_buildTimer <= 0f)
+            {
+                int unitIndex = m_buildQueue.Dequeue();
+                Spawn(unitIndex);
+                playerController.uiManager.AddUnitToQueue(unitIndex);
+
+                if (m_buildQueue.Count > 0)
+                {
+                    m_buildTimer = units[m_buildQueue.Peek()].buildTime;
+                }
+            }
+
+            if (m_buildQueue.Count > 0)
+            {
+                playerController.uiManager.UpdateBuyUnitFill(m_buildQueue.Peek(), m_buildTimer / units[m_buildQueue.Peek()].buildTime);
+            }
+
+            m_buildTimer -= Time.deltaTime;
+        }
+    }
+
     public void OnSpawnUnitClick(int unitIndex)
+    {
+        if (playerController.ownedByPlayer && playerController.currentResources >= units[unitIndex].price)
+        {
+            if(m_buildQueue.Count == 0)
+            {
+                m_buildTimer = units[unitIndex].buildTime;
+            }
+
+            m_buildQueue.Enqueue(unitIndex);
+            playerController.uiManager.AddUnitToQueue(unitIndex);
+        }
+    }
+
+    private void Spawn(int unitIndex)
     {
         var spawned = SpawnUnit(units[unitIndex].type);
 

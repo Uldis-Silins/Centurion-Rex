@@ -16,3 +16,4 @@ MonoBehaviour:
   unitPrefab: {fileID: 4220708611386460244, guid: c97503ca6ff6d644aa6b179e09acd18c,
     type: 3}
   price: 100
+  buildTime: 10

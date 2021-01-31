@@ -11,4 +11,5 @@ public class UnitData : ScriptableObject
     public UnitType type;
     public GameObject unitPrefab;
     public float price;
+    public float buildTime;
 }

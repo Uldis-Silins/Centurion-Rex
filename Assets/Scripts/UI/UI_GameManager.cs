@@ -19,10 +19,14 @@ public class UI_GameManager : MonoBehaviour
     public RectTransform resourcePanel;
 
     public Button[] buyUnitsButtons;
+    public Image[] buyUnitFill;
+    public Text[] buyUnitButtonTexts;
 
     public Text wineAmountText;
 
     private BuildingPanel m_curBuildingPanel;
+
+    private int[] m_unitQueueAmounts;
 
     private void Start()
     {
@@ -34,6 +38,8 @@ public class UI_GameManager : MonoBehaviour
         pauseMenu.gameObject.SetActive(false);
         winMenu.gameObject.SetActive(false);
         gameOverMenu.gameObject.SetActive(false);
+
+        m_unitQueueAmounts = new int[buyUnitButtonTexts.Length];
     }
 
     public void CloseBuildingMenu()
@@ -73,6 +79,23 @@ public class UI_GameManager : MonoBehaviour
     {
         string currentSceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
         UnityEngine.SceneManagement.SceneManager.LoadScene(currentSceneName);
+    }
+
+    public void AddUnitToQueue(int index)
+    {
+        m_unitQueueAmounts[index]++;
+        buyUnitButtonTexts[index].text = m_unitQueueAmounts[index].ToString();
+    }
+
+    public void RemoveUnitToQueue(int index)
+    {
+        m_unitQueueAmounts[index]--;
+        buyUnitButtonTexts[index].text = m_unitQueueAmounts[index] == 0 ? " " : m_unitQueueAmounts[index].ToString();
+    }
+
+    public void UpdateBuyUnitFill(int buttonIndex, float amount)
+    {
+        buyUnitFill[buttonIndex].fillAmount = amount;
     }
 
     public void OnQuitClick()
