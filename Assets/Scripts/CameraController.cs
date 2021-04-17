@@ -10,7 +10,7 @@ public class CameraController : MonoBehaviour
 
     [SerializeField] private Renderer m_levelRenderer;
     [SerializeField] private Bounds m_levelBounds;
-    [SerializeField] private float m_cameraSpeed = 20.0f;
+    [SerializeField] private float m_cameraSpeed = 30.0f;
     [SerializeField, Tooltip("Percent of screen size"), Range(0f, 50f)] private float m_screenDragBounds = 5f;
 
     private Vector3 m_targetCamPosition;
@@ -62,6 +62,15 @@ public class CameraController : MonoBehaviour
     private void LateUpdate()
     {
         transform.position = Vector3.Lerp(m_prevCamPosition, m_targetCamPosition, m_cameraSpeed * Time.deltaTime);
+        m_prevCamPosition = transform.position;
+    }
+
+    public void SetPosition(Vector3 position)
+    {
+        m_targetCamPosition = position;
+        m_targetCamPosition.x = Mathf.Clamp(m_targetCamPosition.x, m_levelBounds.min.x, m_levelBounds.max.x);
+        m_targetCamPosition.z = Mathf.Clamp(m_targetCamPosition.z, m_levelBounds.min.z, m_levelBounds.max.z);
+        transform.position = m_targetCamPosition;
         m_prevCamPosition = transform.position;
     }
 
