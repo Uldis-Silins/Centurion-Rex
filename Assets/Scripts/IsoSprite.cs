@@ -2,20 +2,37 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(SpriteRenderer)), ExecuteInEditMode]
+[RequireComponent(typeof(SpriteRenderer))]
 public class IsoSprite : MonoBehaviour
 {
-    private SpriteRenderer m_spriteRenderer;
+    [SerializeField] private int m_defaultSortingOrder = 5000;
+    [SerializeField] private int offset = 0;
+    [SerializeField] private float m_tickRate = 0.2f;
+    [SerializeField] private bool updateSorting = true;
+    private Renderer m_renderer;
+
+    private float m_timer;
 
     private void Awake()
     {
-        m_spriteRenderer = GetComponent<SpriteRenderer>();
+        m_renderer = GetComponent<Renderer>();
         //transform.localScale = new Vector3(transform.localScale.z * ScaleX(), transform.localScale.y, transform.localScale.z);
     }
 
-    private void Update()
+    private void LateUpdate()
     {
-        m_spriteRenderer.sortingOrder = (int)transform.position.z * -10;
+        m_timer -= Time.deltaTime;
+
+        if (m_timer <= 0f)
+        {
+            m_timer = m_tickRate;
+            m_renderer.sortingOrder = (int)(m_defaultSortingOrder - transform.position.z - offset);
+
+            if (!updateSorting)
+            {
+                this.enabled = false;
+            }
+        }
     }
 
     private float ScaleX()

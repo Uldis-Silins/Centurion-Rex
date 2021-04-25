@@ -729,6 +729,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab5534db9959ee341b0e1d1766065942, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_defaultSortingOrder: 5000
+  offset: 10
+  m_tickRate: 0.2
+  updateSorting: 1
 --- !u!1 &6395214441298865468
 GameObject:
   m_ObjectHideFlags: 0

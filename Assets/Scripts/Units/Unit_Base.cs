@@ -141,7 +141,11 @@ public abstract class Unit_Base : MonoBehaviour
     protected SpriteAnimatorData.AnimationType GetMoveAnimation()
     {
         Vector2Int direction = GetMoveDirection();
-        m_prevAnimDirection = direction;
+
+        if (direction != Vector2Int.zero)
+        {
+            m_prevAnimDirection = direction;
+        }
 
         if (direction.x == 0 && direction.y == 0)
         {
