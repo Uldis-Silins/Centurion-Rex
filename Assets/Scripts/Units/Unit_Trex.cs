@@ -100,7 +100,12 @@ public class Unit_Trex : Unit_Base, ISelecteble
 
     public override void SetState(UnitStateType type)
     {
-        m_currentStateHandler = m_states[type];
+        m_currentStateType = type;
+
+        if (m_currentStateHandler == null || m_currentStateType == UnitStateType.None)
+        {
+            m_currentStateHandler = m_states[type];
+        }
     }
 
     public void Select()
@@ -146,30 +151,36 @@ public class Unit_Trex : Unit_Base, ISelecteble
     {
         Debug.Assert(m_hasMoveTarget, "MoveState: No move target set.");
         m_seeker.SetDestination(m_moveTarget);
+        anim.PlayAnimation(GetMoveAnimation());
 
         m_currentStateHandler = State_Move;
     }
 
     protected void State_Move()
     {
-        const float STOPPING_DISTANCE = 0.1f;
-
-        if (!m_hasMoveTarget || m_seeker.RemainingDistance < STOPPING_DISTANCE)
+        if (Vector3.Distance(m_seeker.MoveTarget, m_moveTarget) > m_seeker.targetRadius)
         {
+            Debug.Log("Set new move pos");
+            m_seeker.SetDestination(m_moveTarget);
+        }
+
+        if (!m_hasMoveTarget || m_seeker.RemainingDistance < m_seeker.targetRadius)
+        {
+            Debug.Log("Stopped moving, goto idle");
             m_seeker.Stop();
             SetState(UnitStateType.Idle);
         }
 
         if (m_currentStateType != UnitStateType.Move)
         {
+            Debug.Log("State changed fro move to " + m_currentStateType);
             ExitState_Move(m_currentStateType);
         }
 
-        SpriteAnimatorData.AnimationType animType = GetMoveAnimation();
-
-        if (anim.CurrentAnimationType != animType)
+        if (m_hasMoveDirectionChanged)
         {
-            anim.PlayAnimation(animType);
+            Debug.Log("Move direction changed");
+            anim.PlayAnimation(GetMoveAnimation());
         }
     }
 
