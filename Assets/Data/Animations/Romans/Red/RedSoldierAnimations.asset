@@ -124,17 +124,14 @@ MonoBehaviour:
   - type: 10
     frames:
     - frameSprites:
-      - {fileID: -4510311441555811351, guid: ae8e373874b490a4b8073c11fcd4e9e0, type: 3}
-      - {fileID: 4381420685401121069, guid: ae8e373874b490a4b8073c11fcd4e9e0, type: 3}
-      - {fileID: 5092626381222398216, guid: ae8e373874b490a4b8073c11fcd4e9e0, type: 3}
-      - {fileID: 1843561137994800639, guid: ae8e373874b490a4b8073c11fcd4e9e0, type: 3}
-      - {fileID: 2728608457766320161, guid: ae8e373874b490a4b8073c11fcd4e9e0, type: 3}
-      - {fileID: -5853976041367593825, guid: ae8e373874b490a4b8073c11fcd4e9e0, type: 3}
-      - {fileID: 283734699641062011, guid: ae8e373874b490a4b8073c11fcd4e9e0, type: 3}
+      - {fileID: -1938547962733031377, guid: f0110b459a675034fa9820a482f19acf, type: 3}
+      - {fileID: 8818913704326298784, guid: f0110b459a675034fa9820a482f19acf, type: 3}
+      - {fileID: 3671720981494696607, guid: f0110b459a675034fa9820a482f19acf, type: 3}
+      - {fileID: 2467252584547321996, guid: f0110b459a675034fa9820a482f19acf, type: 3}
       frameTime: 0
       flipX: 1
       flipY: 0
-      frameCount: 7
+      frameCount: 4
     playbackSpeedModifier: 1
   - type: 11
     frames:
@@ -154,18 +151,17 @@ MonoBehaviour:
   - type: 12
     frames:
     - frameSprites:
-      - {fileID: -6356896425494904954, guid: 94861086aa9ef084998a7d6711556fe8, type: 3}
-      - {fileID: 744628250572258076, guid: 94861086aa9ef084998a7d6711556fe8, type: 3}
-      - {fileID: -1761847424952636422, guid: 94861086aa9ef084998a7d6711556fe8, type: 3}
-      - {fileID: -7133252492941004697, guid: 94861086aa9ef084998a7d6711556fe8, type: 3}
-      - {fileID: 1860852987577773725, guid: 94861086aa9ef084998a7d6711556fe8, type: 3}
-      - {fileID: 2257932341543994656, guid: 94861086aa9ef084998a7d6711556fe8, type: 3}
-      - {fileID: -6638068875007240308, guid: 94861086aa9ef084998a7d6711556fe8, type: 3}
-      - {fileID: 3269057821019316127, guid: 94861086aa9ef084998a7d6711556fe8, type: 3}
+      - {fileID: -4510311441555811351, guid: ae8e373874b490a4b8073c11fcd4e9e0, type: 3}
+      - {fileID: 4381420685401121069, guid: ae8e373874b490a4b8073c11fcd4e9e0, type: 3}
+      - {fileID: 5092626381222398216, guid: ae8e373874b490a4b8073c11fcd4e9e0, type: 3}
+      - {fileID: 1843561137994800639, guid: ae8e373874b490a4b8073c11fcd4e9e0, type: 3}
+      - {fileID: 2728608457766320161, guid: ae8e373874b490a4b8073c11fcd4e9e0, type: 3}
+      - {fileID: -5853976041367593825, guid: ae8e373874b490a4b8073c11fcd4e9e0, type: 3}
+      - {fileID: 283734699641062011, guid: ae8e373874b490a4b8073c11fcd4e9e0, type: 3}
       frameTime: 0.2
       flipX: 1
       flipY: 0
-      frameCount: 8
+      frameCount: 7
     playbackSpeedModifier: 1
   - type: 13
     frames:
