@@ -98,6 +98,7 @@ GameObject:
   - component: {fileID: -5570320426224378918}
   - component: {fileID: -4826342710931229513}
   - component: {fileID: -8083256488229784507}
+  - component: {fileID: 2555307118925316403}
   m_Layer: 10
   m_Name: TRex
   m_TagString: Untagged
@@ -134,9 +135,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75fdb1d1405b8194eac1feca77551d3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agent: {fileID: 1764298663596790972}
-  seeker: {fileID: 6621914276872425328}
-  anim: {fileID: 7140702506972534062}
+  anim: {fileID: 0}
   health: {fileID: 8626580362713308837}
   unitType: 0
   soldierRenderer: {fileID: 4095252138988724114}
@@ -145,6 +144,8 @@ MonoBehaviour:
   attackClip: {fileID: 8300000, guid: 6752ed4c340822a418d2694348f0779b, type: 3}
   visionDistance: 15
   fovTransform: {fileID: 4095252137087575667}
+  m_agent: {fileID: 0}
+  m_seeker: {fileID: 0}
   attackDistance: 5
   attackDamage: 5
   attacksDelay: 0.5
@@ -435,6 +436,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pitchRange: 0.1
+--- !u!114 &2555307118925316403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4095252137840500702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d6fc5de169056f46bd477ee99879444, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_spriteRenderer: {fileID: 4095252138988724114}
+  m_animationData: {fileID: 0}
+  m_currentAnimationType: 1
 --- !u!1 &4095252138988724116
 GameObject:
   m_ObjectHideFlags: 0
@@ -445,8 +461,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4095252138988724115}
   - component: {fileID: 4095252138988724114}
-  - component: {fileID: 6143031519432068086}
-  - component: {fileID: 7140702506972534062}
   m_Layer: 0
   m_Name: SoldierSprite
   m_TagString: Untagged
@@ -519,37 +533,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6143031519432068086
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4095252138988724116}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab5534db9959ee341b0e1d1766065942, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!95 &7140702506972534062
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4095252138988724116}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 518a184a11201f741a4621591c5ef2bb, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &2007952257800025804
 PrefabInstance:
   m_ObjectHideFlags: 0
