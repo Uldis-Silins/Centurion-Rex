@@ -83,9 +83,9 @@ public class AI_Strategy : MonoBehaviour
     {
         for (int i = 0; i < m_activeUnits.Count; i++)
         {
-            if (!m_activeUnits[i].seeker.IsMoving)
+            if (!m_activeUnits[i].HasMoveTarget)
             {
-                m_activeUnits[i].seeker.SetDestination(playerController.spawnedBuildings[Random.Range(0, playerController.spawnedBuildings.Count)].selecteble.transform.position + new Vector3(Random.insideUnitCircle.x * 25f, 0f, Random.insideUnitCircle.y * 25f));
+                m_activeUnits[i].SetMoveTarget(playerController.spawnedBuildings[Random.Range(0, playerController.spawnedBuildings.Count)].selecteble.transform.position + new Vector3(Random.insideUnitCircle.x * 25f, 0f, Random.insideUnitCircle.y * 25f));
             }
         }
 
@@ -95,7 +95,7 @@ public class AI_Strategy : MonoBehaviour
         {
             for (int i = m_reserveUnits.Count - 1; i >= 0; i--)
             {
-                if (m_reserveUnits[i] == null || m_reserveUnits[i].seeker == null)
+                if (m_reserveUnits[i] == null)
                 {
                     m_reserveUnits.RemoveAt(i);
                 }
@@ -109,7 +109,7 @@ public class AI_Strategy : MonoBehaviour
 
                 for (int i = 0; i < reserveSoldiers.Count; i++)
                 {
-                    reserveSoldiers[i].seeker.SetDestination(pos[i]);
+                    reserveSoldiers[i].SetMoveTarget(pos[i]);
                 }
             }
 
@@ -121,7 +121,7 @@ public class AI_Strategy : MonoBehaviour
 
                 for (int i = 0; i < reserveRanged.Count; i++)
                 {
-                    reserveRanged[i].seeker.SetDestination(pos[i]);
+                    reserveRanged[i].SetMoveTarget(pos[i]);
                 }
             }
 
@@ -133,7 +133,7 @@ public class AI_Strategy : MonoBehaviour
 
                 for (int i = 0; i < reserveCavalry.Count; i++)
                 {
-                    reserveCavalry[i].seeker.SetDestination(pos[i]);
+                    reserveCavalry[i].SetMoveTarget(pos[i]);
                 }
             }
         }
@@ -143,7 +143,7 @@ public class AI_Strategy : MonoBehaviour
 
             for (int i = 0; i < sentUnits; i++)
             {
-                m_reserveUnits[i].seeker.SetDestination(lostBuildings[Random.Range(0, lostBuildings.Count)].transform.position);
+                m_reserveUnits[i].SetMoveTarget(lostBuildings[Random.Range(0, lostBuildings.Count)].transform.position);
             }
         }
     }
@@ -164,9 +164,9 @@ public class AI_Strategy : MonoBehaviour
                 bool canAttack = true;
                 foreach (var unit in m_waves.Peek())
                 {
-                    if (unit == null || unit.seeker == null) continue;
+                    if (unit == null) continue;
 
-                    if (unit.seeker.IsMoving)
+                    if (unit.HasMoveTarget)
                     {
                         canAttack = false;
                     }
@@ -178,8 +178,8 @@ public class AI_Strategy : MonoBehaviour
 
                     for (int i = 0; i < wave.Count; i++)
                     {
-                        if (wave[i].seeker == null) continue;
-                        wave[i].seeker.SetDestination(discoveredPlayerBuildings[0].transform.position);
+                        //if (wave[i].m_seeker == null) continue;
+                        wave[i].SetMoveTarget(discoveredPlayerBuildings[0].transform.position);
                     }
 
                     wave.Clear();
@@ -198,7 +198,7 @@ public class AI_Strategy : MonoBehaviour
         {
             for (int i = 0; i < playerController.OwnedUnits.Count; i++)
             {
-                playerController.OwnedUnits[i].SetAttackState(playerBase, playerBase.gameObject);
+                playerController.OwnedUnits[i].SetAttackTarget(playerBase, playerBase.gameObject);
             }
         }
     }
@@ -252,7 +252,7 @@ public class AI_Strategy : MonoBehaviour
 
             for (int i = 0; i < soldiers.Count; i++)
             {
-                soldiers[i].seeker.SetDestination(positions[i]);
+                soldiers[i].SetMoveTarget(positions[i]);
             }
         }
 

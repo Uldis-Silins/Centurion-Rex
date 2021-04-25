@@ -42,7 +42,7 @@ public class Player_UnitMoveController : MonoBehaviour
 
                 for (int i = 0; i < curSelectedUnits.Count; i++)
                 {
-                    curSelectedUnits[i].GetComponent<Unit_Base>().SetAttackState(health, health.gameObject);
+                    curSelectedUnits[i].GetComponent<Unit_Base>().SetAttackTarget(health, health.gameObject);
                 }
             }
             else
@@ -57,7 +57,8 @@ public class Player_UnitMoveController : MonoBehaviour
 
                     for (int i = 0; i < curSelectedUnits.Count; i++)
                     {
-                        curSelectedUnits[i].GetComponent<Unit_Base>().seeker.SetDestination(resourceBuilding.transform.position);
+                        curSelectedUnits[i].GetComponent<Unit_Base>().SetMoveTarget(resourceBuilding.transform.position);
+                        curSelectedUnits[i].GetComponent<Unit_Base>().SetState(Unit_Base.UnitStateType.Move);
                     }
                 }
             }
@@ -90,8 +91,9 @@ public class Player_UnitMoveController : MonoBehaviour
 
                     for (int i = 0; i < curSelectedUnits.Count; i++)
                     {
-                        curSelectedUnits[i].GetComponent<Unit_Base>().SetAttackState(hits[0].Value, hits[0].Key);
-                        curSelectedUnits[i].GetComponent<Unit_Base>().seeker.SetDestination(targetPositions[i % targetPositions.Count]);
+                        curSelectedUnits[i].GetComponent<Unit_Base>().SetAttackTarget(hits[0].Value, hits[0].Key);
+                        curSelectedUnits[i].GetComponent<Unit_Base>().SetMoveTarget(targetPositions[i % targetPositions.Count]);
+                        curSelectedUnits[i].GetComponent<Unit_Base>().SetState(Unit_Base.UnitStateType.Move);
                     }
                 }
             }
@@ -106,11 +108,10 @@ public class Player_UnitMoveController : MonoBehaviour
                     for (int i = 0; i < curSelectedUnits.Count; i++)
                     {
                         Unit_Base unit = curSelectedUnits[i].GetComponent<Unit_Base>();
-                        unit.agent.enabled = true;
-                        //unit.obstacle.enabled = false;
-                        unit.SetAttackState(null, null);
+                        unit.SetAttackTarget(null, null);
 
-                        unit.seeker.SetDestination(targetPositions[i % targetPositions.Count]);
+                        unit.SetMoveTarget(targetPositions[i % targetPositions.Count]);
+                        unit.SetState(Unit_Base.UnitStateType.Move);
                     }
                 }
             }

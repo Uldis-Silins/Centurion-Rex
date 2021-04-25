@@ -77,7 +77,8 @@ public class Building_UnitSpawner : MonoBehaviour, ISelecteble
         {
             spawned.unitType = units[unitIndex].type;
             playerController.AddToOwnedUnits(spawned);
-            spawned.seeker.SetDestination(moveTarget.position);
+            spawned.SetMoveTarget(moveTarget.position);
+            spawned.SetState(Unit_Base.UnitStateType.Move);
 
             if(playerController.ownedByPlayer)
             {

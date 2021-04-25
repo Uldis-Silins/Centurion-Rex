@@ -42,19 +42,19 @@ public class AI_Awareness : MonoBehaviour
 
                     if(closestEnemies.Count > 0)
                     {
-                        if (isSelectedByPlayer && (unit.agent.velocity.magnitude < 0.1f))
+                        if (isSelectedByPlayer && !unit.HasMoveTarget)
                         {
                             Vector3 closestDist = closestEnemies[0].Key.transform.position;
                             closestDist.y = unit.transform.position.y;
 
                             if (Vector3.Distance(closestDist, unit.transform.position) <= unit.AttackDistance)
                             {
-                                unit.SetAttackState(closestEnemies[0].Value, closestEnemies[0].Key);
+                                unit.SetAttackTarget(closestEnemies[0].Value, closestEnemies[0].Key);
                             }
                         }
                         else
                         {
-                            unit.SetAttackState(closestEnemies[0].Value, closestEnemies[0].Key);
+                            unit.SetAttackTarget(closestEnemies[0].Value, closestEnemies[0].Key);
                         }
                     }
                 }
@@ -67,7 +67,7 @@ public class AI_Awareness : MonoBehaviour
 
                     if(damageable != null)
                     {
-                        unit.SetAttackState(damageable, attacker);
+                        unit.SetAttackTarget(damageable, attacker);
                     }
                 }
             }

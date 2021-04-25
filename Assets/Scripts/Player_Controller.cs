@@ -204,7 +204,7 @@ public class Player_Controller : MonoBehaviour
         {
             for (int i = 0; i < m_ownedUnits.Count; i++)
             {
-                Vector3 pos = m_ownedUnits[i].seeker.IsMoving ? m_ownedUnits[i].seeker.MoveTarget : m_ownedUnits[i].transform.position;
+                Vector3 pos = m_ownedUnits[i].HasMoveTarget ? m_ownedUnits[i].MoveTarget : m_ownedUnits[i].transform.position;
                 List<Arrive> overlapped = CheckUnitOverlap(pos, m_ownedUnits[i]);
                 List<Vector3> targetPositions = GetPositionListCircle(pos, new float[] { 0.5f, 1f, 2f }, new int[] { 5, 10, 20 });
 

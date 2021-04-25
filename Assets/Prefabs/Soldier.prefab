@@ -98,6 +98,7 @@ GameObject:
   - component: {fileID: -7047410920758695339}
   - component: {fileID: 4762776265834391243}
   - component: {fileID: 5758731739219032250}
+  - component: {fileID: 6077791035491440360}
   m_Layer: 10
   m_Name: Soldier
   m_TagString: Untagged
@@ -133,17 +134,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5474efa3c2cebb4e9f25d4276133e3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agent: {fileID: 6651225268188538565}
-  seeker: {fileID: 7829992475956404216}
-  anim: {fileID: 5771514512995546459}
+  anim: {fileID: 6077791035491440360}
   health: {fileID: 7820143654597645030}
-  unitType: 0
+  unitType: 1
   soldierRenderer: {fileID: 4220708612654221336}
   soundSource: {fileID: 4762776265834391243}
   walkClip: {fileID: 8300000, guid: 927c667fc0b12184d8d3fded742ed85d, type: 3}
   attackClip: {fileID: 8300000, guid: d78080f604d2c73448e93c7db36526e7, type: 3}
   visionDistance: 5
   fovTransform: {fileID: 4220708610805117433}
+  m_agent: {fileID: 6651225268188538565}
+  m_seeker: {fileID: 7829992475956404216}
   attackDistance: 1
   attackDamage: 5
   attacksDelay: 0.5
@@ -206,7 +207,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 2
   trueMaxSpeed: 0
-  maxAccel: 30
+  maxAccel: 300
   orientation: 0
   rotation: 0
   velocity: {x: 0, y: 0, z: 0}
@@ -433,6 +434,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pitchRange: 0.1
+--- !u!114 &6077791035491440360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4220708611386460244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d6fc5de169056f46bd477ee99879444, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_spriteRenderer: {fileID: 4220708612654221336}
+  m_animationData: {fileID: 11400000, guid: 48076d06bed3cbf418521d06cdc13467, type: 2}
+  m_currentAnimationType: 1
 --- !u!1 &4220708612654221342
 GameObject:
   m_ObjectHideFlags: 0
@@ -443,8 +459,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4220708612654221337}
   - component: {fileID: 4220708612654221336}
-  - component: {fileID: 6271214786046712956}
-  - component: {fileID: 5771514512995546459}
   m_Layer: 0
   m_Name: SoldierSprite
   m_TagString: Untagged
@@ -517,34 +531,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6271214786046712956
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4220708612654221342}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab5534db9959ee341b0e1d1766065942, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!95 &5771514512995546459
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4220708612654221342}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8b8afe596ba8fdb4ab5315249ff2de19, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0

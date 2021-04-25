@@ -15,6 +15,8 @@ public class VisibilityManager : MonoBehaviour
 
     private void Update()
     {
+        if (enemyController == null || enemyController.OwnedUnits == null) return;
+
         for (int i = 0; i < enemyController.OwnedUnits.Count; i++)
         {
             enemyController.OwnedUnits[i].soldierRenderer.enabled = false;

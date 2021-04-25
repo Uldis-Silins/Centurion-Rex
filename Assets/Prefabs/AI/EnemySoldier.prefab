@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: -8051217637460513258}
   - component: {fileID: 6963665858929961176}
   - component: {fileID: 2599926167375743803}
+  - component: {fileID: 7541403487686809086}
   m_Layer: 10
   m_Name: EnemySoldier
   m_TagString: Untagged
@@ -53,9 +54,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5474efa3c2cebb4e9f25d4276133e3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agent: {fileID: 4710290147687922626}
-  seeker: {fileID: 1735651278587361565}
-  anim: {fileID: 2988519878768431652}
+  anim: {fileID: 7541403487686809086}
   health: {fileID: 3391315334237148504}
   unitType: 0
   soldierRenderer: {fileID: 4220708612654221336}
@@ -64,6 +63,8 @@ MonoBehaviour:
   attackClip: {fileID: 8300000, guid: d78080f604d2c73448e93c7db36526e7, type: 3}
   visionDistance: 5
   fovTransform: {fileID: 0}
+  m_agent: {fileID: 4710290147687922626}
+  m_seeker: {fileID: 1735651278587361565}
   attackDistance: 1
   attackDamage: 5
   attacksDelay: 0.5
@@ -353,6 +354,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pitchRange: 0.1
+--- !u!114 &7541403487686809086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4220708611386460244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d6fc5de169056f46bd477ee99879444, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_spriteRenderer: {fileID: 4220708612654221336}
+  m_animationData: {fileID: 11400000, guid: 48076d06bed3cbf418521d06cdc13467, type: 2}
+  m_currentAnimationType: 1
 --- !u!1 &4220708612654221342
 GameObject:
   m_ObjectHideFlags: 0
@@ -363,8 +379,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4220708612654221337}
   - component: {fileID: 4220708612654221336}
-  - component: {fileID: 6271214786046712956}
-  - component: {fileID: 2988519878768431652}
   m_Layer: 0
   m_Name: SoldierSprite
   m_TagString: Untagged
@@ -425,7 +439,7 @@ SpriteRenderer:
   m_SortingLayerID: -1997730693
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: -3688417580222116566, guid: 988c98e73686a774f928454bc2b96ada,
+  m_Sprite: {fileID: 7509203059001866126, guid: 6d91519a0ddc9254090a2bf89b8591db,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
@@ -437,34 +451,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6271214786046712956
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4220708612654221342}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab5534db9959ee341b0e1d1766065942, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!95 &2988519878768431652
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4220708612654221342}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c73d3a5e2c523a448a4198405b8e763f, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
