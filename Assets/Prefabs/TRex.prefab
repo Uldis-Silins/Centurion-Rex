@@ -449,7 +449,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_spriteRenderer: {fileID: 4095252138988724114}
-  m_animationData: {fileID: 0}
+  m_animationData: {fileID: 11400000, guid: c3497e6330883a942bb13f18b06b1348, type: 2}
   m_currentAnimationType: 1
 --- !u!1 &4095252138988724116
 GameObject:
