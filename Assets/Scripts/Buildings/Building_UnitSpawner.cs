@@ -8,6 +8,7 @@ public class Building_UnitSpawner : MonoBehaviour, ISelecteble
 
     public Transform spawnPoint;
     public Transform moveTarget;
+    public SpriteRenderer moveTargetSprite;
 
     public AudioSource audioSource;
 
@@ -21,6 +22,14 @@ public class Building_UnitSpawner : MonoBehaviour, ISelecteble
     private void Awake()
     {
         m_buildQueue = new Queue<int>();
+    }
+
+    private void Start()
+    {
+        if (playerController.ownedByPlayer)
+        {
+            moveTargetSprite.enabled = false;
+        }
     }
 
     private void Update()
@@ -45,6 +54,22 @@ public class Building_UnitSpawner : MonoBehaviour, ISelecteble
             }
 
             m_buildTimer -= Time.deltaTime;
+        }
+
+        if(IsSelected)
+        {
+            if(Input.GetMouseButtonUp(1))
+            {
+                Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+                Plane groundPlane = new Plane(Vector3.up, spawnPoint.transform.position.y);
+                float enter = 0.0f;
+
+                if(groundPlane.Raycast(camRay, out enter))
+                {
+                    moveTarget.position = camRay.GetPoint(enter);
+                }
+            }
         }
     }
 
@@ -109,10 +134,14 @@ public class Building_UnitSpawner : MonoBehaviour, ISelecteble
     public void Select()
     {
         IsSelected = true;
+
+        moveTargetSprite.enabled = true;
     }
 
     public void Deselect()
     {
         IsSelected = false;
+
+        moveTargetSprite.enabled = false;
     }
 }

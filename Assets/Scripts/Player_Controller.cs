@@ -30,6 +30,8 @@ public class Player_Controller : MonoBehaviour
 
     private Camera m_mainCam;
 
+    private ISelecteble m_selectedBuilding;
+
     public List<Unit_Base> OwnedUnits { get { return m_ownedUnits; } }
 
     public int CurrentPopulation { get { return m_ownedUnits.Count; } }
@@ -106,14 +108,17 @@ public class Player_Controller : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit, buildingLayer))
             {
-                GameObject selectable = hit.collider.gameObject;
+                GameObject selectableObject = hit.collider.gameObject;
+                ISelecteble selectable = selectableObject.GetComponent<ISelecteble>();
 
-                if (selectable.GetComponent<ISelecteble>() != null)
+                if (selectable != null)
                 {
                     for (int i = 0; i < spawnedBuildings.Count; i++)
                     {
-                        if (spawnedBuildings[i].selecteble == selectable)
+                        if (spawnedBuildings[i].selecteble == selectableObject)
                         {
+                            m_selectedBuilding = selectable;
+                            selectable.Select();
                             uiManager.ShowBuildingMenu(spawnedBuildings[i].type);
                         }
                     }
@@ -121,7 +126,11 @@ public class Player_Controller : MonoBehaviour
             }
             else
             {
-                uiManager.CloseBuildingMenu();
+                if (m_selectedBuilding != null)
+                {
+                    m_selectedBuilding.Deselect();
+                    uiManager.CloseBuildingMenu();
+                }
             }
         }
     }
