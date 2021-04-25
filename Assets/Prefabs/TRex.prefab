@@ -135,17 +135,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75fdb1d1405b8194eac1feca77551d3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 0}
+  anim: {fileID: 2555307118925316403}
   health: {fileID: 8626580362713308837}
-  unitType: 0
+  unitType: 3
   soldierRenderer: {fileID: 4095252138988724114}
   soundSource: {fileID: -4826342710931229513}
   walkClip: {fileID: 8300000, guid: f58121c216e48c34bbec4a26561c473b, type: 3}
   attackClip: {fileID: 8300000, guid: 6752ed4c340822a418d2694348f0779b, type: 3}
   visionDistance: 15
   fovTransform: {fileID: 4095252137087575667}
-  m_agent: {fileID: 0}
-  m_seeker: {fileID: 0}
+  m_agent: {fileID: 1764298663596790972}
+  m_seeker: {fileID: 6621914276872425328}
   attackDistance: 5
   attackDamage: 5
   attacksDelay: 0.5
