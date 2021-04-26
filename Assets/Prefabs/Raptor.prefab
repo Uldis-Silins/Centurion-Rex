@@ -371,7 +371,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_spriteRenderer: {fileID: 4884607227775040791}
-  m_animationData: {fileID: 0}
+  m_animationData: {fileID: 11400000, guid: a1e32b72036e4454e81f9873a93fa79c, type: 2}
   m_currentAnimationType: 1
 --- !u!1 &4884607226922222833
 GameObject:
@@ -547,3 +547,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab5534db9959ee341b0e1d1766065942, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_defaultSortingOrder: 5000
+  offset: 0
+  m_tickRate: 0.2
+  updateSorting: 1
