@@ -128,7 +128,7 @@ MonoBehaviour:
       - {fileID: -3274100157989293692, guid: e4ea3a5318752c14d8a8f87ead04425d, type: 3}
       - {fileID: -8427315898740693551, guid: e4ea3a5318752c14d8a8f87ead04425d, type: 3}
       - {fileID: -9104174604335048612, guid: e4ea3a5318752c14d8a8f87ead04425d, type: 3}
-      frameTime: 0
+      frameTime: 0.2
       flipX: 1
       flipY: 0
       frameCount: 4
