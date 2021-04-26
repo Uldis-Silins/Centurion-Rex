@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: deaf0b8d6b1577f439c32eeb938e4fdc, type: 3}
   m_Name: Peditatus
   m_EditorClassIdentifier: 
+  faction: 0
   type: 1
   unitPrefab: {fileID: 4220708611386460244, guid: c97503ca6ff6d644aa6b179e09acd18c,
     type: 3}
-  price: 100
-  buildTime: 5
+  price: 10
+  buildTime: 2
