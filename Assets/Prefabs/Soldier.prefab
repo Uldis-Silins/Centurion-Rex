@@ -145,6 +145,8 @@ MonoBehaviour:
   fovTransform: {fileID: 4220708610805117433}
   m_agent: {fileID: 6651225268188538565}
   m_seeker: {fileID: 7829992475956404216}
+  m_avoider: {fileID: 1572417538469346222}
+  m_obstacleAvoider: {fileID: -7047410920758695339}
   attackDistance: 1
   attackDamage: 5
   attacksDelay: 0.5
@@ -207,7 +209,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 2
   trueMaxSpeed: 0
-  maxAccel: 300
+  maxAccel: 30
   orientation: 0
   rotation: 0
   velocity: {x: 0, y: 0, z: 0}
@@ -225,15 +227,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03632dcb928328f4bab9d9e6a88dc6f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weight: 0.1
+  weight: 0.2
   m_moveTarget: {x: 0, y: 0, z: 0}
   dest: {x: 0, y: 0, z: 0}
   maxSpeed: 10
-  maxAccel: 10
+  maxAccel: 30
   maxRotation: 0
   maxAngularAccel: 0
   tickRate: 0.1
-  collisionRadius: 0.5
+  collisionRadius: 0.75
 --- !u!114 &7829992475956404216
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -250,7 +252,7 @@ MonoBehaviour:
   m_moveTarget: {x: 0, y: 0, z: 0}
   dest: {x: 0, y: 0, z: 0}
   maxSpeed: 10
-  maxAccel: 10
+  maxAccel: 30
   maxRotation: 0
   maxAngularAccel: 0
   targetRadius: 0.1

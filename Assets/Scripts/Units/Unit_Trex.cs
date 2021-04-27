@@ -19,6 +19,7 @@ public class Unit_Trex : Unit_Base, ISelecteble
     private UnitStateType m_currentStateType;
 
     public bool IsSelected { get; private set; }
+    public GameObject SelectableGameObject { get { return this.gameObject; } }
     public override float AttackDistance { get { return attackDistance; } }
 
     protected override void Awake()
@@ -149,8 +150,12 @@ public class Unit_Trex : Unit_Base, ISelecteble
 
     protected void EnterState_Move()
     {
+        Debug.Log("EnterState_Move");
         Debug.Assert(m_hasMoveTarget, "MoveState: No move target set.");
         m_seeker.SetDestination(m_moveTarget);
+        m_avoider.enabled = true;
+        m_obstacleAvoider.enabled = true;
+
         anim.PlayAnimation(GetMoveAnimation());
 
         m_currentStateHandler = State_Move;
@@ -164,28 +169,35 @@ public class Unit_Trex : Unit_Base, ISelecteble
             m_seeker.SetDestination(m_moveTarget);
         }
 
-        if (!m_hasMoveTarget || m_seeker.RemainingDistance < m_seeker.targetRadius)
+        if (m_hasMoveDirectionChanged)
         {
-            Debug.Log("Stopped moving, goto idle");
-            m_seeker.Stop();
-            SetState(UnitStateType.Idle);
+            Debug.Log("Move direction changed");
+            anim.PlayAnimation(GetMoveAnimation());
         }
 
         if (m_currentStateType != UnitStateType.Move)
         {
             Debug.Log("State changed fro move to " + m_currentStateType);
             ExitState_Move(m_currentStateType);
+            return;
         }
 
-        if (m_hasMoveDirectionChanged)
+        if (!m_hasMoveTarget || !m_seeker.IsMoving)
         {
-            Debug.Log("Move direction changed");
-            anim.PlayAnimation(GetMoveAnimation());
+            Debug.Log("Stopped moving, goto idle");
+            ExitState_Move(UnitStateType.Idle);
+            return;
         }
     }
 
     protected void ExitState_Move(UnitStateType targetState)
     {
+        m_avoider.enabled = false;  // stay enabled and change wight?
+        m_obstacleAvoider.enabled = false;
+        m_hasMoveTarget = false;
+        m_seeker.Stop();
+
+        m_currentStateType = targetState;
         m_currentStateHandler = m_states[targetState];
     }
 

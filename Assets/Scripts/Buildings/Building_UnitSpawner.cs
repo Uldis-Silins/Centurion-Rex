@@ -18,6 +18,7 @@ public class Building_UnitSpawner : MonoBehaviour, ISelecteble
     private float m_buildTimer;
 
     public bool IsSelected { get; protected set; }
+    public GameObject SelectableGameObject { get { return this.gameObject; } }
 
     private void Awake()
     {

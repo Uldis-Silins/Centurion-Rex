@@ -8,4 +8,5 @@ public interface ISelecteble
     void Deselect();
 
     bool IsSelected { get; }
+    GameObject SelectableGameObject { get; }
 }

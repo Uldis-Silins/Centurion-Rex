@@ -63,12 +63,12 @@ public class AgentBehaviour : MonoBehaviour
 
     public void SetDestination(Vector3 position, float checkRadius = 0.5f)
     {
-        Collider[] hits = Physics.OverlapSphere(position, checkRadius, 1 << LayerMask.NameToLayer("Unit"));
+        //Collider[] hits = Physics.OverlapSphere(position, checkRadius, 1 << LayerMask.NameToLayer("Unit"));
         
-        if(hits.Length > 0)
-        {
-            position += new Vector3(Random.insideUnitCircle.x * hits.Length * 0.5f, 0f, Random.insideUnitCircle.y * hits.Length * 0.5f);
-        }
+        //if(hits.Length > 0)
+        //{
+        //    position += new Vector3(Random.insideUnitCircle.x * hits.Length * 0.5f, 0f, Random.insideUnitCircle.y * hits.Length * 0.5f);
+        //}
 
         position.y = transform.position.y;
         m_moveTarget = position;

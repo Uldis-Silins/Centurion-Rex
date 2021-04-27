@@ -66,6 +66,8 @@ MonoBehaviour:
   fovTransform: {fileID: 4884607226922222838}
   m_agent: {fileID: 2487764914265873965}
   m_seeker: {fileID: 1049130474692183050}
+  m_avoider: {fileID: 6924561660754553123}
+  m_obstacleAvoider: {fileID: -5203476320056888525}
   attackDistance: 10
   attackDamage: 5
   attacksDelay: 0.5

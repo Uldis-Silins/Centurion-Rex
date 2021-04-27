@@ -18,6 +18,7 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
     private UnitStateType m_currentStateType;
 
     public bool IsSelected { get; private set; }
+    public GameObject SelectableGameObject { get { return this.gameObject; } }
     public override float AttackDistance { get { return attackDistance; } }
 
     protected override void Awake()
@@ -53,6 +54,7 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
 
     public override void SetState(UnitStateType type)
     {
+        Debug.Log("SetState: " + type.ToString());
         m_currentStateType = type;
 
         if (m_currentStateHandler == null || m_currentStateType == UnitStateType.None)
@@ -85,6 +87,7 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
     {
         anim.PlayAnimation(GetIdleAnimation());
         m_currentStateHandler = State_Idle;
+        Debug.Log("EnterState_Idle");
     }
 
     protected void State_Idle()
@@ -97,13 +100,18 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
 
     protected void ExitState_Idle(UnitStateType targetState)
     {
+        m_currentStateType = targetState;
         m_currentStateHandler = m_states[targetState];
     }
 
     protected void EnterState_Move()
     {
+        Debug.Log("EnterState_Move");
         Debug.Assert(m_hasMoveTarget, "MoveState: No move target set.");
         m_seeker.SetDestination(m_moveTarget);
+        m_avoider.enabled = true;
+        m_obstacleAvoider.enabled = true;
+
         anim.PlayAnimation(GetMoveAnimation());
 
         m_currentStateHandler = State_Move;
@@ -111,23 +119,10 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
 
     protected void State_Move()
     {
-        if(Vector3.Distance(m_seeker.MoveTarget, m_moveTarget) > m_seeker.targetRadius)
+        if (Vector3.Distance(m_seeker.MoveTarget, m_moveTarget) > m_seeker.targetRadius)
         {
             Debug.Log("Set new move pos");
             m_seeker.SetDestination(m_moveTarget);
-        }
-
-        if(!m_hasMoveTarget || m_seeker.RemainingDistance < m_seeker.targetRadius)
-        {
-            Debug.Log("Stopped moving, goto idle");
-            m_seeker.Stop();
-            SetState(UnitStateType.Idle);
-        }
-
-        if (m_currentStateType != UnitStateType.Move)
-        {
-            Debug.Log("State changed fro move to " + m_currentStateType);
-            ExitState_Move(m_currentStateType);
         }
 
         if (m_hasMoveDirectionChanged)
@@ -135,10 +130,30 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
             Debug.Log("Move direction changed");
             anim.PlayAnimation(GetMoveAnimation());
         }
+
+        if (m_currentStateType != UnitStateType.Move)
+        {
+            Debug.Log("State changed fro move to " + m_currentStateType);
+            ExitState_Move(m_currentStateType);
+            return;
+        }
+
+        if (!m_hasMoveTarget || !m_seeker.IsMoving)
+        {
+            Debug.Log("Stopped moving, goto idle");
+            ExitState_Move(UnitStateType.Idle);
+            return;
+        }
     }
 
     protected void ExitState_Move(UnitStateType targetState)
     {
+        m_avoider.enabled = false;  // stay enabled and change wight?
+        m_obstacleAvoider.enabled = false;
+        m_hasMoveTarget = false;
+        m_seeker.Stop();
+
+        m_currentStateType = targetState;
         m_currentStateHandler = m_states[targetState];
     }
 
@@ -188,6 +203,7 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
 
     protected void ExitState_Attack(UnitStateType targetState)
     {
+        m_currentStateType = targetState;
         m_currentStateHandler = m_states[targetState];
     }
 

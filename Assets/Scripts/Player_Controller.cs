@@ -68,7 +68,7 @@ public class Player_Controller : MonoBehaviour
             uiManager.wineAmountText.text = currentResources.ToString();
         }
 
-        StartCoroutine(CheckUnitOverlap());
+        //StartCoroutine(CheckUnitOverlap());
     }
 
     private void Update()
@@ -149,7 +149,7 @@ public class Player_Controller : MonoBehaviour
 
         if(ownedByPlayer && selectableManager != null)
         {
-            selectableManager.RegisterSelectable(unit.GetComponent<ISelecteble>(), unit.gameObject);
+            selectableManager.RegisterSelectable(unit.GetComponent<ISelecteble>());
         }
     }
 
@@ -175,12 +175,15 @@ public class Player_Controller : MonoBehaviour
 
         for (int i = m_ownedUnits.Count - 1; i >= 0; i--)
         {
-            if(m_ownedUnits[i].gameObject == killedObj)
+            if (m_ownedUnits[i].gameObject == killedObj)
             {
-                if(selectableManager != null)
-                {
-                    selectableManager.UnregisterSelectable(killedObj);
-                }
+                Debug.Assert(selectableManager != null, "SelectableManager is null");
+
+                ISelecteble selectable = selectableManager.GetSelectable(killedObj);
+
+                Debug.Assert(selectable != null, killedObj.name + " is not a selectable");
+
+                selectableManager.UnregisterSelectable(selectable);
 
                 m_waitingForKill.Push(damageable);
 
@@ -207,56 +210,56 @@ public class Player_Controller : MonoBehaviour
         }
     }
 
-    private IEnumerator CheckUnitOverlap()
-    {
-        while (true)
-        {
-            for (int i = 0; i < m_ownedUnits.Count; i++)
-            {
-                Vector3 pos = m_ownedUnits[i].HasMoveTarget ? m_ownedUnits[i].MoveTarget : m_ownedUnits[i].transform.position;
-                List<Arrive> overlapped = CheckUnitOverlap(pos, m_ownedUnits[i]);
-                List<Vector3> targetPositions = GetPositionListCircle(pos, new float[] { 0.5f, 1f, 2f }, new int[] { 5, 10, 20 });
+    //private IEnumerator CheckUnitOverlap()
+    //{
+    //    while (true)
+    //    {
+    //        for (int i = 0; i < m_ownedUnits.Count; i++)
+    //        {
+    //            Vector3 pos = m_ownedUnits[i].HasMoveTarget ? m_ownedUnits[i].MoveTarget : m_ownedUnits[i].transform.position;
+    //            List<Arrive> overlapped = CheckUnitOverlap(pos, m_ownedUnits[i]);
+    //            List<Vector3> targetPositions = GetPositionListCircle(pos, new float[] { 0.5f, 1f, 2f }, new int[] { 5, 10, 20 });
 
-                if (overlapped.Count > 0)
-                {
-                    foreach (var unit in overlapped)
-                    {
-                        if (unit != m_ownedUnits[i])
-                        {
-                            unit.SetDestination(targetPositions[i % targetPositions.Count]);
-                        }
-                    }
-                    yield return new WaitForSeconds(0.2f);
-                }
-            }
+    //            if (overlapped.Count > 0)
+    //            {
+    //                foreach (var unit in overlapped)
+    //                {
+    //                    if (unit != m_ownedUnits[i])
+    //                    {
+    //                        unit.SetDestination(targetPositions[i % targetPositions.Count]);
+    //                    }
+    //                }
+    //                yield return new WaitForSeconds(0.2f);
+    //            }
+    //        }
 
-            yield return null;
-        }
-    }
+    //        yield return null;
+    //    }
+    //}
 
-    private List<Arrive> CheckUnitOverlap(Vector3 pos, Unit_Base caller)
-    {
-        Collider[] hits = Physics.OverlapSphere(pos, 0.25f, 1 << LayerMask.NameToLayer("Unit"));
-        List<Arrive> overlappedUnits = new List<Arrive>();
+    //private List<Arrive> CheckUnitOverlap(Vector3 pos, Unit_Base caller)
+    //{
+    //    Collider[] hits = Physics.OverlapSphere(pos, 0.25f, 1 << LayerMask.NameToLayer("Unit"));
+    //    List<Arrive> overlappedUnits = new List<Arrive>();
 
-        if (hits.Length > 2)
-        {
-            hits = Physics.OverlapSphere(pos, 2.5f, 1 << LayerMask.NameToLayer("Unit"));
-        }
+    //    if (hits.Length > 2)
+    //    {
+    //        hits = Physics.OverlapSphere(pos, 2.5f, 1 << LayerMask.NameToLayer("Unit"));
+    //    }
 
-        for (int i = 0; i < hits.Length; i++)
-        {
-            if (hits[i].gameObject == caller.gameObject) continue;
+    //    for (int i = 0; i < hits.Length; i++)
+    //    {
+    //        if (hits[i].gameObject == caller.gameObject) continue;
 
-            Arrive hitAgent = hits[i].gameObject.GetComponent<Arrive>();
-            if (hitAgent != null && !hitAgent.IsMoving && hitAgent.gameObject.GetComponent<Unit_Health>().Faction == ownerFaction)
-            {
-                overlappedUnits.Add(hitAgent);
-            }
-        }
+    //        Arrive hitAgent = hits[i].gameObject.GetComponent<Arrive>();
+    //        if (hitAgent != null && !hitAgent.IsMoving && hitAgent.gameObject.GetComponent<Unit_Health>().Faction == ownerFaction)
+    //        {
+    //            overlappedUnits.Add(hitAgent);
+    //        }
+    //    }
 
-        return overlappedUnits;
-    }
+    //    return overlappedUnits;
+    //}
 
     private List<Vector3> GetPositionListCircle(Vector3 startPos, float[] dist, int[] posCount)
     {

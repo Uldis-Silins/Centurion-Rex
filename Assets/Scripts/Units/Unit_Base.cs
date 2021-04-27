@@ -24,6 +24,8 @@ public abstract class Unit_Base : MonoBehaviour
 
     [SerializeField] protected Agent m_agent;
     [SerializeField] protected Arrive m_seeker;
+    [SerializeField] protected Avoid m_avoider;
+    [SerializeField] protected AvoidObstacles m_obstacleAvoider;
 
     protected Camera m_mainCam;
 
