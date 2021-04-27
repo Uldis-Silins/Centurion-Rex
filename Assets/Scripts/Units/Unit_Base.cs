@@ -123,20 +123,20 @@ public abstract class Unit_Base : MonoBehaviour
     {
         Vector2Int direction = Vector2Int.zero;
 
-        if (Vector3.Dot(Vector3.right, m_rigidbody.velocity) < -0.5f)
+        if (Vector3.Dot(Vector3.right, m_agent.velocity) < -0.5f)
         {
             direction.x = -1;
         }
-        else if (Vector3.Dot(Vector3.right, m_rigidbody.velocity) > 0.5f)
+        else if (Vector3.Dot(Vector3.right, m_agent.velocity) > 0.5f)
         {
             direction.x = 1;
         }
 
-        if (Vector3.Dot(Vector3.up, m_rigidbody.velocity) < -0.5f)
+        if (Vector3.Dot(Vector3.up, m_agent.velocity) < -0.5f)
         {
             direction.y = -1;
         }
-        else if (Vector3.Dot(Vector3.up, m_rigidbody.velocity) > 0.5f)
+        else if (Vector3.Dot(Vector3.up, m_agent.velocity) > 0.5f)
         {
             direction.y = 1;
         }
