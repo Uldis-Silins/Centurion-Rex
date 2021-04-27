@@ -28,6 +28,8 @@ public abstract class Unit_Base : MonoBehaviour
     [SerializeField] protected Avoid m_avoider;
     [SerializeField] protected AvoidObstacles m_obstacleAvoider;
 
+    private Rigidbody2D m_rigidbody;
+
     protected Camera m_mainCam;
 
     protected Vector3 m_startScale;
@@ -49,6 +51,7 @@ public abstract class Unit_Base : MonoBehaviour
     protected virtual void Awake()
     {
         m_mainCam = Camera.main;
+        m_rigidbody = circleCollider.GetComponent<Rigidbody2D>();
 
         m_startScale = soldierRenderer.transform.localScale;
 
@@ -120,20 +123,20 @@ public abstract class Unit_Base : MonoBehaviour
     {
         Vector2Int direction = Vector2Int.zero;
 
-        if (Vector3.Dot(Vector3.right, m_agent.velocity) < -0.5f)
+        if (Vector3.Dot(Vector3.right, m_rigidbody.velocity) < -0.5f)
         {
             direction.x = -1;
         }
-        else if (Vector3.Dot(Vector3.right, m_agent.velocity) > 0.5f)
+        else if (Vector3.Dot(Vector3.right, m_rigidbody.velocity) > 0.5f)
         {
             direction.x = 1;
         }
 
-        if (Vector3.Dot(Vector3.up, m_agent.velocity) < -0.5f)
+        if (Vector3.Dot(Vector3.up, m_rigidbody.velocity) < -0.5f)
         {
             direction.y = -1;
         }
-        else if (Vector3.Dot(Vector3.up, m_agent.velocity) > 0.5f)
+        else if (Vector3.Dot(Vector3.up, m_rigidbody.velocity) > 0.5f)
         {
             direction.y = 1;
         }

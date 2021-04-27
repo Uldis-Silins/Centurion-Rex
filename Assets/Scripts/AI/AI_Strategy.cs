@@ -85,7 +85,8 @@ public class AI_Strategy : MonoBehaviour
         {
             if (!m_activeUnits[i].HasMoveTarget)
             {
-                m_activeUnits[i].SetMoveTarget(playerController.spawnedBuildings[Random.Range(0, playerController.spawnedBuildings.Count)].selecteble.transform.position + new Vector3(Random.insideUnitCircle.x * 25f, 0f, Random.insideUnitCircle.y * 25f));
+                m_activeUnits[i].SetMoveTarget(playerController.spawnedBuildings[Random.Range(0, playerController.spawnedBuildings.Count)].selecteble.transform.position + new Vector3(Random.insideUnitCircle.x * 25f, Random.insideUnitCircle.y * 25f, 0.0f));
+                m_activeUnits[i].SetState(Unit_Base.UnitStateType.Move);
             }
         }
 
@@ -110,6 +111,7 @@ public class AI_Strategy : MonoBehaviour
                 for (int i = 0; i < reserveSoldiers.Count; i++)
                 {
                     reserveSoldiers[i].SetMoveTarget(pos[i]);
+                    reserveSoldiers[i].SetState(Unit_Base.UnitStateType.Move);
                 }
             }
 
@@ -122,6 +124,7 @@ public class AI_Strategy : MonoBehaviour
                 for (int i = 0; i < reserveRanged.Count; i++)
                 {
                     reserveRanged[i].SetMoveTarget(pos[i]);
+                    reserveRanged[i].SetState(Unit_Base.UnitStateType.Move);
                 }
             }
 
@@ -134,6 +137,7 @@ public class AI_Strategy : MonoBehaviour
                 for (int i = 0; i < reserveCavalry.Count; i++)
                 {
                     reserveCavalry[i].SetMoveTarget(pos[i]);
+                    reserveCavalry[i].SetState(Unit_Base.UnitStateType.Move);
                 }
             }
         }
@@ -144,6 +148,7 @@ public class AI_Strategy : MonoBehaviour
             for (int i = 0; i < sentUnits; i++)
             {
                 m_reserveUnits[i].SetMoveTarget(lostBuildings[Random.Range(0, lostBuildings.Count)].transform.position);
+                m_reserveUnits[i].SetState(Unit_Base.UnitStateType.Move);
             }
         }
     }
@@ -199,6 +204,7 @@ public class AI_Strategy : MonoBehaviour
             for (int i = 0; i < playerController.OwnedUnits.Count; i++)
             {
                 playerController.OwnedUnits[i].SetAttackTarget(playerBase, playerBase.gameObject);
+                playerController.OwnedUnits[i].SetState(Unit_Base.UnitStateType.Attack);
             }
         }
     }
@@ -253,6 +259,7 @@ public class AI_Strategy : MonoBehaviour
             for (int i = 0; i < soldiers.Count; i++)
             {
                 soldiers[i].SetMoveTarget(positions[i]);
+                soldiers[i].SetState(Unit_Base.UnitStateType.Move);
             }
         }
 
@@ -264,7 +271,7 @@ public class AI_Strategy : MonoBehaviour
         if(discoveredPlayerBuildings.Count > 0)
         {
             pos = playerController.spawnedBuildings[0].selecteble.transform.position + (discoveredPlayerBuildings[0].transform.position - playerController.spawnedBuildings[0].selecteble.transform.position) / 2f;
-            pos += new Vector3(Random.insideUnitCircle.x * 20f, 0f, Random.insideUnitCircle.y * 20f);
+            pos += new Vector3(Random.insideUnitCircle.x * 20f, Random.insideUnitCircle.y * 20f, 0f);
 
             return true;
         }
@@ -321,7 +328,7 @@ public class AI_Strategy : MonoBehaviour
         {
             for (int x = 0; x <= unitCount / cols; x++)
             {
-                positions.Add(pos + new Vector3(x, 0f, y));
+                positions.Add(pos + new Vector3(x, y, 0f));
             }
         }
 
