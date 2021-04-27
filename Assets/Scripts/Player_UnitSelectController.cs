@@ -30,12 +30,9 @@ public class Player_UnitSelectController : MonoBehaviour
 
             selectableManager.DeselectAll();
 
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
+            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, hitTestLayers);
 
-            //Debug.DrawRay(ray.origin, ray.direction * 30f, Color.red, 10f);
-
-            if (Physics.Raycast(ray, out hit, 1000f, hitTestLayers))
+            if (hit.collider != null)
             {
                 var hitSelectable = hit.collider.gameObject.GetComponent<ISelecteble>();
 

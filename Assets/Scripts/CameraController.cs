@@ -25,7 +25,7 @@ public class CameraController : MonoBehaviour
             m_levelBounds = m_levelRenderer.bounds;
         }
 
-        m_targetCamPosition = new Vector3(startTarget.position.x, transform.position.y, startTarget.position.z);
+        m_targetCamPosition = new Vector3(startTarget.position.x, startTarget.position.y, transform.position.z);
         m_prevCamPosition = transform.position;
 
         m_screenBounds = new Vector2(Screen.width * (m_screenDragBounds * 0.01f), Screen.height * (m_screenDragBounds * 0.01f));
@@ -56,7 +56,7 @@ public class CameraController : MonoBehaviour
         }
 
         m_targetCamPosition.x = Mathf.Clamp(m_targetCamPosition.x, m_levelBounds.min.x, m_levelBounds.max.x);
-        m_targetCamPosition.z = Mathf.Clamp(m_targetCamPosition.z, m_levelBounds.min.z, m_levelBounds.max.z);
+        m_targetCamPosition.y = Mathf.Clamp(m_targetCamPosition.y, m_levelBounds.min.y, m_levelBounds.max.y);
     }
 
     private void LateUpdate()
@@ -69,7 +69,7 @@ public class CameraController : MonoBehaviour
     {
         m_targetCamPosition = position;
         m_targetCamPosition.x = Mathf.Clamp(m_targetCamPosition.x, m_levelBounds.min.x, m_levelBounds.max.x);
-        m_targetCamPosition.z = Mathf.Clamp(m_targetCamPosition.z, m_levelBounds.min.z, m_levelBounds.max.z);
+        m_targetCamPosition.y = Mathf.Clamp(m_targetCamPosition.y, m_levelBounds.min.y, m_levelBounds.max.y);
         transform.position = m_targetCamPosition;
         m_prevCamPosition = transform.position;
     }
@@ -80,11 +80,11 @@ public class CameraController : MonoBehaviour
 
         if(Input.mousePosition.y < m_screenBounds.y)
         {
-            dir.z -= Mathf.Lerp(0f, m_cameraSpeed, (m_screenBounds.y - Input.mousePosition.y) / m_screenBounds.y);
+            dir.y -= Mathf.Lerp(0f, m_cameraSpeed, (m_screenBounds.y - Input.mousePosition.y) / m_screenBounds.y);
         }
         else if(Input.mousePosition.y > Screen.height - m_screenBounds.y)
         {
-            dir.z += Mathf.Lerp(m_cameraSpeed, 0f, (Screen.height - Input.mousePosition.y) /  m_screenBounds.y);
+            dir.y += Mathf.Lerp(m_cameraSpeed, 0f, (Screen.height - Input.mousePosition.y) /  m_screenBounds.y);
         }
 
         if(Input.mousePosition.x < m_screenBounds.x)
@@ -105,11 +105,11 @@ public class CameraController : MonoBehaviour
 
         if(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
         {
-            dir.z += m_cameraSpeed;
+            dir.y += m_cameraSpeed;
         }
         else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
         {
-            dir.z -= m_cameraSpeed;
+            dir.y -= m_cameraSpeed;
         }
 
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))

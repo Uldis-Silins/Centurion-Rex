@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: -5915530817883424669}
   - component: {fileID: -5686660868666005280}
   - component: {fileID: -4938062943195338483}
+  - component: {fileID: 6690478230803635806}
   m_Layer: 10
   m_Name: EnemyRaptor
   m_TagString: Untagged
@@ -53,17 +54,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1856e81b60ade3b4389585d18a9f0a5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agent: {fileID: 9145141018364628441}
-  seeker: {fileID: 1852923002565480216}
-  anim: {fileID: 8313288778661166067}
+  anim: {fileID: 6690478230803635806}
   health: {fileID: 4036118042232991758}
-  unitType: 0
+  unitType: 2
   soldierRenderer: {fileID: 7932924578973166320}
   soundSource: {fileID: -5686660868666005280}
   walkClip: {fileID: 8300000, guid: 3494d283d70ae304aaf659a65546e24f, type: 3}
   attackClip: {fileID: 8300000, guid: e4b0de4fe98b3004fb7afb6a6eb066ce, type: 3}
   visionDistance: 10
   fovTransform: {fileID: 0}
+  m_agent: {fileID: 9145141018364628441}
+  m_seeker: {fileID: 1852923002565480216}
+  m_avoider: {fileID: 7599243530163670001}
+  m_obstacleAvoider: {fileID: -5915530817883424669}
   attackDistance: 10
   attackDamage: 5
   attacksDelay: 0.5
@@ -356,6 +359,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pitchRange: 0.1
+--- !u!114 &6690478230803635806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7932924578175232700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d6fc5de169056f46bd477ee99879444, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_spriteRenderer: {fileID: 7932924578973166320}
+  m_animationData: {fileID: 11400000, guid: a1e32b72036e4454e81f9873a93fa79c, type: 2}
+  m_currentAnimationType: 1
 --- !u!1 &7932924578973166326
 GameObject:
   m_ObjectHideFlags: 0
@@ -428,7 +446,7 @@ SpriteRenderer:
   m_SortingLayerID: -1997730693
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7715645233226302889, guid: 3b8eb905bfd9d8d49b5909547fced8d5,
+  m_Sprite: {fileID: -7566860896783485313, guid: 5bcd9753f32baf8409c91b5762ce9902,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
@@ -452,6 +470,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab5534db9959ee341b0e1d1766065942, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_defaultSortingOrder: 5000
+  offset: 0
+  m_tickRate: 0.2
+  updateSorting: 1
 --- !u!95 &8313288778661166067
 Animator:
   serializedVersion: 3

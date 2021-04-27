@@ -103,10 +103,9 @@ public class Player_Controller : MonoBehaviour
 
         if (ownedByPlayer && Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
-            Ray ray = m_mainCam.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
+            RaycastHit2D hit = Physics2D.Raycast(m_mainCam.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, buildingLayer);
 
-            if (Physics.Raycast(ray, out hit, buildingLayer))
+            if (hit.collider != null)
             {
                 GameObject selectableObject = hit.collider.gameObject;
                 ISelecteble selectable = selectableObject.GetComponent<ISelecteble>();

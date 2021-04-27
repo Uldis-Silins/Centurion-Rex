@@ -74,7 +74,7 @@ public abstract class Unit_Base : MonoBehaviour
     private void OnDrawGizmos()
     {
 #if UNITY_EDITOR
-        UnityEditor.Handles.Label(transform.position + Vector3.forward, GetMoveDirection().ToString());
+        UnityEditor.Handles.Label(transform.position + Vector3.up, GetMoveDirection().ToString());
 #endif
     }
 
@@ -128,11 +128,11 @@ public abstract class Unit_Base : MonoBehaviour
             direction.x = 1;
         }
 
-        if (Vector3.Dot(Vector3.forward, m_agent.velocity) < -0.5f)
+        if (Vector3.Dot(Vector3.up, m_agent.velocity) < -0.5f)
         {
             direction.y = -1;
         }
-        else if (Vector3.Dot(Vector3.forward, m_agent.velocity) > 0.5f)
+        else if (Vector3.Dot(Vector3.up, m_agent.velocity) > 0.5f)
         {
             direction.y = 1;
         }

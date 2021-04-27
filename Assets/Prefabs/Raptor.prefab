@@ -10,9 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4884607226475887960}
   - component: {fileID: 4884607226475887964}
-  - component: {fileID: 1763806297752549769}
   - component: {fileID: 1575660922224551913}
-  - component: {fileID: 5046708129426318759}
   - component: {fileID: 2487764914265873965}
   - component: {fileID: 6924561660754553123}
   - component: {fileID: 1049130474692183050}
@@ -20,6 +18,8 @@ GameObject:
   - component: {fileID: 623293730294965364}
   - component: {fileID: -225181039690297460}
   - component: {fileID: 424954229235121098}
+  - component: {fileID: 6276870967286039075}
+  - component: {fileID: 6549670665910155841}
   m_Layer: 10
   m_Name: Raptor
   m_TagString: Untagged
@@ -74,19 +74,6 @@ MonoBehaviour:
   accuracy: 1
   projectilePrefab: {fileID: 8186089749701993020, guid: 65e3b98f1b3600847b4a220bfc85334a,
     type: 3}
---- !u!65 &1763806297752549769
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4884607226475887963}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1.5}
-  m_Center: {x: 0, y: 0.5, z: -0.5}
 --- !u!114 &1575660922224551913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -103,22 +90,6 @@ MonoBehaviour:
   owningFaction: 1
   ragdoll: {fileID: 1927671764241883233, guid: 91881c21356601d4eae624c1b21a4069, type: 3}
   m_sprite: {fileID: 4884607227775040791}
---- !u!54 &5046708129426318759
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4884607226475887963}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!114 &2487764914265873965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -375,6 +346,43 @@ MonoBehaviour:
   m_spriteRenderer: {fileID: 4884607227775040791}
   m_animationData: {fileID: 11400000, guid: a1e32b72036e4454e81f9873a93fa79c, type: 2}
   m_currentAnimationType: 1
+--- !u!50 &6276870967286039075
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4884607226475887963}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!58 &6549670665910155841
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4884607226475887963}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.06, y: 0.06}
+  serializedVersion: 2
+  m_Radius: 0.25
 --- !u!1 &4884607226922222833
 GameObject:
   m_ObjectHideFlags: 0
@@ -400,13 +408,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4884607226922222833}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.571, z: 0}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 2}
   m_LocalScale: {x: 30, y: 1, z: 30}
   m_Children: []
   m_Father: {fileID: 4884607226475887960}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!33 &4884607226922222837
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -480,7 +488,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4884607227775040785}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.933, z: 0}
+  m_LocalPosition: {x: 0, y: 1.18, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_Children: []
   m_Father: {fileID: 4884607226475887960}

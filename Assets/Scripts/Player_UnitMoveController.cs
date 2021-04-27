@@ -15,7 +15,16 @@ public class Player_UnitMoveController : MonoBehaviour
     private void Awake()
     {
         m_mainCam = Camera.main;
-        m_groundPlane = new Plane(m_mapRenderer.transform.up, m_mapRenderer.transform.position);
+        m_groundPlane = new Plane(-Vector3.forward, m_mapRenderer.transform.position);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Color prevColor = Gizmos.color;
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(m_mapRenderer.transform.position, m_mapRenderer.transform.position + (Vector3.right + Vector3.up) * 100.0f);
+        Gizmos.DrawLine(m_mapRenderer.transform.position, m_mapRenderer.transform.position - Vector3.forward * 200.0f);
+        Gizmos.color = prevColor;
     }
 
     private void Update()
@@ -25,12 +34,10 @@ public class Player_UnitMoveController : MonoBehaviour
             return;
         }
 
-        Ray camRay = m_mainCam.ScreenPointToRay(Input.mousePosition);
-
         // Force attack cursor on building hack
-        RaycastHit hit;
+        RaycastHit2D hit = Physics2D.Raycast(m_mainCam.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, 1 << LayerMask.NameToLayer("Building"));
 
-        if (Physics.Raycast(camRay, out hit, 1000f, 1 << LayerMask.NameToLayer("Building")))
+        if (hit.collider != null)
         {
             var health = hit.collider.gameObject.GetComponent<Building_Health>();
 
@@ -67,6 +74,7 @@ public class Player_UnitMoveController : MonoBehaviour
         }
         // ~hack
 
+        Ray camRay = m_mainCam.ScreenPointToRay(Input.mousePosition);
         float dist;
 
         if (m_groundPlane.Raycast(camRay, out dist))
@@ -74,7 +82,7 @@ public class Player_UnitMoveController : MonoBehaviour
             List<GameObject> curSelectedUnits = new List<GameObject>(m_selectableManager.GetCurrentSelectedObjects());
 
             Vector3 hitPos = camRay.GetPoint(dist);
-            hitPos.y = 0;
+            hitPos.z = 0;
 
             List<KeyValuePair<GameObject, IDamageable>> hits = new List<KeyValuePair<GameObject, IDamageable>>(m_damageableManager.GetAtPosition(hitPos, 1f, FactionType.Enemy));
 
@@ -138,7 +146,7 @@ public class Player_UnitMoveController : MonoBehaviour
         for (int i = 0; i < posCount; i++)
         {
             float angle = i * (360f / posCount);
-            Vector3 dir = Quaternion.Euler(0f, angle, 0f) * Vector3.right;
+            Vector3 dir = Quaternion.Euler(0f, angle, 0f) * Vector3.up;
             positions.Add(startPos + dir * dist);
         }
 

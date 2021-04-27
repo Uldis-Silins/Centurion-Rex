@@ -70,7 +70,7 @@ public class AgentBehaviour : MonoBehaviour
         //    position += new Vector3(Random.insideUnitCircle.x * hits.Length * 0.5f, 0f, Random.insideUnitCircle.y * hits.Length * 0.5f);
         //}
 
-        position.y = transform.position.y;
+        position.z = transform.position.z;
         m_moveTarget = position;
     }
 

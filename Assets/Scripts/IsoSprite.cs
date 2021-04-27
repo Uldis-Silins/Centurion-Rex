@@ -26,7 +26,7 @@ public class IsoSprite : MonoBehaviour
         if (m_timer <= 0f)
         {
             m_timer = m_tickRate;
-            m_renderer.sortingOrder = (int)(m_defaultSortingOrder - transform.position.z - offset);
+            m_renderer.sortingOrder = (int)(m_defaultSortingOrder - transform.position.y - offset);
 
             if (!updateSorting)
             {

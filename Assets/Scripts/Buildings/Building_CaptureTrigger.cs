@@ -1,18 +1,18 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(SphereCollider))]
+[RequireComponent(typeof(CircleCollider2D))]
 public class Building_CaptureTrigger : MonoBehaviour
 {
     public Building_Resource building;
-    public AudioSource audio;
+    public AudioSource audioSource;
 
     private int m_unitLayer;
 
     private void Awake()
     {
         m_unitLayer = LayerMask.NameToLayer("Unit");
-        var col = GetComponent<SphereCollider>();
+        var col = GetComponent<CircleCollider2D>();
         col.isTrigger = true;
         col.radius = building.captureRadius;
     }
@@ -30,7 +30,7 @@ public class Building_CaptureTrigger : MonoBehaviour
 
                 if(unitHealth.Faction == FactionType.Player)
                 {
-                    audio.Play();
+                    audioSource.Play();
                 }
             }
         }

@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 6846421801156533200}
   - component: {fileID: 6416145593999371635}
   - component: {fileID: -5718980704416150554}
+  - component: {fileID: 4176543927255737375}
   m_Layer: 10
   m_Name: EnemyTRex
   m_TagString: Untagged
@@ -54,17 +55,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75fdb1d1405b8194eac1feca77551d3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agent: {fileID: 8722644879541080341}
-  seeker: {fileID: 4353974679995329707}
-  anim: {fileID: 1268546659493846379}
+  anim: {fileID: 4176543927255737375}
   health: {fileID: 8387221090912806377}
-  unitType: 0
+  unitType: 3
   soldierRenderer: {fileID: 4095252138988724114}
   soundSource: {fileID: 6416145593999371635}
   walkClip: {fileID: 8300000, guid: f58121c216e48c34bbec4a26561c473b, type: 3}
   attackClip: {fileID: 8300000, guid: 4174110c4a3c3fd4182e67b7d1420881, type: 3}
   visionDistance: 15
   fovTransform: {fileID: 0}
+  m_agent: {fileID: 8722644879541080341}
+  m_seeker: {fileID: 4353974679995329707}
+  m_avoider: {fileID: 8538733233170244040}
+  m_obstacleAvoider: {fileID: 6846421801156533200}
   attackDistance: 5
   attackDamage: 5
   attacksDelay: 0.5
@@ -355,6 +358,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pitchRange: 0.1
+--- !u!114 &4176543927255737375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4095252137840500702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d6fc5de169056f46bd477ee99879444, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_spriteRenderer: {fileID: 4095252138988724114}
+  m_animationData: {fileID: 11400000, guid: c3497e6330883a942bb13f18b06b1348, type: 2}
+  m_currentAnimationType: 1
 --- !u!1 &4095252138988724116
 GameObject:
   m_ObjectHideFlags: 0
@@ -427,7 +445,7 @@ SpriteRenderer:
   m_SortingLayerID: -1997730693
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 4156789016103231233, guid: 7b46b8b1622dd0d45a0e23f10e382c90,
+  m_Sprite: {fileID: 2430121835600970751, guid: 5532ab4628f728141883e95b59c64de0,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -451,6 +469,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab5534db9959ee341b0e1d1766065942, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_defaultSortingOrder: 5000
+  offset: 0
+  m_tickRate: 0.2
+  updateSorting: 1
 --- !u!95 &1268546659493846379
 Animator:
   serializedVersion: 3

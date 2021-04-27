@@ -29,11 +29,11 @@ public class UI_MinimapController : MonoBehaviour
                 localPoint += new Vector2(minimapImage.rectTransform.rect.width / 2.0f, minimapImage.rectTransform.rect.height / 2.0f);
                 Vector2 viewPos = new Vector2(localPoint.x / minimapImage.rectTransform.rect.width, localPoint.y / minimapImage.rectTransform.rect.height);
 
-                float mainCamYPos = mainCamera.transform.position.y;
+                float mainCamZPos = mainCamera.transform.position.z;
                 Vector3 boundsMin = levelTilemapRenderer.bounds.min;
-                boundsMin.y = 0f;
+                boundsMin.z = 0f;
 
-                mainCamera.SetPosition(boundsMin + new Vector3(levelTilemapRenderer.bounds.size.x * viewPos.x, mainCamYPos, levelTilemapRenderer.bounds.size.z * viewPos.y));
+                mainCamera.SetPosition(boundsMin + new Vector3(levelTilemapRenderer.bounds.size.x * viewPos.x, levelTilemapRenderer.bounds.size.y * viewPos.y, mainCamZPos));
             }
         }
     }
@@ -68,16 +68,16 @@ public class UI_MinimapController : MonoBehaviour
             minimapCamera.orthographic = true;
         }
 
-        minimapCamera.aspect = levelTilemapRenderer.bounds.size.x / levelTilemapRenderer.bounds.size.z;
-        float width = levelTilemapRenderer.bounds.extents.z;
+        minimapCamera.aspect = levelTilemapRenderer.bounds.size.x / levelTilemapRenderer.bounds.size.y;
+        float width = levelTilemapRenderer.bounds.extents.y;
         minimapCamera.orthographicSize = width * minimapCamera.aspect;
-        minimapCamera.transform.position = levelTilemapRenderer.bounds.center + Vector3.up * 50.0f;
+        minimapCamera.transform.position = levelTilemapRenderer.bounds.center - Vector3.forward * 70.0f;
     }
 
     [ExecuteInEditMode]
     private void FitMinimapImage()
     {
-        float aspect = levelTilemapRenderer.bounds.size.x / levelTilemapRenderer.bounds.size.z;
+        float aspect = levelTilemapRenderer.bounds.size.x / levelTilemapRenderer.bounds.size.y;
 
         minimapImage.rectTransform.sizeDelta = new Vector2(minimapBackgroundImage.rect.height * aspect, minimapBackgroundImage.rect.height);
     }
