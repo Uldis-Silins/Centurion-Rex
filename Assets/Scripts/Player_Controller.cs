@@ -216,7 +216,7 @@ public class Player_Controller : MonoBehaviour
             for (int i = 0; i < m_ownedUnits.Count; i++)
             {
                 Vector3 pos = m_ownedUnits[i].HasMoveTarget ? m_ownedUnits[i].MoveTarget : m_ownedUnits[i].transform.position;
-                List<Arrive> overlapped = CheckUnitOverlap(pos, m_ownedUnits[i]);
+                List<Unit_Base> overlapped = CheckUnitOverlap(pos, m_ownedUnits[i]);
                 List<Vector3> targetPositions = GetPositionListCircle(pos, new float[] { 0.75f, 1.5f, 3f }, new int[] { 5, 10, 20 });
 
                 if (overlapped.Count > 0)
@@ -225,7 +225,8 @@ public class Player_Controller : MonoBehaviour
                     {
                         if (unit != m_ownedUnits[i])
                         {
-                            unit.SetDestination(targetPositions[i % targetPositions.Count]);
+                            unit.SetMoveTarget(targetPositions[i % targetPositions.Count]);
+                            unit.SetState(Unit_Base.UnitStateType.Move);
                         }
                     }
                     yield return new WaitForSeconds(0.2f);
@@ -236,10 +237,10 @@ public class Player_Controller : MonoBehaviour
         }
     }
 
-    private List<Arrive> CheckUnitOverlap(Vector3 pos, Unit_Base caller)
+    private List<Unit_Base> CheckUnitOverlap(Vector3 pos, Unit_Base caller)
     {
         Collider2D[] hits = Physics2D.OverlapCircleAll(pos, caller.circleCollider.radius * 2.0f, 1 << LayerMask.NameToLayer("Unit"));
-        List<Arrive> overlappedUnits = new List<Arrive>();
+        List<Unit_Base> overlappedUnits = new List<Unit_Base>();
 
         if (hits.Length > 2)
         {
@@ -250,10 +251,10 @@ public class Player_Controller : MonoBehaviour
         {
             if (hits[i].gameObject == caller.gameObject) continue;
 
-            Arrive hitAgent = hits[i].gameObject.GetComponent<Arrive>();
-            if (hitAgent != null && !hitAgent.IsMoving && hitAgent.gameObject.GetComponent<Unit_Health>().Faction == ownerFaction)
+            Unit_Base hitUnit = hits[i].gameObject.GetComponent<Unit_Base>();
+            if (hitUnit != null && !hitUnit.HasMoveTarget && hitUnit.health.Faction == ownerFaction)
             {
-                overlappedUnits.Add(hitAgent);
+                overlappedUnits.Add(hitUnit);
             }
         }
 
