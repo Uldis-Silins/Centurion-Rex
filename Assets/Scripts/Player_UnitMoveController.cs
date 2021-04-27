@@ -146,7 +146,7 @@ public class Player_UnitMoveController : MonoBehaviour
         for (int i = 0; i < posCount; i++)
         {
             float angle = i * (360f / posCount);
-            Vector3 dir = Quaternion.Euler(0f, angle, 0f) * Vector3.up;
+            Vector3 dir = Quaternion.Euler(0f, 0f, angle) * Vector3.right;
             positions.Add(startPos + dir * dist);
         }
 

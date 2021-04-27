@@ -17,7 +17,7 @@ public class Building_CaptureTrigger : MonoBehaviour
         col.radius = building.captureRadius;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         Debug.Log("other layer: " + LayerMask.LayerToName(other.gameObject.layer));
         if(other.gameObject.layer == m_unitLayer)
