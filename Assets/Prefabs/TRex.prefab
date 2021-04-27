@@ -139,6 +139,7 @@ MonoBehaviour:
   health: {fileID: 8626580362713308837}
   unitType: 3
   soldierRenderer: {fileID: 4095252138988724114}
+  circleCollider: {fileID: 6243670798216409578}
   soundSource: {fileID: -4826342710931229513}
   walkClip: {fileID: 8300000, guid: f58121c216e48c34bbec4a26561c473b, type: 3}
   attackClip: {fileID: 8300000, guid: 6752ed4c340822a418d2694348f0779b, type: 3}

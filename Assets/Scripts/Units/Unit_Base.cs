@@ -14,6 +14,7 @@ public abstract class Unit_Base : MonoBehaviour
     public UnitData.UnitType unitType;
 
     public SpriteRenderer soldierRenderer;
+    public CircleCollider2D circleCollider;
 
     public AudioSource soundSource;
     public AudioClip walkClip;

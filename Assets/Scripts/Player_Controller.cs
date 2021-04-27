@@ -217,7 +217,7 @@ public class Player_Controller : MonoBehaviour
             {
                 Vector3 pos = m_ownedUnits[i].HasMoveTarget ? m_ownedUnits[i].MoveTarget : m_ownedUnits[i].transform.position;
                 List<Arrive> overlapped = CheckUnitOverlap(pos, m_ownedUnits[i]);
-                List<Vector3> targetPositions = GetPositionListCircle(pos, new float[] { 0.5f, 1f, 2f }, new int[] { 5, 10, 20 });
+                List<Vector3> targetPositions = GetPositionListCircle(pos, new float[] { 0.75f, 1.5f, 3f }, new int[] { 5, 10, 20 });
 
                 if (overlapped.Count > 0)
                 {
@@ -238,12 +238,12 @@ public class Player_Controller : MonoBehaviour
 
     private List<Arrive> CheckUnitOverlap(Vector3 pos, Unit_Base caller)
     {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(pos, 0.25f, 1 << LayerMask.NameToLayer("Unit"));
+        Collider2D[] hits = Physics2D.OverlapCircleAll(pos, caller.circleCollider.radius * 2.0f, 1 << LayerMask.NameToLayer("Unit"));
         List<Arrive> overlappedUnits = new List<Arrive>();
 
         if (hits.Length > 2)
         {
-            hits = Physics2D.OverlapCircleAll(pos, 2.5f, 1 << LayerMask.NameToLayer("Unit"));
+            hits = Physics2D.OverlapCircleAll(pos, caller.circleCollider.radius * 10.0f, 1 << LayerMask.NameToLayer("Unit"));
         }
 
         for (int i = 0; i < hits.Length; i++)

@@ -63,7 +63,7 @@ public class Building_UnitSpawner : MonoBehaviour, ISelecteble
             {
                 Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-                Plane groundPlane = new Plane(Vector3.up, spawnPoint.transform.position.y);
+                Plane groundPlane = new Plane(-Vector3.forward, spawnPoint.transform.position.z);
                 float enter = 0.0f;
 
                 if(groundPlane.Raycast(camRay, out enter))
