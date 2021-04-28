@@ -5,15 +5,15 @@ public class GridHashList2D
 {
     public class Node
     {
-        public Vector2 position;
+        public Transform transform;
         public Vector2 dimensions;
         public Vector2Int[] indices;
 
         public int queryID = -1;
 
-        public Node(Vector2 position, Vector2 dimensions)
+        public Node(Transform transform, Vector2 dimensions)
         {
-            this.position = position;
+            this.transform = transform;
             this.dimensions = dimensions;
             indices = null;
         }
@@ -38,14 +38,9 @@ public class GridHashList2D
         m_queryIDs = 0;
     }
 
-    /// <summary>
-    /// Add object to grid.
-    /// </summary>
-    /// <param name="position">Position of object</param>
-    /// <param name="dimensions">Scale of object</param>
-    public Node Add(Vector2 position, Vector2 dimensions)
+    public Node Add(Transform transform, Vector2 dimensions)
     {
-        Node node = new Node(position, dimensions);
+        Node node = new Node(transform, dimensions);
         Insert(node);
 
         return node;
@@ -95,8 +90,8 @@ public class GridHashList2D
 
     public void Update(Node node)
     {
-        float posX = node.position.x;
-        float posY = node.position.y;
+        float posX = node.transform.position.x;
+        float posY = node.transform.position.y;
         float w = node.dimensions.x;
         float h = node.dimensions.y;
 
@@ -132,8 +127,8 @@ public class GridHashList2D
     /// </summary>
     private void Insert(Node node)
     {
-        float posX = node.position.x;
-        float posY = node.position.y;
+        float posX = node.transform.position.x;
+        float posY = node.transform.position.y;
         float w = node.dimensions.x;
         float h = node.dimensions.y;
 

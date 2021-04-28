@@ -13,13 +13,13 @@ public class UI_HudManager : MonoBehaviour
     }
 
     public Canvas hudCanvas;
-    public RectTransform selectionRectPrefab;
+    public UI_UnitSelectionRect selectionRectPrefab;
 
     public SelectableManager selectableManager;
 
     public CursorSprite[] cursorSprites;
 
-    private List<RectTransform> m_spawnedSelectionRects;
+    private List<UI_UnitSelectionRect> m_spawnedSelectionRects;
     private List<Unit_Base> m_currentSelectebles;
 
     private Camera m_mainCam;
@@ -29,7 +29,7 @@ public class UI_HudManager : MonoBehaviour
     private void Awake()
     {
         m_mainCam = Camera.main;
-        m_spawnedSelectionRects = new List<RectTransform>();
+        m_spawnedSelectionRects = new List<UI_UnitSelectionRect>();
     }
 
     private void Update()
@@ -69,13 +69,14 @@ public class UI_HudManager : MonoBehaviour
 
                 for (int i = 0; i < count; i++)
                 {
-                    m_spawnedSelectionRects.Add(Instantiate<RectTransform>(selectionRectPrefab, hudCanvas.transform));
+                    m_spawnedSelectionRects.Add(Instantiate<UI_UnitSelectionRect>(selectionRectPrefab, hudCanvas.transform));
                 }
             }
 
             for (int i = 0; i < m_currentSelectebles.Count; i++)
             {
                 m_spawnedSelectionRects[i].gameObject.SetActive(true);
+                //m_spawnedSelectionRects[i].selectionRect.rectTransform.sizeDelta = new Vector2(m_currentSelectebles[i].soldierRenderer.sprite.texture.width, m_currentSelectebles[i].soldierRenderer.sprite.texture.height);
             }
 
             UpdateSelectionRects();
@@ -126,8 +127,13 @@ public class UI_HudManager : MonoBehaviour
         for (int i = 0; i < m_currentSelectebles.Count; i++)
         {
             Unit_Base curSelected = m_currentSelectebles[i];
-            m_spawnedSelectionRects[i].anchoredPosition = m_mainCam.WorldToScreenPoint(curSelected.transform.position);
-            m_spawnedSelectionRects[i].sizeDelta = curSelected.soldierRenderer.sprite.pixelsPerUnit * curSelected.transform.localScale * 0.5f;
+            (m_spawnedSelectionRects[i].transform as RectTransform).anchoredPosition = m_mainCam.WorldToScreenPoint(curSelected.soldierRenderer.transform.position);
+            m_spawnedSelectionRects[i].selectionRect.rectTransform.sizeDelta = curSelected.soldierRenderer.sprite.pixelsPerUnit * curSelected.transform.localScale * 0.5f;
+
+            float width = m_spawnedSelectionRects[i].selectionRect.rectTransform.sizeDelta.x;
+            m_spawnedSelectionRects[i].healthBar.rectTransform.sizeDelta = new Vector2(width, width * 0.1f);
+
+            m_spawnedSelectionRects[i].SetHealthBar(m_currentSelectebles[i].health.CurrentHealth, m_currentSelectebles[i].health.maxHealth);
         }
     }
 }

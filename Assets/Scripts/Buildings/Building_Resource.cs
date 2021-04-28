@@ -22,8 +22,14 @@ public class Building_Resource : MonoBehaviour
     public float productionPerSecond;
 
     private Player_Controller m_currentPlayerController;
+    private Player_Controller.Building m_building;
 
     private float m_resourceTimer;
+
+    private void Awake()
+    {
+        m_building = new Player_Controller.Building(gameObject, BuildingType.ResourceProduction);
+    }
 
     private void Start()
     {
@@ -51,6 +57,8 @@ public class Building_Resource : MonoBehaviour
 
     public void SetOwner(FactionType faction)
     {
+        if (ownerFaction == faction) return;
+
         if(m_currentPlayerController != null)
         {
             for (int i = m_currentPlayerController.ownedBuildings.Count - 1; i >= 0; i--)
@@ -70,14 +78,18 @@ public class Building_Resource : MonoBehaviour
                 fovObject.SetActive(true);
                 m_currentPlayerController = playerControllers[i];
             }
-            else if(playerControllers[i].ownedByPlayer && faction == FactionType.Enemy)
+            else if(!playerControllers[i].ownedByPlayer && faction == FactionType.Enemy)
             {
                 fovObject.SetActive(false);
                 m_currentPlayerController = playerControllers[i];
             }
         }
 
-        m_currentPlayerController.ownedBuildings.Add(new Player_Controller.Building(gameObject, BuildingType.ResourceProduction));
+        if (!m_currentPlayerController.ownedBuildings.Contains(m_building))
+        {
+            m_currentPlayerController.ownedBuildings.Add(m_building);
+        }
+
         ownerFaction = faction;
         spriteRenderer.sprite = GetFactionSprite(faction);
     }

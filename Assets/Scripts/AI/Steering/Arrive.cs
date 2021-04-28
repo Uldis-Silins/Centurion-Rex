@@ -7,12 +7,12 @@ public class Arrive : AgentBehaviour
     public float slowRadius;
     public float timeToTarget = 0.1f;
 
-    public bool IsMoving { get { return (m_moveTarget - transform.position).magnitude >= slowRadius; } }
+    public bool IsMoving { get { return (m_moveTarget - m_position).magnitude >= targetRadius; } }
 
     public override Steering GetSteering()
     {
         Steering steering = new Steering();
-        Vector3 direction = m_moveTarget - transform.position;
+        Vector2 direction = m_moveTarget - m_position;
         float distance = direction.magnitude;
         float targetSpeed;
 
@@ -29,7 +29,7 @@ public class Arrive : AgentBehaviour
             targetSpeed = agent.maxSpeed * distance / slowRadius;
         }
 
-        Vector3 desiredVelocity = direction;
+        Vector2 desiredVelocity = direction;
         desiredVelocity.Normalize();
         desiredVelocity *= targetSpeed;
         steering.linear = desiredVelocity - agent.velocity;

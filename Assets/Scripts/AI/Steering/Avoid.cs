@@ -8,7 +8,6 @@ public class Avoid : AgentBehaviour
 
     private List<GameObject> targets;
     private float m_tickTimer;
-    private Collider2D[] m_hits;
 
     public override void Awake()
     {
@@ -23,13 +22,15 @@ public class Avoid : AgentBehaviour
         {
             targets.Clear();
 
-            if (Physics2D.OverlapCircleNonAlloc(transform.position, collisionRadius * 2f, m_hits, 1 << LayerMask.NameToLayer("Unit")) > 0)
+            Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, collisionRadius * 2f, 1 << LayerMask.NameToLayer("Unit"));
+
+            if (hits.Length > 0)
             {
-                for (int i = 0; i < m_hits.Length; i++)
+                for (int i = 0; i < hits.Length; i++)
                 {
-                    if (m_hits[i].GetComponent<Agent>())
+                    if (hits[i].GetComponent<Agent>())
                     {
-                        targets.Add(m_hits[i].gameObject);
+                        targets.Add(hits[i].gameObject);
                     }
                 }
             }

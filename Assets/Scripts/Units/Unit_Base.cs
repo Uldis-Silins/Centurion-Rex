@@ -87,17 +87,29 @@ public abstract class Unit_Base : MonoBehaviour
     {
         Color prevColor = Gizmos.color;
 
-        if(HasAttackTarget)
+        Gizmos.color = Color.red;
+
+        if (HasAttackTarget)
         {
-            Gizmos.color = Color.red;
             Gizmos.DrawLine(transform.position, m_attackTarget.DamageableGameObject.transform.position);
         }
-        
-        if(HasMoveTarget)
+
+        Gizmos.DrawWireSphere(transform.position, AttackDistance);
+
+        Gizmos.color = Color.green;
+
+        if (HasMoveTarget)
         {
-            Gizmos.color = Color.green;
             Gizmos.DrawLine(transform.position, m_moveTarget);
         }
+
+        Gizmos.DrawWireSphere(transform.position, visionDistance);
+
+        Gizmos.color = Color.yellow;
+
+        Gizmos.DrawWireSphere(transform.position, m_avoider.collisionRadius);
+        Vector2 pos = transform.position;
+        Gizmos.DrawLine(transform.position, pos + m_agent.velocity * m_obstacleAvoider.lookAhead);
 
         Gizmos.color = prevColor;
     }

@@ -16,6 +16,8 @@ public class Pursue : Seek
 
     public override Steering GetSteering()
     {
+        if (target == null) return base.GetSteering();
+
         Vector3 direction = m_targetAux - transform.position;
         float distance = direction.magnitude;
         float speed = agent.velocity.magnitude;

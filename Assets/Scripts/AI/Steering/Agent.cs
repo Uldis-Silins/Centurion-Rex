@@ -9,7 +9,7 @@ public class Agent : MonoBehaviour
 
     public float orientation;
     public float rotation;
-    public Vector3 velocity;
+    public Vector2 velocity;
     protected Steering steering;
 
     public float maxRotation = 45.0f;
@@ -17,7 +17,7 @@ public class Agent : MonoBehaviour
 
     private void Start()
     {
-        velocity = Vector3.zero;
+        velocity = Vector2.zero;
         steering = new Steering();
         trueMaxSpeed = maxSpeed;
     }
@@ -30,8 +30,7 @@ public class Agent : MonoBehaviour
 
     protected virtual void Update()
     {
-        Vector3 displacement = velocity * Time.deltaTime;
-        displacement.z = 0;
+        Vector2 displacement = velocity * Time.deltaTime;
 
         orientation += rotation * Time.deltaTime;
 

@@ -5,7 +5,7 @@ public class AgentBehaviour : MonoBehaviour
 {
     public float weight = 1.0f;
 
-    [SerializeField] protected Vector3 m_moveTarget;
+    [SerializeField] protected Vector2 m_moveTarget;
     protected Agent agent;
     public Vector3 dest;
 
@@ -14,7 +14,9 @@ public class AgentBehaviour : MonoBehaviour
     public float maxRotation = 5.0f;
     public float maxAngularAccel = 5.0f;
 
-    public Vector3 MoveTarget { get { return m_moveTarget; } }
+    protected Vector2 m_position;
+
+    public Vector2 MoveTarget { get { return m_moveTarget; } }
     public float RemainingDistance { get { return Vector3.Distance(m_moveTarget, transform.position); } }
 
     public virtual void Awake()
@@ -24,6 +26,7 @@ public class AgentBehaviour : MonoBehaviour
 
     public virtual void Update()
     {
+        m_position = transform.position;
         agent.SetSteering(GetSteering(), weight);
 
         //if (Vector3.Distance(transform.position, m_moveTarget) < arriveDistance)

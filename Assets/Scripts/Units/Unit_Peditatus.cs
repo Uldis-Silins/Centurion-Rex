@@ -48,7 +48,7 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
     private void OnDrawGizmos()
     {
 #if UNITY_EDITOR
-        UnityEditor.Handles.Label(transform.position + Vector3.forward * 1.5f, m_currentStateType.ToString());
+        UnityEditor.Handles.Label(transform.position + Vector3.up * 1.5f, m_currentStateType.ToString());
 #endif
     }
 
@@ -109,8 +109,8 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
         Debug.Log("EnterState_Move");
         Debug.Assert(m_hasMoveTarget, "MoveState: No move target set.");
         m_seeker.SetDestination(m_moveTarget);
-        m_avoider.enabled = true;
-        m_obstacleAvoider.enabled = true;
+        //m_avoider.enabled = true;
+        //m_obstacleAvoider.enabled = true;
         m_pursuer.enabled = false;
 
         anim.PlayAnimation(GetMoveAnimation());
@@ -150,19 +150,17 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
                 }
             }
 
-            if (!m_hasMoveTarget)
-            {
-                Debug.Log("Stopped moving, goto idle");
-                ExitState_Move(UnitStateType.Idle);
-                return;
-            }
+            m_hasMoveTarget = false;
+            Debug.Log("Stopped moving, goto idle");
+            ExitState_Move(UnitStateType.Idle);
+            return;
         }
     }
 
     protected void ExitState_Move(UnitStateType targetState)
     {
-        m_avoider.enabled = false;  // stay enabled and change wight?
-        m_obstacleAvoider.enabled = false;
+        //m_avoider.enabled = false;  // stay enabled and change wight?
+        //m_obstacleAvoider.enabled = false;
         m_hasMoveTarget = false;
         m_seeker.Stop();
 
@@ -195,7 +193,11 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
         if (Vector2.Distance(transform.position, m_attackTarget.DamageableGameObject.transform.position) > attackDistance)
         {
             m_pursuer.SetDestination((m_attackTarget.DamageableGameObject.transform.position - transform.position).normalized * attackDistance);
-            anim.PlayAnimation(GetMoveAnimation());
+
+            if (m_hasMoveDirectionChanged)
+            {
+                anim.PlayAnimation(GetMoveAnimation());
+            }
         }
 
         SpriteAnimatorData.AnimationType animType = GetAttackAnimation(m_attackTarget.DamageableGameObject.transform.position);
