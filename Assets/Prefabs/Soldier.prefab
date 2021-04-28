@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 1572417538469346222}
   - component: {fileID: 7829992475956404216}
   - component: {fileID: -7047410920758695339}
+  - component: {fileID: -6935352028890680209}
   - component: {fileID: 4762776265834391243}
   - component: {fileID: 5758731739219032250}
   - component: {fileID: 6077791035491440360}
@@ -148,6 +149,7 @@ MonoBehaviour:
   m_seeker: {fileID: 7829992475956404216}
   m_avoider: {fileID: 1572417538469346222}
   m_obstacleAvoider: {fileID: -7047410920758695339}
+  m_pursuer: {fileID: -6935352028890680209}
   attackDistance: 1
   attackDamage: 5
   attacksDelay: 0.5
@@ -202,7 +204,7 @@ MonoBehaviour:
   weight: 0.2
   m_moveTarget: {x: 0, y: 0, z: 0}
   dest: {x: 0, y: 0, z: 0}
-  maxSpeed: 10
+  maxSpeed: 2
   maxAccel: 30
   maxRotation: 0
   maxAngularAccel: 0
@@ -223,7 +225,7 @@ MonoBehaviour:
   weight: 1
   m_moveTarget: {x: 0, y: 0, z: 0}
   dest: {x: 0, y: 0, z: 0}
-  maxSpeed: 10
+  maxSpeed: 2
   maxAccel: 30
   maxRotation: 0
   maxAngularAccel: 0
@@ -245,15 +247,36 @@ MonoBehaviour:
   weight: 1.5
   m_moveTarget: {x: 0, y: 0, z: 0}
   dest: {x: 0, y: 0, z: 0}
-  maxSpeed: 50
-  maxAccel: 50
-  maxRotation: 5
+  maxSpeed: 10
+  maxAccel: 30
+  maxRotation: 0
   maxAngularAccel: 5
   avoidDistance: 2
   lookAhead: 3.5
   avoidanceLayers:
     serializedVersion: 2
     m_Bits: 4608
+--- !u!114 &-6935352028890680209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4220708611386460244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89cda59a27bb9b3489a42b194a213208, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weight: 1
+  m_moveTarget: {x: 0, y: 0, z: 0}
+  dest: {x: 0, y: 0, z: 0}
+  maxSpeed: 2
+  maxAccel: 30
+  maxRotation: 0
+  maxAngularAccel: 0
+  maxPrediction: 1
+  target: {fileID: 0}
 --- !u!82 &4762776265834391243
 AudioSource:
   m_ObjectHideFlags: 0

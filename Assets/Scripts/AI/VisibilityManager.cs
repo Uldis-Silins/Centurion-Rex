@@ -8,14 +8,22 @@ public class VisibilityManager : MonoBehaviour
 
     private List<FOVElement> m_fovElements;
 
+    public HashSet<Unit_Base> VisibleUnits { get; private set; }
+    public HashSet<GameObject> VisibleBuildings { get; private set; }
+
     private void Awake()
     {
         m_fovElements = new List<FOVElement>(GameObject.FindObjectsOfType<FOVElement>());
+        VisibleBuildings = new HashSet<GameObject>();
+        VisibleUnits = new HashSet<Unit_Base>();
     }
 
     private void Update()
     {
         if (enemyController == null || enemyController.OwnedUnits == null) return;
+
+        VisibleBuildings.Clear();
+        VisibleUnits.Clear();
 
         for (int i = 0; i < enemyController.OwnedUnits.Count; i++)
         {
@@ -29,6 +37,15 @@ public class VisibilityManager : MonoBehaviour
                 if (playerController.OwnedUnits[i].CanSeeUnit(enemyController.OwnedUnits[j]))
                 {
                     enemyController.OwnedUnits[j].soldierRenderer.enabled = true;
+                    VisibleUnits.Add(enemyController.OwnedUnits[j]);
+                }
+            }
+
+            for (int j = 0; j < enemyController.ownedBuildings.Count; j++)
+            {
+                if(Vector2.Distance(playerController.OwnedUnits[i].transform.position, enemyController.ownedBuildings[j].selectable.transform.position) <= playerController.OwnedUnits[i].visionDistance)
+                {
+                    VisibleBuildings.Add(enemyController.ownedBuildings[j].selectable);
                 }
             }
         }
@@ -42,6 +59,7 @@ public class VisibilityManager : MonoBehaviour
                 if (m_fovElements[i].CanSeeUnit(enemyController.OwnedUnits[j]))
                 {
                     enemyController.OwnedUnits[j].soldierRenderer.enabled = true;
+                    VisibleUnits.Add(enemyController.OwnedUnits[j]);
                 }
             }
         }

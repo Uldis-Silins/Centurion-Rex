@@ -24,6 +24,7 @@ public class Building_Health : MonoBehaviour, IDamageable
     private int m_curActiveFireSprites;
 
     public float CurrentHealth { get; protected set; }
+    public GameObject DamageableGameObject { get { return this.gameObject; } }
     public FactionType Faction { get { return owningFaction; } }
 
     private void Start()

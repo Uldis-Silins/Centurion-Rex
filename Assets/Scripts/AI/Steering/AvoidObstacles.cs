@@ -15,17 +15,18 @@ public class AvoidObstacles : Seek
     public override Steering GetSteering()
     {
         Steering steering = new Steering();
-        Vector3 position = transform.position;
-        Vector3 rayVector = agent.velocity.normalized * lookAhead;
-        Vector3 direction = rayVector;
-        RaycastHit hit;
+        Vector2 position = transform.position;
+        Vector2 rayVector = agent.velocity.normalized * lookAhead;
+        Vector2 direction = rayVector;
+        RaycastHit2D hit = Physics2D.Raycast(position, direction, lookAhead, avoidanceLayers);
 
-        if (Physics.Raycast(position, direction, out hit, lookAhead, avoidanceLayers))
+        if (hit)
         {
             position = hit.point + hit.normal * avoidDistance;
             m_moveTarget = position;
             steering = base.GetSteering();
         }
+
         return steering;
     }
 }

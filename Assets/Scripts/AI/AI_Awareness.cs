@@ -38,23 +38,23 @@ public class AI_Awareness : MonoBehaviour
 
                 if(unit != null)
                 {
-                    var closestEnemies = new List<KeyValuePair<GameObject, IDamageable> >(damageableManager.GetAtPosition(unit.transform.position, unit.visionDistance, playerController.enemyFaction));
+                    var closestEnemies = new List<IDamageable>(damageableManager.GetAtPosition(unit.transform.position, unit.visionDistance, playerController.enemyFaction));
 
                     if(closestEnemies.Count > 0)
                     {
                         if (isSelectedByPlayer && !unit.HasMoveTarget)
                         {
-                            Vector3 closestDist = closestEnemies[0].Key.transform.position;
+                            Vector3 closestDist = closestEnemies[0].DamageableGameObject.transform.position;
                             closestDist.y = unit.transform.position.y;
 
                             if (Vector3.Distance(closestDist, unit.transform.position) <= unit.AttackDistance)
                             {
-                                unit.SetAttackTarget(closestEnemies[0].Value, closestEnemies[0].Key);
+                                unit.SetAttackTarget(closestEnemies[0]);
                             }
                         }
                         else
                         {
-                            unit.SetAttackTarget(closestEnemies[0].Value, closestEnemies[0].Key);
+                            unit.SetAttackTarget(closestEnemies[0]);
                         }
                     }
                 }
@@ -67,7 +67,7 @@ public class AI_Awareness : MonoBehaviour
 
                     if(damageable != null)
                     {
-                        unit.SetAttackTarget(damageable, attacker);
+                        unit.SetAttackTarget(damageable);
                     }
                 }
             }

@@ -8,6 +8,7 @@ public class Player_UnitMoveController : MonoBehaviour
     [SerializeField] private DamageableManager m_damageableManager;
     [SerializeField] private Renderer m_mapRenderer;
     [SerializeField] private LayerMask attackableLayers;
+    [SerializeField] private Canvas m_minimapCanvas;
 
     private Camera m_mainCam;
     private Plane m_groundPlane;
@@ -49,7 +50,7 @@ public class Player_UnitMoveController : MonoBehaviour
 
                 for (int i = 0; i < curSelectedUnits.Count; i++)
                 {
-                    curSelectedUnits[i].GetComponent<Unit_Base>().SetAttackTarget(health, health.gameObject);
+                    curSelectedUnits[i].GetComponent<Unit_Base>().SetAttackTarget(health);
                 }
             }
             else
@@ -84,7 +85,7 @@ public class Player_UnitMoveController : MonoBehaviour
             Vector3 hitPos = camRay.GetPoint(dist);
             hitPos.z = 0;
 
-            List<KeyValuePair<GameObject, IDamageable>> hits = new List<KeyValuePair<GameObject, IDamageable>>(m_damageableManager.GetAtPosition(hitPos, 1f, FactionType.Enemy));
+            List<IDamageable> hits = new List<IDamageable>(m_damageableManager.GetAtPosition(hitPos, 1f, FactionType.Enemy));
 
             if (hits.Count > 0)
             {
@@ -93,13 +94,13 @@ public class Player_UnitMoveController : MonoBehaviour
                     hudManager.ChangeCursor(UI_HudManager.CursorType.Attack);
                 }
 
-                if (Input.GetMouseButtonUp(1))
+                if (Input.GetMouseButtonUp(1) && !UI_Helpers.IsPointerOverCanvasElement(m_minimapCanvas))
                 {
                     List<Vector3> targetPositions = GetPositionListCircle(hitPos, new float[] { 1f, 2f, 3f, 4f, 5f }, new int[] { 5, 10, 20, 40, 60 });
 
                     for (int i = 0; i < curSelectedUnits.Count; i++)
                     {
-                        curSelectedUnits[i].GetComponent<Unit_Base>().SetAttackTarget(hits[0].Value, hits[0].Key);
+                        curSelectedUnits[i].GetComponent<Unit_Base>().SetAttackTarget(hits[0]);
                         curSelectedUnits[i].GetComponent<Unit_Base>().SetMoveTarget(targetPositions[i % targetPositions.Count]);
                         curSelectedUnits[i].GetComponent<Unit_Base>().SetState(Unit_Base.UnitStateType.Move);
                     }
@@ -109,14 +110,14 @@ public class Player_UnitMoveController : MonoBehaviour
             {
                 hudManager.ChangeCursor(UI_HudManager.CursorType.Default);
 
-                if (Input.GetMouseButtonUp(1))
+                if (Input.GetMouseButtonUp(1) && !UI_Helpers.IsPointerOverCanvasElement(m_minimapCanvas))
                 {
                     List<Vector3> targetPositions = GetPositionListCircle(hitPos, new float[] { 1f, 2f, 3f, 4f, 5f }, new int[] { 5, 10, 20, 40, 60 });
 
                     for (int i = 0; i < curSelectedUnits.Count; i++)
                     {
                         Unit_Base unit = curSelectedUnits[i].GetComponent<Unit_Base>();
-                        unit.SetAttackTarget(null, null);
+                        unit.SetAttackTarget(null);
 
                         unit.SetMoveTarget(targetPositions[i % targetPositions.Count]);
                         unit.SetState(Unit_Base.UnitStateType.Move);

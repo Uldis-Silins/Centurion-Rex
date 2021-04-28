@@ -183,7 +183,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 3
   trueMaxSpeed: 0
-  maxAccel: 30
+  maxAccel: 50
   orientation: 0
   rotation: 0
   velocity: {x: 0, y: 0, z: 0}
@@ -201,11 +201,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03632dcb928328f4bab9d9e6a88dc6f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weight: 0.1
+  weight: 0.2
   m_moveTarget: {x: 0, y: 0, z: 0}
   dest: {x: 0, y: 0, z: 0}
-  maxSpeed: 10
-  maxAccel: 10
+  maxSpeed: 50
+  maxAccel: 50
   maxRotation: 0
   maxAngularAccel: 0
   tickRate: 0.1

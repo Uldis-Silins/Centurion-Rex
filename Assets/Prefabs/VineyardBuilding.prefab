@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6058453133297056865}
   - component: {fileID: 4476118851162229208}
   - component: {fileID: 6544775770587677213}
-  m_Layer: 2
+  m_Layer: 9
   m_Name: Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   building: {fileID: 879582977767006913}
-  audio: {fileID: 6544775770587677213}
+  audioSource: {fileID: 6544775770587677213}
 --- !u!58 &4476118851162229208
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -179,7 +179,7 @@ GameObject:
   - component: {fileID: 5626376634118764500}
   - component: {fileID: 8414987850819724211}
   - component: {fileID: 5518688191534761402}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: FireSprite 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -280,7 +280,7 @@ GameObject:
   - component: {fileID: 2469733101281074412}
   - component: {fileID: 3565388812273513239}
   - component: {fileID: 1867203924323081598}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: FireSprite 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -474,7 +474,7 @@ GameObject:
   - component: {fileID: 6241617686829295751}
   - component: {fileID: 3957401209253748346}
   - component: {fileID: 2056368991490864885}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: FireSprite 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -662,7 +662,7 @@ GameObject:
   - component: {fileID: 8548427589585414118}
   - component: {fileID: 5468107633921148253}
   - component: {fileID: 2256375149735188773}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BuildingSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -794,7 +794,7 @@ GameObject:
   - component: {fileID: 2197829144189446345}
   - component: {fileID: 8750157946265751984}
   - component: {fileID: 3398029418499859212}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: FireSprite 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}

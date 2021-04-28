@@ -10,5 +10,6 @@ public interface IDamageable
     void Kill();
 
     float CurrentHealth { get; }
+    GameObject DamageableGameObject { get; }
     FactionType Faction { get; }
 }

@@ -49,8 +49,20 @@ public class Building_Resource : MonoBehaviour
         m_resourceTimer -= Time.deltaTime;
     }
 
-    public void  SetOwner(FactionType faction)
+    public void SetOwner(FactionType faction)
     {
+        if(m_currentPlayerController != null)
+        {
+            for (int i = m_currentPlayerController.ownedBuildings.Count - 1; i >= 0; i--)
+            {
+                if(m_currentPlayerController.ownedBuildings[i].selectable = gameObject)
+                {
+                    m_currentPlayerController.ownedBuildings.RemoveAt(i);
+                    break;
+                }
+            }
+        }
+
         for (int i = 0; i < playerControllers.Count; i++)
         {
             if(playerControllers[i].ownedByPlayer && faction == FactionType.Player)
@@ -65,6 +77,7 @@ public class Building_Resource : MonoBehaviour
             }
         }
 
+        m_currentPlayerController.ownedBuildings.Add(new Player_Controller.Building(gameObject, BuildingType.ResourceProduction));
         ownerFaction = faction;
         spriteRenderer.sprite = GetFactionSprite(faction);
     }

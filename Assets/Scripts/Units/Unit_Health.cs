@@ -17,6 +17,7 @@ public class Unit_Health : MonoBehaviour, IDamageable
     private GameObject m_lastAttacker;
 
     public float CurrentHealth { get; protected set; }
+    public GameObject DamageableGameObject { get { return this.gameObject; } }
     public FactionType Faction { get { return owningFaction; } }
 
     /// <summary>

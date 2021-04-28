@@ -124,9 +124,9 @@ public class Unit_Raptor : Unit_Base, ISelecteble
         //m_soldierRenderer.material.SetColor(m_colorPropID, m_startColor);
     }
 
-    public override void SetAttackTarget(IDamageable target, GameObject obj)
+    public override void SetAttackTarget(IDamageable target)
     {
-        base.SetAttackTarget(target, obj);
+        base.SetAttackTarget(target);
 
         m_attackTimer = attacksDelay;
     }
@@ -185,11 +185,22 @@ public class Unit_Raptor : Unit_Base, ISelecteble
             return;
         }
 
-        if (!m_hasMoveTarget || !m_seeker.IsMoving)
+        if (!m_seeker.IsMoving)
         {
-            Debug.Log("Stopped moving, goto idle");
-            ExitState_Move(UnitStateType.Idle);
-            return;
+            if (HasAttackTarget)
+            {
+                if (Vector2.Distance(transform.position, m_attackTarget.DamageableGameObject.transform.position) <= attackDistance * 0.75f)
+                {
+                    ExitState_Move(UnitStateType.Attack);
+                }
+            }
+
+            if (!m_hasMoveTarget)
+            {
+                Debug.Log("Stopped moving, goto idle");
+                ExitState_Move(UnitStateType.Idle);
+                return;
+            }
         }
     }
 
@@ -206,7 +217,7 @@ public class Unit_Raptor : Unit_Base, ISelecteble
 
     protected void EnterState_Attack()
     {
-        anim.PlayAnimation(GetAttackAnimation(m_attackTarget.Key.transform.position));
+        anim.PlayAnimation(GetAttackAnimation(m_attackTarget.DamageableGameObject.transform.position));
         m_attackTimer = attacksDelay;
         m_isDamageApplied = false;
         m_currentStateHandler = State_Attack;
@@ -214,12 +225,17 @@ public class Unit_Raptor : Unit_Base, ISelecteble
 
     protected void State_Attack()
     {
+        if (Vector2.Distance(transform.position, m_attackTarget.DamageableGameObject.transform.position) > attackDistance)
+        {
+            ExitState_Attack(UnitStateType.Move);
+        }
+
         if (m_currentStateType != UnitStateType.Attack)
         {
             ExitState_Attack(m_currentStateType);
         }
 
-        SpriteAnimatorData.AnimationType animType = GetAttackAnimation(m_attackTarget.Key.transform.position);
+        SpriteAnimatorData.AnimationType animType = GetAttackAnimation(m_attackTarget.DamageableGameObject.transform.position);
 
         if (anim.CurrentAnimationType != animType)
         {
@@ -240,9 +256,9 @@ public class Unit_Raptor : Unit_Base, ISelecteble
         {
             anim.PlayAnimation(animType, false, false);
 
-            Quaternion lookRot = Quaternion.LookRotation(m_attackTarget.Key.transform.position - transform.position);
+            Quaternion lookRot = Quaternion.LookRotation(m_attackTarget.DamageableGameObject.transform.position - transform.position);
             Projectile instance = Instantiate(projectilePrefab, transform.position, lookRot);
-            instance.Spawn(transform.position, m_attackTarget.Key.transform.position + new Vector3(Random.insideUnitCircle.x * accuracy, 0f, Random.insideUnitCircle.y * accuracy), attackDamage, m_attackTarget.Value, gameObject);
+            instance.Spawn(transform.position, m_attackTarget.DamageableGameObject.transform.position + new Vector3(Random.insideUnitCircle.x * accuracy, 0f, Random.insideUnitCircle.y * accuracy), attackDamage, m_attackTarget, gameObject);
 
             m_attackTimer = attacksDelay;
         }

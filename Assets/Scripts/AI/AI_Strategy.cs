@@ -85,7 +85,7 @@ public class AI_Strategy : MonoBehaviour
         {
             if (!m_activeUnits[i].HasMoveTarget)
             {
-                m_activeUnits[i].SetMoveTarget(playerController.spawnedBuildings[Random.Range(0, playerController.spawnedBuildings.Count)].selecteble.transform.position + new Vector3(Random.insideUnitCircle.x * 25f, Random.insideUnitCircle.y * 25f, 0.0f));
+                m_activeUnits[i].SetMoveTarget(playerController.ownedBuildings[Random.Range(0, playerController.ownedBuildings.Count)].selectable.transform.position + new Vector3(Random.insideUnitCircle.x * 25f, Random.insideUnitCircle.y * 25f, 0.0f));
                 m_activeUnits[i].SetState(Unit_Base.UnitStateType.Move);
             }
         }
@@ -203,7 +203,7 @@ public class AI_Strategy : MonoBehaviour
         {
             for (int i = 0; i < playerController.OwnedUnits.Count; i++)
             {
-                playerController.OwnedUnits[i].SetAttackTarget(playerBase, playerBase.gameObject);
+                playerController.OwnedUnits[i].SetAttackTarget(playerBase);
                 playerController.OwnedUnits[i].SetState(Unit_Base.UnitStateType.Attack);
             }
         }
@@ -270,7 +270,7 @@ public class AI_Strategy : MonoBehaviour
     {
         if(discoveredPlayerBuildings.Count > 0)
         {
-            pos = playerController.spawnedBuildings[0].selecteble.transform.position + (discoveredPlayerBuildings[0].transform.position - playerController.spawnedBuildings[0].selecteble.transform.position) / 2f;
+            pos = playerController.ownedBuildings[0].selectable.transform.position + (discoveredPlayerBuildings[0].transform.position - playerController.ownedBuildings[0].selectable.transform.position) / 2f;
             pos += new Vector3(Random.insideUnitCircle.x * 20f, Random.insideUnitCircle.y * 20f, 0f);
 
             return true;
@@ -324,11 +324,14 @@ public class AI_Strategy : MonoBehaviour
         List<Vector3> positions = new List<Vector3>();
         int cols = (int)Mathf.Sqrt(unitCount);
 
-        for (int y = 0; y <= cols; y++)
+        if (cols > 0)
         {
-            for (int x = 0; x <= unitCount / cols; x++)
+            for (int y = 0; y <= cols; y++)
             {
-                positions.Add(pos + new Vector3(x, y, 0f));
+                for (int x = 0; x <= unitCount / cols; x++)
+                {
+                    positions.Add(pos + new Vector3(x, y, 0f));
+                }
             }
         }
 
@@ -339,9 +342,9 @@ public class AI_Strategy : MonoBehaviour
     {
         List<Building_Resource> lostBuildings = new List<Building_Resource>();
 
-        for (int i = 0; i < playerController.spawnedBuildings.Count; i++)
+        for (int i = 0; i < playerController.ownedBuildings.Count; i++)
         {
-            Building_Resource building = playerController.spawnedBuildings[i].selecteble.GetComponent<Building_Resource>();
+            Building_Resource building = playerController.ownedBuildings[i].selectable.GetComponent<Building_Resource>();
 
             if(building != null && building.ownerFaction != FactionType.Enemy)
             {

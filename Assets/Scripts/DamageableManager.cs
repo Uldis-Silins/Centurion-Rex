@@ -72,17 +72,17 @@ public class DamageableManager : MonoBehaviour
         Assert.AreEqual(m_registeredObjects.Count, m_registeredDamageables.Count);
     }
 
-    public IEnumerable<KeyValuePair<GameObject, IDamageable> > GetAtPosition(Vector3 position, float radius, FactionType faction)
+    public IEnumerable<IDamageable> GetAtPosition(Vector2 position, float radius, FactionType faction)
     {
-        List<KeyValuePair<GameObject, IDamageable> > hits = new List<KeyValuePair<GameObject, IDamageable>>();
+        List<IDamageable> hits = new List<IDamageable>();
 
         for (int i = 0; i < m_registeredObjects.Count; i++)
         {
             position.y = m_registeredObjects[i].transform.position.y;
 
-            if(m_registeredDamageables[i].Faction == faction && Vector3.Distance(position, m_registeredObjects[i].transform.position) <= radius)
+            if(m_registeredDamageables[i].Faction == faction && Vector2.Distance(position, m_registeredObjects[i].transform.position) <= radius)
             {
-                hits.Add(new KeyValuePair<GameObject, IDamageable>(m_registeredObjects[i], m_registeredDamageables[i]));
+                hits.Add(m_registeredDamageables[i]);
             }
         }
 
@@ -113,24 +113,24 @@ public class DamageableManager : MonoBehaviour
         return null;
     }
 
-    public class DistanceComparer : IComparer<KeyValuePair<GameObject, IDamageable>>
+    public class DistanceComparer : IComparer<IDamageable>
     {
-        private Vector3 m_pos;
+        private Vector2 m_pos;
 
-        public DistanceComparer(Vector3 pos)
+        public DistanceComparer(Vector2 pos)
         {
             m_pos = pos;
         }
 
-        public int Compare(KeyValuePair<GameObject, IDamageable> x, KeyValuePair<GameObject, IDamageable> y)
+        public int Compare(IDamageable x, IDamageable y)
         {
-            m_pos.y = x.Key.transform.position.y;
+            //m_pos.z = x.DamageableGameObject.transform.position.z;
 
-            if (Vector3.Distance(x.Key.transform.position, m_pos) < Vector3.Distance(y.Key.transform.position, m_pos))
+            if (Vector2.Distance(x.DamageableGameObject.transform.position, m_pos) < Vector2.Distance(y.DamageableGameObject.transform.position, m_pos))
             {
                 return -1;
             }
-            else if (Vector3.Distance(x.Key.transform.position, m_pos) > Vector3.Distance(y.Key.transform.position, m_pos))
+            else if (Vector2.Distance(x.DamageableGameObject.transform.position, m_pos) > Vector2.Distance(y.DamageableGameObject.transform.position, m_pos))
             {
                 return 1;
             }

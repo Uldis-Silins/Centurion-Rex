@@ -19,7 +19,7 @@ public class Building_CaptureTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("other layer: " + LayerMask.LayerToName(other.gameObject.layer));
+        Debug.Log("Building capture trigger enter other layer: " + LayerMask.LayerToName(other.gameObject.layer));
         if(other.gameObject.layer == m_unitLayer)
         {
             var unitHealth = other.gameObject.GetComponent<Unit_Health>();

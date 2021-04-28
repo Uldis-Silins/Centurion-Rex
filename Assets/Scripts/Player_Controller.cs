@@ -12,7 +12,7 @@ public class Player_Controller : MonoBehaviour
 
     public UI_GameManager uiManager;
     public UI_HudManager hudManager;
-    public List<Building> spawnedBuildings;
+    public List<Building> ownedBuildings;
 
     public LayerMask buildingLayer;
 
@@ -101,7 +101,7 @@ public class Player_Controller : MonoBehaviour
             Destroy(killedObj);
         }
 
-        if (ownedByPlayer && Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+        if (ownedByPlayer && Input.GetMouseButtonDown(0) && !UI_Helpers.IsPointerOverUIElement())
         {
             RaycastHit2D hit = Physics2D.Raycast(m_mainCam.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, buildingLayer);
 
@@ -112,13 +112,13 @@ public class Player_Controller : MonoBehaviour
 
                 if (selectable != null)
                 {
-                    for (int i = 0; i < spawnedBuildings.Count; i++)
+                    for (int i = 0; i < ownedBuildings.Count; i++)
                     {
-                        if (spawnedBuildings[i].selecteble == selectableObject)
+                        if (ownedBuildings[i].selectable == selectableObject)
                         {
                             m_selectedBuilding = selectable;
                             selectable.Select();
-                            uiManager.ShowBuildingMenu(spawnedBuildings[i].type);
+                            uiManager.ShowBuildingMenu(ownedBuildings[i].type);
                         }
                     }
                 }
@@ -176,13 +176,13 @@ public class Player_Controller : MonoBehaviour
         {
             if (m_ownedUnits[i].gameObject == killedObj)
             {
-                Debug.Assert(selectableManager != null, "SelectableManager is null");
-
-                ISelecteble selectable = selectableManager.GetSelectable(killedObj);
-
-                Debug.Assert(selectable != null, killedObj.name + " is not a selectable");
-
-                selectableManager.UnregisterSelectable(selectable);
+                if (ownerFaction == FactionType.Player)
+                {
+                    Debug.Assert(selectableManager != null, "SelectableManager is null");
+                    ISelecteble selectable = selectableManager.GetSelectable(killedObj);
+                    Debug.Assert(selectable != null, killedObj.name + " is not a selectable");
+                    selectableManager.UnregisterSelectable(selectable);
+                }
 
                 m_waitingForKill.Push(damageable);
 
@@ -291,8 +291,14 @@ public class Player_Controller : MonoBehaviour
     [System.Serializable]
     public class Building
     {
-        public GameObject selecteble;
+        public GameObject selectable;
         public BuildingType type;
+
+        public Building(GameObject selectable, BuildingType type)
+        {
+            this.selectable = selectable;
+            this.type = type;
+        }
     }
 }
 

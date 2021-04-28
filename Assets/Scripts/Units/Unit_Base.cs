@@ -27,13 +27,14 @@ public abstract class Unit_Base : MonoBehaviour
     [SerializeField] protected Arrive m_seeker;
     [SerializeField] protected Avoid m_avoider;
     [SerializeField] protected AvoidObstacles m_obstacleAvoider;
+    [SerializeField] protected Pursue m_pursuer;
 
     private Rigidbody2D m_rigidbody;
 
     protected Camera m_mainCam;
 
     protected Vector3 m_startScale;
-    protected KeyValuePair<GameObject, IDamageable> m_attackTarget;
+    protected IDamageable m_attackTarget;
     protected Vector3 m_moveTarget;
     protected bool m_hasMoveTarget;
 
@@ -42,7 +43,7 @@ public abstract class Unit_Base : MonoBehaviour
     protected bool m_hasMoveDirectionChanged;
     private Vector2Int m_prevAnimDirection;
 
-    public bool HasAttackTarget { get { return m_attackTarget.Key != null && m_attackTarget.Value != null; } }
+    public bool HasAttackTarget { get { return m_attackTarget != null && m_attackTarget.CurrentHealth > 0 && m_attackTarget.DamageableGameObject != null; } }
     public virtual float AttackDistance { get; }
 
     public bool HasMoveTarget { get { return m_hasMoveTarget; } }
@@ -89,7 +90,7 @@ public abstract class Unit_Base : MonoBehaviour
         if(HasAttackTarget)
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawLine(transform.position, m_attackTarget.Key.transform.position);
+            Gizmos.DrawLine(transform.position, m_attackTarget.DamageableGameObject.transform.position);
         }
         
         if(HasMoveTarget)
@@ -103,9 +104,9 @@ public abstract class Unit_Base : MonoBehaviour
 
     public abstract void SetState(UnitStateType type);
 
-    public virtual void SetAttackTarget(IDamageable target, GameObject obj)
+    public virtual void SetAttackTarget(IDamageable target)
     {
-        m_attackTarget = new KeyValuePair<GameObject, IDamageable>(obj, target);
+        m_attackTarget = target;
     }
 
     public virtual void SetMoveTarget(Vector3 targetPosition)

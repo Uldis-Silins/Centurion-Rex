@@ -6,16 +6,17 @@ using UnityEngine;
 public class IsoSprite : MonoBehaviour
 {
     [SerializeField] private int m_defaultSortingOrder = 5000;
+    [SerializeField] private int scaling = 10;
     [SerializeField] private int offset = 0;
     [SerializeField] private float m_tickRate = 0.2f;
     [SerializeField] private bool updateSorting = true;
-    private Renderer m_renderer;
+    private SpriteRenderer m_renderer;
 
     private float m_timer;
 
     private void Awake()
     {
-        m_renderer = GetComponent<Renderer>();
+        m_renderer = GetComponent<SpriteRenderer>();
         //transform.localScale = new Vector3(transform.localScale.z * ScaleX(), transform.localScale.y, transform.localScale.z);
     }
 
@@ -26,7 +27,7 @@ public class IsoSprite : MonoBehaviour
         if (m_timer <= 0f)
         {
             m_timer = m_tickRate;
-            m_renderer.sortingOrder = (int)(m_defaultSortingOrder - transform.position.y - offset);
+            m_renderer.sortingOrder = (int)(m_defaultSortingOrder - (transform.position.y * scaling) - offset);
 
             if (!updateSorting)
             {
