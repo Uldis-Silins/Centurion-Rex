@@ -108,7 +108,6 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
     {
         Debug.Log("EnterState_Move");
         Debug.Assert(m_hasMoveTarget, "MoveState: No move target set.");
-        m_seeker.SetDestination(m_moveTarget);
         //m_avoider.enabled = true;
         //m_obstacleAvoider.enabled = true;
         m_pursuer.enabled = false;
@@ -120,12 +119,6 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
 
     protected void State_Move()
     {
-        if (Vector3.Distance(m_seeker.MoveTarget, m_moveTarget) > m_seeker.targetRadius)
-        {
-            Debug.Log("Set new move pos");
-            m_seeker.SetDestination(m_moveTarget);
-        }
-
         if (m_hasMoveDirectionChanged)
         {
             Debug.Log("Move direction changed");

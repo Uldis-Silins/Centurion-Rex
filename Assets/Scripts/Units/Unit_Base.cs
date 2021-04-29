@@ -31,6 +31,8 @@ public abstract class Unit_Base : MonoBehaviour
 
     private Rigidbody2D m_rigidbody;
 
+    private NavigationController m_navigationController;
+
     protected Camera m_mainCam;
 
     protected Vector3 m_startScale;
@@ -60,6 +62,8 @@ public abstract class Unit_Base : MonoBehaviour
         {
             fovTransform.localScale = new Vector3(visionDistance * 2f, 1f, visionDistance * 2f);
         }
+
+        m_navigationController = GameObject.FindObjectOfType<NavigationController>();
     }
 
     protected virtual void Update()
@@ -123,8 +127,15 @@ public abstract class Unit_Base : MonoBehaviour
 
     public virtual void SetMoveTarget(Vector3 targetPosition)
     {
-        m_moveTarget = targetPosition;
-        m_hasMoveTarget = true;
+        if (m_navigationController.flowField.cells != null)
+        {
+            m_navigationController.SetDestination(targetPosition);
+            m_seeker.flowField = m_navigationController.flowField;
+            m_seeker.gridWorldOffset = m_navigationController.gridOffset;
+            m_seeker.SetDestination(targetPosition);
+            m_moveTarget = targetPosition;
+            m_hasMoveTarget = true;
+        }
     }
 
     public bool CanSeeUnit(Unit_Base unit)

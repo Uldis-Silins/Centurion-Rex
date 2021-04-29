@@ -6,13 +6,23 @@ public class Arrive : AgentBehaviour
     public float targetRadius;
     public float slowRadius;
     public float timeToTarget = 0.1f;
+    public FlowField flowField;
+    public Vector3 gridWorldOffset;
 
     public bool IsMoving { get { return (m_moveTarget - m_position).magnitude >= targetRadius; } }
 
     public override Steering GetSteering()
     {
         Steering steering = new Steering();
-        Vector2 direction = m_moveTarget - m_position;
+        //Vector2 direction = m_moveTarget - m_position;    // Replaced by flow field
+
+        #region Flow field
+        FlowField.Cell curCell = flowField.GetCell(transform.position + gridWorldOffset);
+        Vector2 direction = new Vector2(curCell.bestDirection.vector.x, curCell.bestDirection.vector.y);
+        
+        Debug.DrawLine(transform.position, m_position + direction, Color.magenta);
+        #endregion  // ~Flow field
+
         float distance = direction.magnitude;
         float targetSpeed;
 
