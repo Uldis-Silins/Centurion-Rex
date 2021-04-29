@@ -134,8 +134,10 @@ public class Unit_Raptor : Unit_Base, ISelecteble
     #region State Handlers
     protected void EnterState_Idle()
     {
+        m_separator.enabled = true;
         anim.PlayAnimation(GetIdleAnimation());
         m_currentStateHandler = State_Idle;
+        Debug.Log("EnterState_Idle");
     }
 
     protected void State_Idle()
@@ -148,6 +150,8 @@ public class Unit_Raptor : Unit_Base, ISelecteble
 
     protected void ExitState_Idle(UnitStateType targetState)
     {
+        m_separator.enabled = false;
+        m_currentStateType = targetState;
         m_currentStateHandler = m_states[targetState];
     }
 
@@ -155,21 +159,15 @@ public class Unit_Raptor : Unit_Base, ISelecteble
     {
         Debug.Log("EnterState_Move");
         Debug.Assert(m_hasMoveTarget, "MoveState: No move target set.");
-        m_seeker.SetDestination(m_moveTarget);
-        m_avoider.enabled = true;
-        m_obstacleAvoider.enabled = true;
+        //m_avoider.enabled = true;
+        //m_obstacleAvoider.enabled = true;
+        m_pursuer.enabled = false;
 
         m_currentStateHandler = State_Move;
     }
 
     protected void State_Move()
     {
-        if (Vector3.Distance(m_seeker.MoveTarget, m_moveTarget) > m_seeker.targetRadius)
-        {
-            Debug.Log("Set new move pos");
-            m_seeker.SetDestination(m_moveTarget);
-        }
-
         if (m_currentStateType != UnitStateType.Move)
         {
             Debug.Log("State changed fro move to " + m_currentStateType);
@@ -181,25 +179,24 @@ public class Unit_Raptor : Unit_Base, ISelecteble
         {
             if (HasAttackTarget)
             {
-                if (Vector2.Distance(transform.position, m_attackTarget.DamageableGameObject.transform.position) <= attackDistance * 0.75f)
+                if (Vector2.Distance(transform.position, m_attackTarget.DamageableGameObject.transform.position) <= attackDistance)
                 {
                     ExitState_Move(UnitStateType.Attack);
+                    return;
                 }
             }
 
-            if (!m_hasMoveTarget)
-            {
-                Debug.Log("Stopped moving, goto idle");
-                ExitState_Move(UnitStateType.Idle);
-                return;
-            }
+            m_hasMoveTarget = false;
+            Debug.Log("Stopped moving, goto idle");
+            ExitState_Move(UnitStateType.Idle);
+            return;
         }
     }
 
     protected void ExitState_Move(UnitStateType targetState)
     {
-        m_avoider.enabled = false;  // stay enabled and change wight?
-        m_obstacleAvoider.enabled = false;
+        //m_avoider.enabled = false;  // stay enabled and change wight?
+        //m_obstacleAvoider.enabled = false;
         m_hasMoveTarget = false;
         m_seeker.Stop();
 

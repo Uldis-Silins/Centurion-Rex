@@ -50,11 +50,13 @@ public class AI_Awareness : MonoBehaviour
                             if (Vector3.Distance(closestDist, unit.transform.position) <= unit.AttackDistance)
                             {
                                 unit.SetAttackTarget(closestEnemies[0]);
+                                unit.SetState(Unit_Base.UnitStateType.Attack);
                             }
                         }
                         else
                         {
                             unit.SetAttackTarget(closestEnemies[0]);
+                            unit.SetState(Unit_Base.UnitStateType.Attack);
                         }
                     }
                 }
@@ -68,6 +70,7 @@ public class AI_Awareness : MonoBehaviour
                     if(damageable != null)
                     {
                         unit.SetAttackTarget(damageable);
+                        unit.SetState(Unit_Base.UnitStateType.Attack);
                     }
                 }
             }

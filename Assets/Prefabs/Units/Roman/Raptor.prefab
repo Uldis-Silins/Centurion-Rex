@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 6924561660754553123}
   - component: {fileID: 1049130474692183050}
   - component: {fileID: -5203476320056888525}
+  - component: {fileID: 5481669827955013788}
+  - component: {fileID: -6240033588460035018}
   - component: {fileID: 623293730294965364}
   - component: {fileID: -225181039690297460}
   - component: {fileID: 424954229235121098}
@@ -71,6 +73,7 @@ MonoBehaviour:
   m_avoider: {fileID: 6924561660754553123}
   m_obstacleAvoider: {fileID: -5203476320056888525}
   m_pursuer: {fileID: 0}
+  m_separator: {fileID: 0}
   attackDistance: 10
   attackDamage: 5
   attacksDelay: 0.5
@@ -190,6 +193,51 @@ MonoBehaviour:
   avoidanceLayers:
     serializedVersion: 2
     m_Bits: 4608
+--- !u!114 &5481669827955013788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4884607226475887963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89cda59a27bb9b3489a42b194a213208, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weight: 1
+  m_moveTarget: {x: 0, y: 0}
+  dest: {x: 0, y: 0, z: 0}
+  maxSpeed: 50
+  maxAccel: 50
+  maxRotation: 5
+  maxAngularAccel: 5
+  maxPrediction: 1
+  target: {fileID: 0}
+--- !u!114 &-6240033588460035018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4884607226475887963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01ccf87a735859f44bfde091771cc0c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weight: 1
+  m_moveTarget: {x: 0, y: 0}
+  dest: {x: 0, y: 0, z: 0}
+  maxSpeed: 50
+  maxAccel: 50
+  maxRotation: 5
+  maxAngularAccel: 5
+  radius: 0.5
+  tickRate: 0.2
+  unitLayers:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!82 &623293730294965364
 AudioSource:
   m_ObjectHideFlags: 0

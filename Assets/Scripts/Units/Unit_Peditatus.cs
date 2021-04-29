@@ -33,6 +33,9 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
         m_states.Add(UnitStateType.Move, EnterState_Move);
         m_states.Add(UnitStateType.Attack, EnterState_Attack);
         m_states.Add(UnitStateType.Die, EnterState_Die);
+
+        m_separator.enabled = false;
+        m_pursuer.enabled = false;
     }
 
     protected override void Update()
@@ -85,6 +88,7 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
     #region State Handlers
     protected void EnterState_Idle()
     {
+        m_separator.enabled = true;
         anim.PlayAnimation(GetIdleAnimation());
         m_currentStateHandler = State_Idle;
         Debug.Log("EnterState_Idle");
@@ -100,6 +104,7 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
 
     protected void ExitState_Idle(UnitStateType targetState)
     {
+        m_separator.enabled = false;
         m_currentStateType = targetState;
         m_currentStateHandler = m_states[targetState];
     }

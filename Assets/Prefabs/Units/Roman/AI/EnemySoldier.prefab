@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 1735651278587361565}
   - component: {fileID: -8051217637460513258}
   - component: {fileID: 2076514725828392594}
+  - component: {fileID: 3736249086818000876}
   - component: {fileID: 6963665858929961176}
   - component: {fileID: 2599926167375743803}
   - component: {fileID: 7541403487686809086}
@@ -70,6 +71,7 @@ MonoBehaviour:
   m_avoider: {fileID: 2224277810102205562}
   m_obstacleAvoider: {fileID: -8051217637460513258}
   m_pursuer: {fileID: 2076514725828392594}
+  m_separator: {fileID: 3736249086818000876}
   attackDistance: 1
   attackDamage: 5
   attacksDelay: 0.5
@@ -106,7 +108,7 @@ MonoBehaviour:
   maxAccel: 30
   orientation: 0
   rotation: 0
-  velocity: {x: 0, y: 0, z: 0}
+  velocity: {x: 0, y: 0}
   maxRotation: 45
   maxAngularAccel: 45
 --- !u!114 &2224277810102205562
@@ -122,7 +124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weight: 0.1
-  m_moveTarget: {x: 0, y: 0, z: 0}
+  m_moveTarget: {x: 0, y: 0}
   dest: {x: 0, y: 0, z: 0}
   maxSpeed: 2
   maxAccel: 30
@@ -143,7 +145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weight: 1
-  m_moveTarget: {x: 0, y: 0, z: 0}
+  m_moveTarget: {x: 0, y: 0}
   dest: {x: 0, y: 0, z: 0}
   maxSpeed: 2
   maxAccel: 30
@@ -152,6 +154,16 @@ MonoBehaviour:
   targetRadius: 0.1
   slowRadius: 0.1
   timeToTarget: 0.1
+  flowField:
+    gridSize: {x: 0, y: 0}
+    cellRadius: 0
+    cellDiameter: 0
+    destinationCell:
+      worldPosition: {x: 0, y: 0}
+      gridIndex: {x: 0, y: 0}
+      cost: 0
+      bestCost: 0
+  gridWorldOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &-8051217637460513258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,7 +177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weight: 1.5
-  m_moveTarget: {x: 0, y: 0, z: 0}
+  m_moveTarget: {x: 0, y: 0}
   dest: {x: 0, y: 0, z: 0}
   maxSpeed: 2
   maxAccel: 30
@@ -189,7 +201,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weight: 1
-  m_moveTarget: {x: 0, y: 0, z: 0}
+  m_moveTarget: {x: 0, y: 0}
   dest: {x: 0, y: 0, z: 0}
   maxSpeed: 2
   maxAccel: 30
@@ -197,6 +209,30 @@ MonoBehaviour:
   maxAngularAccel: 0
   maxPrediction: 1
   target: {fileID: 0}
+--- !u!114 &3736249086818000876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4220708611386460244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01ccf87a735859f44bfde091771cc0c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weight: 1
+  m_moveTarget: {x: 0, y: 0}
+  dest: {x: 0, y: 0, z: 0}
+  maxSpeed: 50
+  maxAccel: 50
+  maxRotation: 5
+  maxAngularAccel: 5
+  radius: 0.5
+  tickRate: 0.2
+  unitLayers:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!82 &6963665858929961176
 AudioSource:
   m_ObjectHideFlags: 0
@@ -364,7 +400,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_spriteRenderer: {fileID: 4220708612654221336}
-  m_animationData: {fileID: 11400000, guid: 48076d06bed3cbf418521d06cdc13467, type: 2}
+  m_animationData: {fileID: 11400000, guid: 4b9660430626a1d418127d08e2696ee9, type: 2}
   m_currentAnimationType: 1
 --- !u!50 &7651970116640661779
 Rigidbody2D:
@@ -471,9 +507,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1997730693
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7509203059001866126, guid: 6d91519a0ddc9254090a2bf89b8591db,
+  m_Sprite: {fileID: -3478792775534731743, guid: 751bbc76793302b43bef91896e80822d,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1

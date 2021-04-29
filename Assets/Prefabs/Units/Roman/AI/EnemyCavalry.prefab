@@ -15,13 +15,15 @@ GameObject:
   - component: {fileID: 8538733233170244040}
   - component: {fileID: 4353974679995329707}
   - component: {fileID: 6846421801156533200}
+  - component: {fileID: 2550907137768932704}
+  - component: {fileID: 8956729652423473996}
   - component: {fileID: 6416145593999371635}
   - component: {fileID: -5718980704416150554}
   - component: {fileID: 4176543927255737375}
   - component: {fileID: 8432720919428396585}
   - component: {fileID: 3143130226508708588}
   m_Layer: 10
-  m_Name: EnemyTRex
+  m_Name: EnemyCavalry
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -69,6 +71,8 @@ MonoBehaviour:
   m_seeker: {fileID: 4353974679995329707}
   m_avoider: {fileID: 8538733233170244040}
   m_obstacleAvoider: {fileID: 6846421801156533200}
+  m_pursuer: {fileID: 2550907137768932704}
+  m_separator: {fileID: 8956729652423473996}
   attackDistance: 5
   attackDamage: 5
   attacksDelay: 0.5
@@ -106,7 +110,7 @@ MonoBehaviour:
   maxAccel: 30
   orientation: 0
   rotation: 0
-  velocity: {x: 0, y: 0, z: 0}
+  velocity: {x: 0, y: 0}
   maxRotation: 45
   maxAngularAccel: 45
 --- !u!114 &8538733233170244040
@@ -122,7 +126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weight: 0.1
-  m_moveTarget: {x: 0, y: 0, z: 0}
+  m_moveTarget: {x: 0, y: 0}
   dest: {x: 0, y: 0, z: 0}
   maxSpeed: 10
   maxAccel: 10
@@ -143,7 +147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weight: 1
-  m_moveTarget: {x: 0, y: 0, z: 0}
+  m_moveTarget: {x: 0, y: 0}
   dest: {x: 0, y: 0, z: 0}
   maxSpeed: 50
   maxAccel: 50
@@ -152,6 +156,16 @@ MonoBehaviour:
   targetRadius: 0.1
   slowRadius: 0.1
   timeToTarget: 0.1
+  flowField:
+    gridSize: {x: 0, y: 0}
+    cellRadius: 0
+    cellDiameter: 0
+    destinationCell:
+      worldPosition: {x: 0, y: 0}
+      gridIndex: {x: 0, y: 0}
+      cost: 0
+      bestCost: 0
+  gridWorldOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &6846421801156533200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,7 +179,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weight: 1.5
-  m_moveTarget: {x: 0, y: 0, z: 0}
+  m_moveTarget: {x: 0, y: 0}
   dest: {x: 0, y: 0, z: 0}
   maxSpeed: 50
   maxAccel: 50
@@ -176,6 +190,51 @@ MonoBehaviour:
   avoidanceLayers:
     serializedVersion: 2
     m_Bits: 4608
+--- !u!114 &2550907137768932704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4095252137840500702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89cda59a27bb9b3489a42b194a213208, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weight: 1
+  m_moveTarget: {x: 0, y: 0}
+  dest: {x: 0, y: 0, z: 0}
+  maxSpeed: 50
+  maxAccel: 50
+  maxRotation: 5
+  maxAngularAccel: 5
+  maxPrediction: 1
+  target: {fileID: 0}
+--- !u!114 &8956729652423473996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4095252137840500702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01ccf87a735859f44bfde091771cc0c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weight: 1
+  m_moveTarget: {x: 0, y: 0}
+  dest: {x: 0, y: 0, z: 0}
+  maxSpeed: 50
+  maxAccel: 50
+  maxRotation: 5
+  maxAngularAccel: 5
+  radius: 0.5
+  tickRate: 0.2
+  unitLayers:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!82 &6416145593999371635
 AudioSource:
   m_ObjectHideFlags: 0
@@ -343,7 +402,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_spriteRenderer: {fileID: 4095252138988724114}
-  m_animationData: {fileID: 11400000, guid: c3497e6330883a942bb13f18b06b1348, type: 2}
+  m_animationData: {fileID: 11400000, guid: 4b9660430626a1d418127d08e2696ee9, type: 2}
   m_currentAnimationType: 1
 --- !u!50 &8432720919428396585
 Rigidbody2D:
@@ -452,9 +511,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1997730693
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 2430121835600970751, guid: 5532ab4628f728141883e95b59c64de0,
+  m_Sprite: {fileID: -3478792775534731743, guid: 751bbc76793302b43bef91896e80822d,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -479,6 +538,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_defaultSortingOrder: 5000
+  scaling: 10
   offset: 0
   m_tickRate: 0.2
   updateSorting: 1

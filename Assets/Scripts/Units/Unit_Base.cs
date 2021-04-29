@@ -28,6 +28,7 @@ public abstract class Unit_Base : MonoBehaviour
     [SerializeField] protected Avoid m_avoider;
     [SerializeField] protected AvoidObstacles m_obstacleAvoider;
     [SerializeField] protected Pursue m_pursuer;
+    [SerializeField] protected Separate m_separator;
 
     private Rigidbody2D m_rigidbody;
 

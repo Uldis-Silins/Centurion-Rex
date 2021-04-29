@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 7829992475956404216}
   - component: {fileID: -7047410920758695339}
   - component: {fileID: -6935352028890680209}
+  - component: {fileID: 2898546333530889532}
   - component: {fileID: 4762776265834391243}
   - component: {fileID: 5758731739219032250}
   - component: {fileID: 6077791035491440360}
@@ -151,6 +152,7 @@ MonoBehaviour:
   m_avoider: {fileID: 1572417538469346222}
   m_obstacleAvoider: {fileID: -7047410920758695339}
   m_pursuer: {fileID: -6935352028890680209}
+  m_separator: {fileID: 2898546333530889532}
   attackDistance: 1
   attackDamage: 5
   attacksDelay: 0.5
@@ -288,6 +290,30 @@ MonoBehaviour:
   maxAngularAccel: 0
   maxPrediction: 1
   target: {fileID: 0}
+--- !u!114 &2898546333530889532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4220708611386460244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01ccf87a735859f44bfde091771cc0c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weight: 1
+  m_moveTarget: {x: 0, y: 0}
+  dest: {x: 0, y: 0, z: 0}
+  maxSpeed: 50
+  maxAccel: 50
+  maxRotation: 5
+  maxAngularAccel: 5
+  radius: 0.25
+  tickRate: 0.2
+  unitLayers:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!82 &4762776265834391243
 AudioSource:
   m_ObjectHideFlags: 0

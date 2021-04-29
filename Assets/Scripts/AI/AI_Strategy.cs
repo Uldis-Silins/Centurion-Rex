@@ -83,7 +83,7 @@ public class AI_Strategy : MonoBehaviour
     {
         for (int i = 0; i < m_activeUnits.Count; i++)
         {
-            if (!m_activeUnits[i].HasMoveTarget)
+            if (!m_activeUnits[i].HasMoveTarget && !m_activeUnits[i].HasAttackTarget)
             {
                 m_activeUnits[i].SetMoveTarget(playerController.ownedBuildings[Random.Range(0, playerController.ownedBuildings.Count)].selectable.transform.position + new Vector3(Random.insideUnitCircle.x * 25f, Random.insideUnitCircle.y * 25f, 0.0f));
                 m_activeUnits[i].SetState(Unit_Base.UnitStateType.Move);
