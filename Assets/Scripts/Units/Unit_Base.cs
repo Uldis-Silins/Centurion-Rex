@@ -132,15 +132,22 @@ public abstract class Unit_Base : MonoBehaviour
 
     public virtual void SetMoveTarget(Vector3 targetPosition)
     {
-        if (m_navigationController.flowField.cells != null)
+        const float MIN_NAVIGATION_DISTANCE = 2.5f;
+        float dist = Vector2.Distance(transform.position, targetPosition);
+        Collider2D hit = Physics2D.Linecast(transform.position, targetPosition, m_navigationController.obstacleLayers).collider;
+
+        targetPosition = GetAdjustedPosition(targetPosition);
+
+        if (dist > MIN_NAVIGATION_DISTANCE && hit != circleCollider)
         {
-            m_navigationController.SetDestination(targetPosition);
-            m_seeker.flowField = m_navigationController.flowField;
+            Debug.Log("Requesting navigation");
+            m_seeker.flowField = m_navigationController.GetFlowField(transform.position, targetPosition);
             m_seeker.gridWorldOffset = m_navigationController.gridOffset;
-            m_seeker.SetDestination(targetPosition);
-            m_moveTarget = targetPosition;
-            m_hasMoveTarget = true;
         }
+
+        m_seeker.SetDestination(targetPosition);
+        m_moveTarget = targetPosition;
+        m_hasMoveTarget = true;
     }
 
     public bool CanSeeUnit(Unit_Base unit)
@@ -249,5 +256,59 @@ public abstract class Unit_Base : MonoBehaviour
         {
             return SpriteAnimatorData.AnimationType.IdleRight;
         }
+    }
+
+    private Vector2 GetAdjustedPosition(Vector3 worldPosition, float distance = 0f)
+    {
+        float checkRadius = circleCollider.radius;
+        Vector2 adjustedPosition = worldPosition + (worldPosition - transform.position).normalized * distance;
+
+        LayerMask mask = LayerMask.GetMask("Unit", "Obstacle", "Building");
+
+        Collider2D[] hits = Physics2D.OverlapCircleAll(adjustedPosition, checkRadius, mask);
+
+        if (hits.Length == 0)
+        {
+            return adjustedPosition;
+        }
+
+        List<Vector2> circlePositions = GetPositionListCircle(adjustedPosition, checkRadius * 3.0f, 12);
+
+        for (int i = 0; i < circlePositions.Count; i++)
+        {
+            if((hits = Physics2D.OverlapCircleAll(circlePositions[i], checkRadius, mask)).Length == 0)
+            {
+                return circlePositions[i];
+            }
+        }
+
+        return adjustedPosition + new Vector2(Random.insideUnitCircle.x * hits.Length * checkRadius, Random.insideUnitCircle.y * hits.Length * checkRadius);
+    }
+
+    private List<Vector2> GetPositionListCircle(Vector2 startPos, float[] dist, int[] posCount)
+    {
+        List<Vector2> positions = new List<Vector2>();
+        positions.Add(startPos);
+
+        for (int i = 0; i < dist.Length; i++)
+        {
+            positions.AddRange(GetPositionListCircle(startPos, dist[i], posCount[i]));
+        }
+
+        return positions;
+    }
+
+    private List<Vector2> GetPositionListCircle(Vector2 startPos, float dist, int posCount)
+    {
+        List<Vector2> positions = new List<Vector2>();
+
+        for (int i = 0; i < posCount; i++)
+        {
+            float angle = i * (360f / posCount);
+            Vector2 dir = Quaternion.Euler(0f, 0f, angle) * Vector3.right;
+            positions.Add(startPos + dir * dist);
+        }
+
+        return positions;
     }
 }

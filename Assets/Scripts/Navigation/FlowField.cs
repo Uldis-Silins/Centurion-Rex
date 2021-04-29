@@ -46,6 +46,15 @@ public class FlowField
         this.gridSize = gridSize;
     }
 
+    public FlowField(FlowField from)
+    {
+        cells = from.cells;
+        gridSize = from.gridSize;
+        cellRadius = from.cellRadius;
+        cellDiameter = from.cellDiameter;
+        destinationCell = from.destinationCell;
+    }
+
     public void CreateGrid(Vector2 startPosition)
     {
         cells = new Cell[gridSize.x, gridSize.y];
@@ -64,9 +73,8 @@ public class FlowField
     {
         Vector2 cellHalfExtents = Vector2.one * cellRadius;
 
-        //string[] layers = new string[layerCosts.Keys.Count];
-        //layerCosts.Keys.CopyTo(layers, 0);
-        string[] layers = new string[] { "Obstacle", "Building" };
+        string[] layers = new string[layerCosts.Keys.Count];
+        layerCosts.Keys.CopyTo(layers, 0);
         int terrainMask = LayerMask.GetMask(layers);
 
         foreach (var cell in cells)

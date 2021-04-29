@@ -16,13 +16,12 @@ public class Arrive : AgentBehaviour
         Steering steering = new Steering();
         Vector2 direction = m_moveTarget - m_position;    // Replaced by flow field
 
-        #region Flow field
-        FlowField.Cell curCell = flowField.GetCell(transform.position + gridWorldOffset);
-        Vector2 cellDirection = new Vector2(curCell.bestDirection.vector.x, curCell.bestDirection.vector.y);
-        direction = Vector2.Lerp(cellDirection, direction, RemainingDistance / slowRadius);
-        
-        Debug.DrawLine(transform.position, m_position + direction, Color.magenta);
-        #endregion  // ~Flow field
+        if (flowField.cells != null)
+        {
+            FlowField.Cell curCell = flowField.GetCell(transform.position + gridWorldOffset);
+            Vector2 cellDirection = new Vector2(curCell.bestDirection.vector.x, curCell.bestDirection.vector.y);
+            direction = Vector2.Lerp(cellDirection, direction, RemainingDistance / slowRadius);
+        }
 
         float distance = direction.magnitude;
         float targetSpeed;

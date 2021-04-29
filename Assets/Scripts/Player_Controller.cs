@@ -68,7 +68,7 @@ public class Player_Controller : MonoBehaviour
             uiManager.wineAmountText.text = currentResources.ToString();
         }
 
-        StartCoroutine(CheckUnitOverlap());
+        //StartCoroutine(CheckUnitOverlap());
     }
 
     private void Update()
