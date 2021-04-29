@@ -99,6 +99,7 @@ GameObject:
   - component: {fileID: 2555307118925316403}
   - component: {fileID: 5262305600461489775}
   - component: {fileID: 6243670798216409578}
+  - component: {fileID: 2676011392271525351}
   m_Layer: 10
   m_Name: TRex
   m_TagString: Untagged
@@ -149,6 +150,7 @@ MonoBehaviour:
   m_seeker: {fileID: 6621914276872425328}
   m_avoider: {fileID: 8579516314433698450}
   m_obstacleAvoider: {fileID: -5570320426224378918}
+  m_pursuer: {fileID: 0}
   attackDistance: 5
   attackDamage: 5
   attacksDelay: 0.5
@@ -186,7 +188,7 @@ MonoBehaviour:
   maxAccel: 50
   orientation: 0
   rotation: 0
-  velocity: {x: 0, y: 0, z: 0}
+  velocity: {x: 0, y: 0}
   maxRotation: 45
   maxAngularAccel: 45
 --- !u!114 &8579516314433698450
@@ -202,7 +204,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weight: 0.2
-  m_moveTarget: {x: 0, y: 0, z: 0}
+  m_moveTarget: {x: 0, y: 0}
   dest: {x: 0, y: 0, z: 0}
   maxSpeed: 50
   maxAccel: 50
@@ -223,7 +225,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weight: 1
-  m_moveTarget: {x: 0, y: 0, z: 0}
+  m_moveTarget: {x: 0, y: 0}
   dest: {x: 0, y: 0, z: 0}
   maxSpeed: 50
   maxAccel: 50
@@ -232,6 +234,16 @@ MonoBehaviour:
   targetRadius: 0.1
   slowRadius: 0.1
   timeToTarget: 0.1
+  flowField:
+    gridSize: {x: 0, y: 0}
+    cellRadius: 0
+    cellDiameter: 0
+    destinationCell:
+      worldPosition: {x: 0, y: 0}
+      gridIndex: {x: 0, y: 0}
+      cost: 0
+      bestCost: 0
+  gridWorldOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &-5570320426224378918
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,7 +257,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weight: 1.5
-  m_moveTarget: {x: 0, y: 0, z: 0}
+  m_moveTarget: {x: 0, y: 0}
   dest: {x: 0, y: 0, z: 0}
   maxSpeed: 50
   maxAccel: 50
@@ -462,6 +474,22 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.15}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!70 &2676011392271525351
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4095252137840500702}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.83}
+  m_Size: {x: 1.23, y: 2.19}
+  m_Direction: 0
 --- !u!1 &4095252138988724116
 GameObject:
   m_ObjectHideFlags: 0
@@ -531,7 +559,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1997730693
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 2430121835600970751, guid: 5532ab4628f728141883e95b59c64de0,
     type: 3}
@@ -558,6 +586,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_defaultSortingOrder: 5000
+  scaling: 10
   offset: 1
   m_tickRate: 0.2
   updateSorting: 1

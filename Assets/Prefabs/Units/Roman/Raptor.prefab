@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 424954229235121098}
   - component: {fileID: 6276870967286039075}
   - component: {fileID: 6549670665910155841}
+  - component: {fileID: 3936014580881852320}
   m_Layer: 10
   m_Name: Raptor
   m_TagString: Untagged
@@ -69,6 +70,7 @@ MonoBehaviour:
   m_seeker: {fileID: 1049130474692183050}
   m_avoider: {fileID: 6924561660754553123}
   m_obstacleAvoider: {fileID: -5203476320056888525}
+  m_pursuer: {fileID: 0}
   attackDistance: 10
   attackDamage: 5
   attacksDelay: 0.5
@@ -108,7 +110,7 @@ MonoBehaviour:
   maxAccel: 30
   orientation: 0
   rotation: 0
-  velocity: {x: 0, y: 0, z: 0}
+  velocity: {x: 0, y: 0}
   maxRotation: 45
   maxAngularAccel: 45
 --- !u!114 &6924561660754553123
@@ -124,7 +126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weight: 0.1
-  m_moveTarget: {x: 0, y: 0, z: 0}
+  m_moveTarget: {x: 0, y: 0}
   dest: {x: 0, y: 0, z: 0}
   maxSpeed: 10
   maxAccel: 10
@@ -145,7 +147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weight: 1
-  m_moveTarget: {x: 0, y: 0, z: 0}
+  m_moveTarget: {x: 0, y: 0}
   dest: {x: 0, y: 0, z: 0}
   maxSpeed: 50
   maxAccel: 50
@@ -154,6 +156,16 @@ MonoBehaviour:
   targetRadius: 0.1
   slowRadius: 0.1
   timeToTarget: 0.1
+  flowField:
+    gridSize: {x: 0, y: 0}
+    cellRadius: 0
+    cellDiameter: 0
+    destinationCell:
+      worldPosition: {x: 0, y: 0}
+      gridIndex: {x: 0, y: 0}
+      cost: 0
+      bestCost: 0
+  gridWorldOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &-5203476320056888525
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,7 +179,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weight: 1.5
-  m_moveTarget: {x: 0, y: 0, z: 0}
+  m_moveTarget: {x: 0, y: 0}
   dest: {x: 0, y: 0, z: 0}
   maxSpeed: 50
   maxAccel: 50
@@ -381,9 +393,25 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.06, y: 0.06}
+  m_Offset: {x: 0.03, y: 0.18}
   serializedVersion: 2
   m_Radius: 0.25
+--- !u!70 &3936014580881852320
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4884607226475887963}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.75}
+  m_Size: {x: 0.74, y: 1.21}
+  m_Direction: 0
 --- !u!1 &4884607226922222833
 GameObject:
   m_ObjectHideFlags: 0
@@ -532,7 +560,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1997730693
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: -7566860896783485313, guid: 5bcd9753f32baf8409c91b5762ce9902,
     type: 3}
@@ -559,6 +587,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_defaultSortingOrder: 5000
+  scaling: 10
   offset: 0
   m_tickRate: 0.2
   updateSorting: 1

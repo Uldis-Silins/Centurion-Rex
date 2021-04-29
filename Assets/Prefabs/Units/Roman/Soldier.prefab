@@ -100,6 +100,7 @@ GameObject:
   - component: {fileID: 6077791035491440360}
   - component: {fileID: 7258617856455038464}
   - component: {fileID: 4915803369945908463}
+  - component: {fileID: 643907753154236581}
   m_Layer: 10
   m_Name: Soldier
   m_TagString: Untagged
@@ -232,6 +233,16 @@ MonoBehaviour:
   targetRadius: 0.1
   slowRadius: 0.3
   timeToTarget: 0.2
+  flowField:
+    gridSize: {x: 0, y: 0}
+    cellRadius: 0
+    cellDiameter: 0
+    destinationCell:
+      worldPosition: {x: 0, y: 0}
+      gridIndex: {x: 0, y: 0}
+      cost: 0
+      bestCost: 0
+  gridWorldOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &-7047410920758695339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -483,6 +494,22 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.1}
   serializedVersion: 2
   m_Radius: 0.25
+--- !u!70 &643907753154236581
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4220708611386460244}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.45}
+  m_Size: {x: 0.59, y: 1}
+  m_Direction: 0
 --- !u!1 &4220708612654221342
 GameObject:
   m_ObjectHideFlags: 0
@@ -552,7 +579,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1997730693
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 7509203059001866126, guid: 6d91519a0ddc9254090a2bf89b8591db,
     type: 3}
