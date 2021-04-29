@@ -178,15 +178,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76d5b9276ba3d0143a443c5126af0766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weight: 1.5
+  weight: 1.2
   m_moveTarget: {x: 0, y: 0}
   dest: {x: 0, y: 0, z: 0}
-  maxSpeed: 50
+  maxSpeed: 2
   maxAccel: 50
-  maxRotation: 5
-  maxAngularAccel: 5
-  avoidDistance: 2
-  lookAhead: 3.5
+  maxRotation: 0
+  maxAngularAccel: 0
+  avoidDistance: 1.5
+  lookAhead: 3
   avoidanceLayers:
     serializedVersion: 2
     m_Bits: 4608

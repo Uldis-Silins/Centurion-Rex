@@ -159,8 +159,6 @@ public class Unit_Raptor : Unit_Base, ISelecteble
         m_avoider.enabled = true;
         m_obstacleAvoider.enabled = true;
 
-        anim.PlayAnimation(GetMoveAnimation());
-
         m_currentStateHandler = State_Move;
     }
 
@@ -170,12 +168,6 @@ public class Unit_Raptor : Unit_Base, ISelecteble
         {
             Debug.Log("Set new move pos");
             m_seeker.SetDestination(m_moveTarget);
-        }
-
-        if (m_hasMoveDirectionChanged)
-        {
-            Debug.Log("Move direction changed");
-            anim.PlayAnimation(GetMoveAnimation());
         }
 
         if (m_currentStateType != UnitStateType.Move)

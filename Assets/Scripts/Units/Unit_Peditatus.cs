@@ -112,19 +112,11 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
         //m_obstacleAvoider.enabled = true;
         m_pursuer.enabled = false;
 
-        anim.PlayAnimation(GetMoveAnimation());
-
         m_currentStateHandler = State_Move;
     }
 
     protected void State_Move()
     {
-        if (m_hasMoveDirectionChanged)
-        {
-            Debug.Log("Move direction changed");
-            anim.PlayAnimation(GetMoveAnimation());
-        }
-
         if (m_currentStateType != UnitStateType.Move)
         {
             Debug.Log("State changed fro move to " + m_currentStateType);
@@ -186,11 +178,6 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
         if (Vector2.Distance(transform.position, m_attackTarget.DamageableGameObject.transform.position) > attackDistance)
         {
             m_pursuer.SetDestination((m_attackTarget.DamageableGameObject.transform.position - transform.position).normalized * attackDistance);
-
-            if (m_hasMoveDirectionChanged)
-            {
-                anim.PlayAnimation(GetMoveAnimation());
-            }
         }
 
         SpriteAnimatorData.AnimationType animType = GetAttackAnimation(m_attackTarget.DamageableGameObject.transform.position);

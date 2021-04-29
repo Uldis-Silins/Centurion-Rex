@@ -42,7 +42,6 @@ public abstract class Unit_Base : MonoBehaviour
 
     protected StateHandler m_currentStateHandler = null;
 
-    protected bool m_hasMoveDirectionChanged;
     private Vector2Int m_prevAnimDirection;
 
     public bool HasAttackTarget { get { return m_attackTarget != null && m_attackTarget.CurrentHealth > 0 && m_attackTarget.DamageableGameObject != null; } }
@@ -68,8 +67,6 @@ public abstract class Unit_Base : MonoBehaviour
 
     protected virtual void Update()
     {
-        m_hasMoveDirectionChanged = m_prevAnimDirection != GetMoveDirection();
-
         Debug.Assert(m_currentStateHandler != null, "No state set.");
         m_currentStateHandler();
     }
@@ -77,7 +74,15 @@ public abstract class Unit_Base : MonoBehaviour
     protected virtual void LateUpdate()
     {
         // billboard
-        soldierRenderer.transform.rotation = m_mainCam.transform.rotation;
+        //soldierRenderer.transform.rotation = m_mainCam.transform.rotation;
+        if (m_agent.velocity.sqrMagnitude > 0.1f)
+        {
+            anim.PlayAnimation(GetMoveAnimation());
+        }
+        else
+        {
+            anim.PlayAnimation(GetIdleAnimation());
+        }
     }
 
     private void OnDrawGizmos()
