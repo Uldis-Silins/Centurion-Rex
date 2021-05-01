@@ -90,12 +90,12 @@ MonoBehaviour:
   - type: 6
     frames:
     - frameSprites:
-      - {fileID: -273376023096093266, guid: dcd8cabb174cd6e4ebc4af4a9970d94d, type: 3}
-      - {fileID: 3167458630203868445, guid: dcd8cabb174cd6e4ebc4af4a9970d94d, type: 3}
-      - {fileID: -238807537695675721, guid: dcd8cabb174cd6e4ebc4af4a9970d94d, type: 3}
-      - {fileID: 4916739781969031012, guid: dcd8cabb174cd6e4ebc4af4a9970d94d, type: 3}
-      - {fileID: -4083293241696702192, guid: dcd8cabb174cd6e4ebc4af4a9970d94d, type: 3}
-      - {fileID: 4794006651955782748, guid: dcd8cabb174cd6e4ebc4af4a9970d94d, type: 3}
+      - {fileID: 1423840630759205108, guid: f5f9d9c4053c1e74dac390d9739fe985, type: 3}
+      - {fileID: 479109670567722434, guid: f5f9d9c4053c1e74dac390d9739fe985, type: 3}
+      - {fileID: 8134972547183673887, guid: f5f9d9c4053c1e74dac390d9739fe985, type: 3}
+      - {fileID: 965315330198892838, guid: f5f9d9c4053c1e74dac390d9739fe985, type: 3}
+      - {fileID: 5389495880683559776, guid: f5f9d9c4053c1e74dac390d9739fe985, type: 3}
+      - {fileID: 8101596659927917433, guid: f5f9d9c4053c1e74dac390d9739fe985, type: 3}
       frameTime: 0.18
       flipX: 0
       flipY: 0
@@ -104,12 +104,12 @@ MonoBehaviour:
   - type: 5
     frames:
     - frameSprites:
-      - {fileID: -273376023096093266, guid: dcd8cabb174cd6e4ebc4af4a9970d94d, type: 3}
-      - {fileID: 3167458630203868445, guid: dcd8cabb174cd6e4ebc4af4a9970d94d, type: 3}
-      - {fileID: -238807537695675721, guid: dcd8cabb174cd6e4ebc4af4a9970d94d, type: 3}
-      - {fileID: 4916739781969031012, guid: dcd8cabb174cd6e4ebc4af4a9970d94d, type: 3}
-      - {fileID: -4083293241696702192, guid: dcd8cabb174cd6e4ebc4af4a9970d94d, type: 3}
-      - {fileID: 4794006651955782748, guid: dcd8cabb174cd6e4ebc4af4a9970d94d, type: 3}
+      - {fileID: 1423840630759205108, guid: f5f9d9c4053c1e74dac390d9739fe985, type: 3}
+      - {fileID: 479109670567722434, guid: f5f9d9c4053c1e74dac390d9739fe985, type: 3}
+      - {fileID: 8134972547183673887, guid: f5f9d9c4053c1e74dac390d9739fe985, type: 3}
+      - {fileID: 965315330198892838, guid: f5f9d9c4053c1e74dac390d9739fe985, type: 3}
+      - {fileID: 5389495880683559776, guid: f5f9d9c4053c1e74dac390d9739fe985, type: 3}
+      - {fileID: 8101596659927917433, guid: f5f9d9c4053c1e74dac390d9739fe985, type: 3}
       frameTime: 0.18
       flipX: 1
       flipY: 0

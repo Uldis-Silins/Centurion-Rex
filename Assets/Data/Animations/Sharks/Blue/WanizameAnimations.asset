@@ -163,7 +163,7 @@ MonoBehaviour:
       - {fileID: -1649114774871284674, guid: b523c2b88748dbe42baef672f27fd1f9, type: 3}
       - {fileID: -322456514704850287, guid: b523c2b88748dbe42baef672f27fd1f9, type: 3}
       - {fileID: -6475191606904461052, guid: b523c2b88748dbe42baef672f27fd1f9, type: 3}
-      frameTime: 0.15
+      frameTime: 0.28
       flipX: 1
       flipY: 0
       frameCount: 14
@@ -185,7 +185,7 @@ MonoBehaviour:
       - {fileID: -1649114774871284674, guid: b523c2b88748dbe42baef672f27fd1f9, type: 3}
       - {fileID: -322456514704850287, guid: b523c2b88748dbe42baef672f27fd1f9, type: 3}
       - {fileID: -6475191606904461052, guid: b523c2b88748dbe42baef672f27fd1f9, type: 3}
-      frameTime: 0.15
+      frameTime: 0.28
       flipX: 0
       flipY: 0
       frameCount: 14
@@ -199,10 +199,8 @@ MonoBehaviour:
       - {fileID: 495485044973701305, guid: 4035e5f082080dc4bbc0906959f82f7e, type: 3}
       - {fileID: -8834203227472817751, guid: 4035e5f082080dc4bbc0906959f82f7e, type: 3}
       - {fileID: 2981271464266506001, guid: 4035e5f082080dc4bbc0906959f82f7e, type: 3}
-      - {fileID: -8055015675274611111, guid: 4035e5f082080dc4bbc0906959f82f7e, type: 3}
-      - {fileID: -1593035372582612324, guid: 4035e5f082080dc4bbc0906959f82f7e, type: 3}
       frameTime: 0.2
       flipX: 0
       flipY: 0
-      frameCount: 8
+      frameCount: 6
     playbackSpeedModifier: 1

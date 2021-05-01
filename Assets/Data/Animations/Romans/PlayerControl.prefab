@@ -1,0 +1,127 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1783693946521736938
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1783693946521736940}
+  - component: {fileID: 1783693946521736941}
+  - component: {fileID: 1783693946521736943}
+  - component: {fileID: 1783693946521736942}
+  - component: {fileID: 1783693946521736929}
+  m_Layer: 0
+  m_Name: PlayerControl
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1783693946521736940
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1783693946521736938}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -256.53046, y: 20, z: 106.46732}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1783693946521736941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1783693946521736938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8825249ec28895e4fae879dad9c1908e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectableManager: {fileID: 0}
+  selectionBox: {fileID: 0}
+  hudManager: {fileID: 0}
+  hitTestLayers:
+    serializedVersion: 2
+    m_Bits: 8192
+--- !u!114 &1783693946521736943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1783693946521736938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2172bd54fb4b51146b33a8c6e9d959b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hudManager: {fileID: 0}
+  visibilityManager: {fileID: 0}
+  enemyController: {fileID: 0}
+  m_selectableManager: {fileID: 0}
+  m_damageableManager: {fileID: 0}
+  m_mapRenderer: {fileID: 0}
+  attackableLayers:
+    serializedVersion: 2
+    m_Bits: 1536
+  m_minimapCanvas: {fileID: 0}
+--- !u!114 &1783693946521736942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1783693946521736938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2b2773826929b348a33bd6af147adcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownedByPlayer: 1
+  ownerFaction: 1
+  enemyFaction: 2
+  uiManager: {fileID: 0}
+  hudManager: {fileID: 0}
+  ownedBuildings:
+  - type: 1
+    m_gameObject: {fileID: 0}
+  - type: 2
+    m_gameObject: {fileID: 0}
+  walkableTilemap: {fileID: 0}
+  buildingLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  selectableLayer:
+    serializedVersion: 2
+    m_Bits: 8192
+  selectableManager: {fileID: 0}
+  damageableManager: {fileID: 0}
+  currentResources: 2000
+  unitData:
+  - {fileID: 11400000, guid: 0388356e63ff5ff49bfc03170e720480, type: 2}
+  - {fileID: 11400000, guid: df1193560ec3a7d4aabd9834aa96548a, type: 2}
+  - {fileID: 11400000, guid: 855e3c70cee6e5942ab73da060d276dc, type: 2}
+--- !u!114 &1783693946521736929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1783693946521736938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2e1bb9574d34a04393e6474e639ceae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerController: {fileID: 1783693946521736942}
+  enemyController: {fileID: 0}
+  tickRate: 0.3
