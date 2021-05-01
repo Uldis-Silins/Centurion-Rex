@@ -80,12 +80,24 @@ public class Player_UnitMoveController : MonoBehaviour
 
         if (m_groundPlane.Raycast(camRay, out dist))
         {
-            List<GameObject> curSelectedUnits = new List<GameObject>(m_selectableManager.GetCurrentSelectedObjects());
+            List<ISelecteble> curSelectedUnits = new List<ISelecteble>(m_selectableManager.GetCurrentSelected());
+
+            for (int i = curSelectedUnits.Count - 1; i >= 0; i--)
+            {
+                Unit_Base unit;
+                if((unit = curSelectedUnits[i] as Unit_Base) == null || unit.health.Faction != FactionType.Player)
+                {
+                    curSelectedUnits.Remove(curSelectedUnits[i]);
+                }
+            }
+
+            const float radiusPerUnit = 0.25f;
+            float checkEnemiesRadius = curSelectedUnits.Count * radiusPerUnit;
 
             Vector3 hitPos = camRay.GetPoint(dist);
             hitPos.z = 0;
 
-            List<IDamageable> hits = new List<IDamageable>(m_damageableManager.GetAtPosition(hitPos, 1f, FactionType.Enemy));
+            List<IDamageable> hits = new List<IDamageable>(m_damageableManager.GetAtPosition(hitPos, checkEnemiesRadius, FactionType.Enemy));
 
             if (hits.Count > 0)
             {
@@ -96,13 +108,14 @@ public class Player_UnitMoveController : MonoBehaviour
 
                 if (Input.GetMouseButtonUp(1) && !UI_Helpers.IsPointerOverCanvasElement(m_minimapCanvas))
                 {
-                    List<Vector3> targetPositions = GetPositionListCircle(hitPos, new float[] { 1f, 2f, 3f, 4f, 5f }, new int[] { 5, 10, 20, 40, 60 });
-
                     for (int i = 0; i < curSelectedUnits.Count; i++)
                     {
-                        curSelectedUnits[i].GetComponent<Unit_Base>().SetAttackTarget(hits[0]);
-                        curSelectedUnits[i].GetComponent<Unit_Base>().SetMoveTarget(targetPositions[i % targetPositions.Count]);
-                        curSelectedUnits[i].GetComponent<Unit_Base>().SetState(Unit_Base.UnitStateType.Move);
+                        Vector2 enemyPos = hits[i % hits.Count].DamageableGameObject.transform.position;
+                        List<Vector2> formationPositions = Formations.GetPositionListCircle(enemyPos, new float[] { 1f, 2f, 3f, 4f, 5f }, new int[] { 5, 10, 20, 40, 60 });
+                        Unit_Base unit = curSelectedUnits[i] as Unit_Base;
+                        unit.SetAttackTarget(hits[0]);
+                        unit.SetMoveTarget(Formations.GetAdjustedPosition(formationPositions[i], unit, unit.circleCollider.radius * 1.5f));
+                        unit.SetState(Unit_Base.UnitStateType.Move);
                     }
                 }
             }
@@ -112,45 +125,19 @@ public class Player_UnitMoveController : MonoBehaviour
 
                 if (Input.GetMouseButtonUp(1) && !UI_Helpers.IsPointerOverCanvasElement(m_minimapCanvas))
                 {
-                    List<Vector3> targetPositions = GetPositionListCircle(hitPos, new float[] { 1f, 2f, 3f, 4f, 5f }, new int[] { 5, 10, 20, 40, 60 });
+                    List<Vector2> formationPositions = Formations.GetPositionListCircle(hitPos, new float[] { 1f, 2f, 3f, 4f, 5f }, new int[] { 5, 10, 20, 40, 60 });
 
                     for (int i = 0; i < curSelectedUnits.Count; i++)
                     {
-                        Unit_Base unit = curSelectedUnits[i].GetComponent<Unit_Base>();
+                        Unit_Base unit = curSelectedUnits[i] as Unit_Base;
                         unit.SetAttackTarget(null);
 
-                        unit.SetMoveTarget(targetPositions[i % targetPositions.Count]);
+                        
+                        unit.SetMoveTarget(Formations.GetAdjustedPosition(formationPositions[i], unit, unit.circleCollider.radius * 1.5f));
                         unit.SetState(Unit_Base.UnitStateType.Move);
                     }
                 }
             }
         }
-    }
-
-    private List<Vector3> GetPositionListCircle(Vector3 startPos, float[] dist, int[] posCount)
-    {
-        List<Vector3> positions = new List<Vector3>();
-        positions.Add(startPos);
-
-        for (int i = 0; i < dist.Length; i++)
-        {
-            positions.AddRange(GetPositionListCircle(startPos, dist[i], posCount[i]));
-        }
-
-        return positions;
-    }
-
-    private List<Vector3> GetPositionListCircle(Vector3 startPos, float dist, int posCount)
-    {
-        List<Vector3> positions = new List<Vector3>();
-
-        for (int i = 0; i < posCount; i++)
-        {
-            float angle = i * (360f / posCount);
-            Vector3 dir = Quaternion.Euler(0f, 0f, angle) * Vector3.right;
-            positions.Add(startPos + dir * dist);
-        }
-
-        return positions;
     }
 }

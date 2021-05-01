@@ -30,7 +30,7 @@ public class Agent : MonoBehaviour
 
     protected virtual void Update()
     {
-        Vector2 displacement = velocity * Time.deltaTime;
+        Vector3 displacement = velocity * Time.deltaTime;
 
         orientation += rotation * Time.deltaTime;
 
@@ -42,6 +42,7 @@ public class Agent : MonoBehaviour
         {
             orientation -= 360.0f;
         }
+
         transform.Translate(displacement, Space.World);
         transform.rotation = new Quaternion();
         transform.Rotate(Vector3.forward, orientation);

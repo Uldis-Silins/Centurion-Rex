@@ -30,7 +30,7 @@ public abstract class Unit_Base : MonoBehaviour
     [SerializeField] protected Pursue m_pursuer;
     [SerializeField] protected Separate m_separator;
 
-    private Rigidbody2D m_rigidbody;
+    protected Rigidbody2D m_rigidbody;
 
     private NavigationController m_navigationController;
 
@@ -50,6 +50,7 @@ public abstract class Unit_Base : MonoBehaviour
 
     public bool HasMoveTarget { get { return m_hasMoveTarget; } }
     public Vector3 MoveTarget { get { return m_moveTarget; } }
+    public Separate Separator { get { return m_separator; } }
 
     protected virtual void Awake()
     {
@@ -86,13 +87,6 @@ public abstract class Unit_Base : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
-    {
-#if UNITY_EDITOR
-        UnityEditor.Handles.Label(transform.position + Vector3.up, GetMoveDirection().ToString());
-#endif
-    }
-
     private void OnDrawGizmosSelected()
     {
         Color prevColor = Gizmos.color;
@@ -101,7 +95,10 @@ public abstract class Unit_Base : MonoBehaviour
 
         if (HasAttackTarget)
         {
-            Gizmos.DrawLine(transform.position, m_attackTarget.DamageableGameObject.transform.position);
+            Gizmos.DrawLine(transform.position, m_pursuer.target.transform.position);
+
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawLine(transform.position, m_pursuer.MoveTarget);
         }
 
         Gizmos.DrawWireSphere(transform.position, AttackDistance);
@@ -114,12 +111,6 @@ public abstract class Unit_Base : MonoBehaviour
         }
 
         Gizmos.DrawWireSphere(transform.position, visionDistance);
-
-        Gizmos.color = Color.yellow;
-
-        Gizmos.DrawWireSphere(transform.position, m_avoider.collisionRadius);
-        Vector2 pos = transform.position;
-        Gizmos.DrawLine(transform.position, pos + m_agent.velocity * m_obstacleAvoider.lookAhead);
 
         Gizmos.color = prevColor;
     }
@@ -137,11 +128,11 @@ public abstract class Unit_Base : MonoBehaviour
         float dist = Vector2.Distance(transform.position, targetPosition);
         Collider2D hit = Physics2D.Linecast(transform.position, targetPosition, m_navigationController.obstacleLayers).collider;
 
-        targetPosition = GetAdjustedPosition(targetPosition);
+        m_seeker.flowField = null;
 
         if (dist > MIN_NAVIGATION_DISTANCE && hit != circleCollider)
         {
-            Debug.Log("Requesting navigation");
+            Debug.Log(gameObject.name + ": Requesting navigation");
             m_seeker.flowField = m_navigationController.GetFlowField(transform.position, targetPosition);
             m_seeker.gridWorldOffset = m_navigationController.gridOffset;
         }
@@ -257,59 +248,5 @@ public abstract class Unit_Base : MonoBehaviour
         {
             return SpriteAnimatorData.AnimationType.IdleRight;
         }
-    }
-
-    private Vector2 GetAdjustedPosition(Vector3 worldPosition, float distance = 0f)
-    {
-        float checkRadius = circleCollider.radius;
-        Vector2 adjustedPosition = worldPosition + (worldPosition - transform.position).normalized * distance;
-
-        LayerMask mask = LayerMask.GetMask("Unit", "Obstacle", "Building");
-
-        Collider2D[] hits = Physics2D.OverlapCircleAll(adjustedPosition, checkRadius, mask);
-
-        if (hits.Length == 0)
-        {
-            return adjustedPosition;
-        }
-
-        List<Vector2> circlePositions = GetPositionListCircle(adjustedPosition, checkRadius * 3.0f, 12);
-
-        for (int i = 0; i < circlePositions.Count; i++)
-        {
-            if((hits = Physics2D.OverlapCircleAll(circlePositions[i], checkRadius, mask)).Length == 0)
-            {
-                return circlePositions[i];
-            }
-        }
-
-        return adjustedPosition + new Vector2(Random.insideUnitCircle.x * hits.Length * checkRadius, Random.insideUnitCircle.y * hits.Length * checkRadius);
-    }
-
-    private List<Vector2> GetPositionListCircle(Vector2 startPos, float[] dist, int[] posCount)
-    {
-        List<Vector2> positions = new List<Vector2>();
-        positions.Add(startPos);
-
-        for (int i = 0; i < dist.Length; i++)
-        {
-            positions.AddRange(GetPositionListCircle(startPos, dist[i], posCount[i]));
-        }
-
-        return positions;
-    }
-
-    private List<Vector2> GetPositionListCircle(Vector2 startPos, float dist, int posCount)
-    {
-        List<Vector2> positions = new List<Vector2>();
-
-        for (int i = 0; i < posCount; i++)
-        {
-            float angle = i * (360f / posCount);
-            Vector2 dir = Quaternion.Euler(0f, 0f, angle) * Vector3.right;
-            positions.Add(startPos + dir * dist);
-        }
-
-        return positions;
     }
 }

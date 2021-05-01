@@ -6,6 +6,8 @@ public class VisibilityManager : MonoBehaviour
     public Player_Controller playerController;
     public Player_Controller enemyController;
 
+    public bool checkUnitVisibility;
+
     private List<FOVElement> m_fovElements;
 
     public HashSet<Unit_Base> VisibleUnits { get; private set; }
@@ -20,7 +22,7 @@ public class VisibilityManager : MonoBehaviour
 
     private void Update()
     {
-        if (enemyController == null || enemyController.OwnedUnits == null) return;
+        if (enemyController == null || enemyController.OwnedUnits == null || !checkUnitVisibility) return;
 
         VisibleBuildings.Clear();
         VisibleUnits.Clear();

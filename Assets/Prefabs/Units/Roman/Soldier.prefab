@@ -1,5 +1,52 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8897255321994208
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4331601809820714782}
+  - component: {fileID: 1372885257271711855}
+  m_Layer: 13
+  m_Name: Selectable
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4331601809820714782
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8897255321994208}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4220708611386460247}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!70 &1372885257271711855
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8897255321994208}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.45}
+  m_Size: {x: 0.59, y: 1}
+  m_Direction: 0
 --- !u!1 &4220708610805117438
 GameObject:
   m_ObjectHideFlags: 0
@@ -101,7 +148,6 @@ GameObject:
   - component: {fileID: 6077791035491440360}
   - component: {fileID: 7258617856455038464}
   - component: {fileID: 4915803369945908463}
-  - component: {fileID: 643907753154236581}
   m_Layer: 10
   m_Name: Soldier
   m_TagString: Untagged
@@ -122,6 +168,7 @@ Transform:
   m_Children:
   - {fileID: 4220708612654221337}
   - {fileID: 4220708610805117433}
+  - {fileID: 4331601809820714782}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -156,6 +203,7 @@ MonoBehaviour:
   attackDistance: 1
   attackDamage: 5
   attacksDelay: 0.5
+  m_selectableObject: {fileID: 8897255321994208}
 --- !u!114 &7820143654597645030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,20 +247,20 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4220708611386460244}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 03632dcb928328f4bab9d9e6a88dc6f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weight: 0.2
+  weight: 0.3
   m_moveTarget: {x: 0, y: 0}
   dest: {x: 0, y: 0, z: 0}
   maxSpeed: 2
   maxAccel: 30
   maxRotation: 0
   maxAngularAccel: 0
-  tickRate: 0.1
-  collisionRadius: 0.75
+  tickRate: 0.2
+  collisionRadius: 0.25
 --- !u!114 &7829992475956404216
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -234,6 +282,7 @@ MonoBehaviour:
   maxAngularAccel: 0
   targetRadius: 0.1
   slowRadius: 0.3
+  cellRadius: 2
   timeToTarget: 0.2
   flowField:
     gridSize: {x: 0, y: 0}
@@ -257,18 +306,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76d5b9276ba3d0143a443c5126af0766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weight: 1.2
+  weight: 0.6
   m_moveTarget: {x: 0, y: 0}
   dest: {x: 0, y: 0, z: 0}
-  maxSpeed: 2
+  maxSpeed: 4
   maxAccel: 50
   maxRotation: 0
   maxAngularAccel: 0
-  avoidDistance: 1.5
-  lookAhead: 3
+  avoidDistance: 1
+  lookAhead: 1.5
   avoidanceLayers:
     serializedVersion: 2
     m_Bits: 4608
+  tickRate: 0.1
 --- !u!114 &-6935352028890680209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,7 +326,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4220708611386460244}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 89cda59a27bb9b3489a42b194a213208, type: 3}
   m_Name: 
@@ -302,18 +352,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01ccf87a735859f44bfde091771cc0c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weight: 1
+  weight: 0.7
   m_moveTarget: {x: 0, y: 0}
   dest: {x: 0, y: 0, z: 0}
-  maxSpeed: 50
-  maxAccel: 50
-  maxRotation: 5
-  maxAngularAccel: 5
-  radius: 0.25
-  tickRate: 0.2
+  maxSpeed: 3
+  maxAccel: 60
+  maxRotation: 0
+  maxAngularAccel: 0
+  checkRadius: 0.25
   unitLayers:
     serializedVersion: 2
     m_Bits: 1024
+  tickRate: 0.1
 --- !u!82 &4762776265834391243
 AudioSource:
   m_ObjectHideFlags: 0
@@ -503,7 +553,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!58 &4915803369945908463
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -520,22 +570,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.1}
   serializedVersion: 2
   m_Radius: 0.25
---- !u!70 &643907753154236581
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4220708611386460244}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.45}
-  m_Size: {x: 0.59, y: 1}
-  m_Direction: 0
 --- !u!1 &4220708612654221342
 GameObject:
   m_ObjectHideFlags: 0

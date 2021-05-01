@@ -5,15 +5,15 @@ public class GridHashList2D
 {
     public class Node
     {
-        public Transform transform;
+        public Vector2 position;
         public Vector2 dimensions;
         public Vector2Int[] indices;
 
         public int queryID = -1;
 
-        public Node(Transform transform, Vector2 dimensions)
+        public Node(Vector2 position, Vector2 dimensions)
         {
-            this.transform = transform;
+            this.position = position;
             this.dimensions = dimensions;
             indices = null;
         }
@@ -38,20 +38,14 @@ public class GridHashList2D
         m_queryIDs = 0;
     }
 
-    public Node Add(Transform transform, Vector2 dimensions)
+    public Node Add(Vector2 position, Vector2 dimensions)
     {
-        Node node = new Node(transform, dimensions);
+        Node node = new Node(position, dimensions);
         Insert(node);
 
         return node;
     }
 
-    /// <summary>
-    /// Find node intersecting bounds.
-    /// </summary>
-    /// <param name="position">Position to start check from.</param>
-    /// <param name="bounds">Size of checked bounds.</param>
-    /// <returns>Collection of found nodes.</returns>
     public List<Node> Find(Vector2 position, Vector2 bounds)
     {
         float posX = position.x;
@@ -90,8 +84,8 @@ public class GridHashList2D
 
     public void Update(Node node)
     {
-        float posX = node.transform.position.x;
-        float posY = node.transform.position.y;
+        float posX = node.position.x;
+        float posY = node.position.y;
         float w = node.dimensions.x;
         float h = node.dimensions.y;
 
@@ -122,13 +116,10 @@ public class GridHashList2D
         }
     }
 
-    /// <summary>
-    /// Loop over cells and add to cell if query contains node.
-    /// </summary>
     private void Insert(Node node)
     {
-        float posX = node.transform.position.x;
-        float posY = node.transform.position.y;
+        float posX = node.position.x;
+        float posY = node.position.y;
         float w = node.dimensions.x;
         float h = node.dimensions.y;
 

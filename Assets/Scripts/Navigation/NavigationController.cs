@@ -121,14 +121,14 @@ public class NavigationController : MonoBehaviour
 
     private void Update()
     {
-        if(debug && Input.GetMouseButtonUp(0))
-        {
-            Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            worldPos += gridOffset;
-            FlowField.Cell destinationCell = m_flowField.GetCell(worldPos);
-            m_flowField.CreateIntegrationField(destinationCell);
-            m_flowField.CreateFlowField();
-        }
+        //if(debug && Input.GetMouseButtonUp(0))
+        //{
+        //    Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //    worldPos += gridOffset;
+        //    FlowField.Cell destinationCell = m_flowField.GetCell(worldPos);
+        //    m_flowField.CreateIntegrationField(destinationCell);
+        //    m_flowField.CreateFlowField();
+        //}
     }
 
     // Template
@@ -144,10 +144,11 @@ public class NavigationController : MonoBehaviour
 
     public FlowField GetFlowField(Vector3 fromPosition, Vector3 toPosition)
     {
-        int hash = GetGridHash(m_flowField.GetCell(fromPosition).gridIndex, m_flowField.GetCell(toPosition).gridIndex);
+        int hash = GetGridHash(m_flowField.GetCell(fromPosition + gridOffset), m_flowField.GetCell(toPosition + gridOffset));
 
         if (!m_cahcedFields.ContainsKey(hash))
         {
+            Debug.Log("creating hash: " + hash);
             FlowField field = new FlowField(m_flowField);
             m_cahcedFields.Add(hash, field);
             toPosition += gridOffset;
@@ -158,13 +159,16 @@ public class NavigationController : MonoBehaviour
         }
         else
         {
+            Debug.Log("found hash: " + hash);
             return m_cahcedFields[hash];
         }
     }
 
-    private int GetGridHash(Vector2Int fromCell, Vector2Int toCell)
+    private int GetGridHash(FlowField.Cell fromCell, FlowField.Cell toCell)
     {
-        int hash = 17 * 23 + fromCell.GetHashCode();
-        return hash * 23 + toCell.GetHashCode(); 
+        int hash = 17;
+        hash *= 23 + fromCell.GetHashCode();
+        hash *= 31 + toCell.GetHashCode();
+        return hash;
     }
 }

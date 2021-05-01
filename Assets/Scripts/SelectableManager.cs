@@ -78,12 +78,20 @@ public class SelectableManager : MonoBehaviour
 
     public bool IsObjectSelectable(GameObject obj)
     {
-        return obj.GetComponent<ISelecteble>() != null;
+        return obj.transform.parent.GetComponent<ISelecteble>() != null;
     }
 
     public ISelecteble GetSelectable(GameObject obj)
     {
-        return obj.GetComponent<ISelecteble>();
+        for (int i = 0; i < m_registeredSelectables.Count; i++)
+        {
+            if(m_registeredSelectables[i].SelectableGameObject == obj)
+            {
+                return m_registeredSelectables[i];
+            }
+        }
+
+        return null;
     }
 
     public void DeselectAll()
@@ -94,6 +102,21 @@ public class SelectableManager : MonoBehaviour
         }
     }
 
+    public List<ISelecteble> GetCurrentSelected()
+    {
+        List<ISelecteble> selected = new List<ISelecteble>();
+
+        for (int i = 0; i < m_registeredSelectables.Count; i++)
+        {
+            if(m_registeredSelectables[i].IsSelected)
+            {
+                selected.Add(m_registeredSelectables[i]);
+            }
+        }
+
+        return selected;
+    }
+
     public List<GameObject> GetCurrentSelectedObjects()
     {
         List<GameObject> selected = new List<GameObject>();
@@ -102,7 +125,7 @@ public class SelectableManager : MonoBehaviour
         {
             if(m_registeredSelectables[i].IsSelected)
             {
-                selected.Add(m_registeredSelectables[i].SelectableGameObject);
+                selected.Add((m_registeredSelectables[i] as MonoBehaviour).gameObject);
             }
         }
 

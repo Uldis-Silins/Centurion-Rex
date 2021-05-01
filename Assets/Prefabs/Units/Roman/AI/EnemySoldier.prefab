@@ -75,6 +75,7 @@ MonoBehaviour:
   attackDistance: 1
   attackDamage: 5
   attacksDelay: 0.5
+  m_selectableObject: {fileID: 0}
 --- !u!114 &3391315334237148504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,12 +119,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4220708611386460244}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 03632dcb928328f4bab9d9e6a88dc6f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weight: 0.1
+  weight: 0.3
   m_moveTarget: {x: 0, y: 0}
   dest: {x: 0, y: 0, z: 0}
   maxSpeed: 2
@@ -152,8 +153,9 @@ MonoBehaviour:
   maxRotation: 5
   maxAngularAccel: 5
   targetRadius: 0.1
-  slowRadius: 0.1
-  timeToTarget: 0.1
+  slowRadius: 0.3
+  cellRadius: 2
+  timeToTarget: 0.2
   flowField:
     gridSize: {x: 0, y: 0}
     cellRadius: 0
@@ -176,18 +178,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76d5b9276ba3d0143a443c5126af0766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weight: 1.5
+  weight: 0.6
   m_moveTarget: {x: 0, y: 0}
   dest: {x: 0, y: 0, z: 0}
-  maxSpeed: 2
-  maxAccel: 30
-  maxRotation: 5
-  maxAngularAccel: 5
-  avoidDistance: 2
-  lookAhead: 3.5
+  maxSpeed: 4
+  maxAccel: 50
+  maxRotation: 0
+  maxAngularAccel: 0
+  avoidDistance: 1
+  lookAhead: 1.5
   avoidanceLayers:
     serializedVersion: 2
     m_Bits: 4608
+  tickRate: 0.1
 --- !u!114 &2076514725828392594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,7 +198,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4220708611386460244}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 89cda59a27bb9b3489a42b194a213208, type: 3}
   m_Name: 
@@ -221,18 +224,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01ccf87a735859f44bfde091771cc0c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weight: 1
+  weight: 0.7
   m_moveTarget: {x: 0, y: 0}
   dest: {x: 0, y: 0, z: 0}
-  maxSpeed: 50
-  maxAccel: 50
-  maxRotation: 5
-  maxAngularAccel: 5
-  radius: 0.5
-  tickRate: 0.2
+  maxSpeed: 3
+  maxAccel: 60
+  maxRotation: 0
+  maxAngularAccel: 0
+  checkRadius: 0.25
   unitLayers:
     serializedVersion: 2
     m_Bits: 1024
+  tickRate: 0.1
 --- !u!82 &6963665858929961176
 AudioSource:
   m_ObjectHideFlags: 0
@@ -436,7 +439,7 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.03}
+  m_Offset: {x: -0.22, y: -0.09}
   serializedVersion: 2
   m_Radius: 0.25
 --- !u!1 &4220708612654221342

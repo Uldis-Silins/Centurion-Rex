@@ -31,6 +31,22 @@ public class FlowField
 
             cost += amount;
         }
+
+        public Cell DeepCopy()
+        {
+            Cell cell = new Cell(worldPosition, gridIndex);
+            cell.cost = cost;
+            cell.bestCost = bestCost;
+            cell.bestDirection = bestDirection;
+
+            return cell;
+        }
+
+        public override int GetHashCode()
+        {
+            int hash = 17 * 31 + gridIndex.x;
+            return 31 * hash + gridIndex.y;
+        }
     }
 
     public Cell[,] cells;
@@ -48,11 +64,20 @@ public class FlowField
 
     public FlowField(FlowField from)
     {
-        cells = from.cells;
         gridSize = from.gridSize;
+        cells = new Cell[gridSize.x, gridSize.y];
+
+        for (int x = 0; x < gridSize.x; x++)
+        {
+            for (int y = 0; y < gridSize.y; y++)
+            {
+                cells[x, y] = from.cells[x, y].DeepCopy();
+            }
+        }
+
         cellRadius = from.cellRadius;
         cellDiameter = from.cellDiameter;
-        destinationCell = from.destinationCell;
+        destinationCell = from.destinationCell == null ? null : new Cell(from.destinationCell.worldPosition, from.destinationCell.gridIndex);
     }
 
     public void CreateGrid(Vector2 startPosition)

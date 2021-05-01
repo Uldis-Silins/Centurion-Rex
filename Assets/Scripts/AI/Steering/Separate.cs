@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class Separate : Flee
 {
-    public float radius = 0.5f;
-    public float tickRate = 0.2f;
+    public float checkRadius = 0.5f;
     public LayerMask unitLayers;
+    public float tickRate = 0.5f;
 
     private float m_timer;
 
@@ -16,42 +16,44 @@ public class Separate : Flee
 
     public override void Update()
     {
-        if(m_timer <= 0f)
-        {
-            m_timer = tickRate;
-
-            Collider2D[] hits = Physics2D.OverlapCircleAll(m_position, radius, unitLayers);
-            
-            if(hits.Length > 1)
-            {
-                Vector2 closestPos = Vector2.one * float.MaxValue;
-                float closestDist = float.MaxValue;
-
-                for (int i = 0; i < hits.Length; i++)
-                {
-                    if (hits[i].gameObject == gameObject) continue;
-
-                    Vector2 pos = hits[i].transform.position;
-                    float dist = (pos - closestPos).sqrMagnitude;
-
-                    if (dist < closestDist)
-                    {
-                        closestDist = dist;
-                        closestPos = pos;
-                    }
-                }
-
-                m_moveTarget = closestPos;
-            }
-        }
-
-        m_timer -= Time.deltaTime;
-
         base.Update();
     }
 
     public override Steering GetSteering()
     {
+        if (m_timer <= 0f)
+        {
+            Vector3 dir = Vector3.zero;
+            int hitCount = 0;
+            Collider2D[] hits = Physics2D.OverlapCircleAll(m_position, checkRadius, unitLayers);
+
+            if (hits.Length > 1)
+            {
+                for (int i = 0; i < hits.Length; i++)
+                {
+                    if (hits[i].gameObject == gameObject) continue;
+
+                    dir += hits[i].transform.position - transform.position;
+                    hitCount++;
+                }
+
+                if (hitCount > 0)
+                {
+                    dir /= hitCount;
+                }
+            }
+            else
+            {
+                return new Steering();
+            }
+
+            m_moveTarget = m_position + ((Vector2)dir.normalized * checkRadius);
+            m_timer = tickRate;
+        }
+
+        m_timer -= Time.deltaTime;
+        Debug.DrawLine(m_position, m_moveTarget);
+
         return base.GetSteering();
     }
 }

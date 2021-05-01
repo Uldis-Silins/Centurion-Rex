@@ -2,10 +2,14 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.EventSystems;
+using UnityEngine.Tilemaps;
+using UnityEngine.Events;
 
 public class Player_Controller : MonoBehaviour
 {
+    public UnityAction<int> onOwnedUnitAdded = delegate { };
+    public UnityAction<int> onOwnedUnitRemoved = delegate { };
+
     public bool ownedByPlayer;
     public FactionType ownerFaction;
     public FactionType enemyFaction;
@@ -14,7 +18,10 @@ public class Player_Controller : MonoBehaviour
     public UI_HudManager hudManager;
     public List<Building> ownedBuildings;
 
+    public Tilemap walkableTilemap;
+
     public LayerMask buildingLayer;
+    public LayerMask selectableLayer;
 
     [SerializeField] private SelectableManager selectableManager;
     [SerializeField] private DamageableManager damageableManager;
@@ -25,6 +32,8 @@ public class Player_Controller : MonoBehaviour
     public UnitData[] unitData;
 
     private List<Unit_Base> m_ownedUnits;
+    private GridHashList2D m_unitPositionList;
+    private Dictionary<GridHashList2D.Node, Unit_Base> m_unitsByPosition;
 
     private Stack<IDamageable> m_waitingForKill;
 
@@ -33,6 +42,8 @@ public class Player_Controller : MonoBehaviour
     private ISelecteble m_selectedBuilding;
 
     public List<Unit_Base> OwnedUnits { get { return m_ownedUnits; } }
+    public GridHashList2D UnitPositions { get { return m_unitPositionList; } }
+    public Dictionary<GridHashList2D.Node, Unit_Base> UnitsByPosition { get { return m_unitsByPosition; } }
 
     public int CurrentPopulation { get { return m_ownedUnits.Count; } }
 
@@ -48,6 +59,10 @@ public class Player_Controller : MonoBehaviour
         m_waitingForKill = new Stack<IDamageable>();
         m_mainCam = Camera.main;
 
+        Vector3 min = walkableTilemap.CellToWorld(walkableTilemap.cellBounds.min);
+        Vector3 max = walkableTilemap.CellToWorld(walkableTilemap.cellBounds.max);
+        m_unitPositionList = new GridHashList2D(new Rect(min.x, min.y, max.x - min.x, max.y - min.y), new Vector2Int(walkableTilemap.cellBounds.size.x, walkableTilemap.cellBounds.size.y));
+        m_unitsByPosition = new Dictionary<GridHashList2D.Node, Unit_Base>();
     }
 
     private void OnEnable()
@@ -66,9 +81,16 @@ public class Player_Controller : MonoBehaviour
         {
             currentGameState = GameState.Playing;
             uiManager.wineAmountText.text = currentResources.ToString();
-        }
 
-        //StartCoroutine(CheckUnitOverlap());
+            for (int i = 0; i < ownedBuildings.Count; i++)
+            {
+                ISelecteble selectable;
+                if((selectable = ownedBuildings[i].selectable.GetComponent<ISelecteble>()) != null)
+                {
+                    selectableManager.RegisterSelectable(selectable);
+                }
+            }
+        }
     }
 
     private void Update()
@@ -103,18 +125,17 @@ public class Player_Controller : MonoBehaviour
 
         if (ownedByPlayer && Input.GetMouseButtonDown(0) && !UI_Helpers.IsPointerOverUIElement())
         {
-            RaycastHit2D hit = Physics2D.Raycast(m_mainCam.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, buildingLayer);
+            RaycastHit2D hit = Physics2D.Raycast(m_mainCam.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, selectableLayer);
 
-            if (hit.collider != null)
+            if (hit.collider != null && (buildingLayer & (1 << hit.collider.transform.parent.gameObject.layer)) != 0)
             {
-                GameObject selectableObject = hit.collider.gameObject;
-                ISelecteble selectable = selectableObject.GetComponent<ISelecteble>();
+                ISelecteble selectable = selectableManager.GetSelectable(hit.collider.gameObject);
 
                 if (selectable != null)
                 {
                     for (int i = 0; i < ownedBuildings.Count; i++)
                     {
-                        if (ownedBuildings[i].selectable == selectableObject)
+                        if (ownedBuildings[i].selectable == (selectable as MonoBehaviour).gameObject)
                         {
                             m_selectedBuilding = selectable;
                             selectable.Select();
@@ -132,11 +153,42 @@ public class Player_Controller : MonoBehaviour
                 }
             }
         }
+
+        foreach (var node in m_unitsByPosition)
+        {
+            node.Key.position = m_unitsByPosition[node.Key].transform.position;
+            m_unitPositionList.Update(node.Key);
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Color prevColor = Gizmos.color;
+        Gizmos.color = Color.cyan;
+        Vector3 min = walkableTilemap.CellToWorld(walkableTilemap.cellBounds.min);
+        Vector3 max = walkableTilemap.CellToWorld(walkableTilemap.cellBounds.max);
+        Vector3 size = new Vector3(max.x - min.x, max.y - min.y, 1f);
+
+        Gizmos.DrawWireCube(new Vector3(min.x + size.x / 2, min.y + size.y / 2, size.z), size);
+
+        Gizmos.color = Color.magenta;
+
+        if (m_unitsByPosition != null)
+        {
+            foreach (var node in m_unitsByPosition)
+            {
+                Gizmos.DrawWireCube(node.Key.position, node.Key.dimensions);
+            }
+        }
+
+        Gizmos.color = prevColor;
     }
 
     public void AddToOwnedUnits(Unit_Base unit)
     {
         m_ownedUnits.Add(unit);
+        GridHashList2D.Node pos = m_unitPositionList.Add(unit.transform.position, Vector2.one * unit.circleCollider.radius * 2f);
+        m_unitsByPosition.Add(pos, unit);
 
         var health = unit.GetComponent<Unit_Health>();
 
@@ -150,6 +202,8 @@ public class Player_Controller : MonoBehaviour
         {
             selectableManager.RegisterSelectable(unit.GetComponent<ISelecteble>());
         }
+
+        onOwnedUnitAdded.Invoke(m_ownedUnits.Count - 1);
     }
 
     public void AddResource(float amount)
@@ -186,6 +240,30 @@ public class Player_Controller : MonoBehaviour
 
                 m_waitingForKill.Push(damageable);
 
+                List<GridHashList2D.Node> closestNodes = m_unitPositionList.Find(m_ownedUnits[i].transform.position, Vector2.one * m_ownedUnits[i].circleCollider.radius);
+                Debug.Assert(closestNodes.Count > 0, m_ownedUnits[i].name + ": not found at position");
+                GridHashList2D.Node foundNode = null;
+
+                for (int j = 0; j < closestNodes.Count; j++)
+                {
+                    if(m_unitsByPosition[closestNodes[j]] == m_ownedUnits[i])
+                    {
+                        foundNode = closestNodes[j];
+                        break;
+                    }
+                }
+
+                if(foundNode != null)
+                {
+                    m_unitPositionList.Remove(foundNode);
+                    m_unitsByPosition.Remove(foundNode);
+                }
+                else
+                {
+                    Debug.LogError(m_ownedUnits[i].gameObject.name + ": node not found");
+                }
+                
+                onOwnedUnitRemoved(i);
                 m_ownedUnits.RemoveAt(i);
                 break;
             }
@@ -207,85 +285,6 @@ public class Player_Controller : MonoBehaviour
                 currentGameState = GameState.GameOver;
             }
         }
-    }
-
-    private IEnumerator CheckUnitOverlap()
-    {
-        while (true)
-        {
-            for (int i = 0; i < m_ownedUnits.Count; i++)
-            {
-                Vector3 pos = m_ownedUnits[i].HasMoveTarget ? m_ownedUnits[i].MoveTarget : m_ownedUnits[i].transform.position;
-                List<Unit_Base> overlapped = CheckUnitOverlap(pos, m_ownedUnits[i]);
-                List<Vector3> targetPositions = GetPositionListCircle(pos, new float[] { 0.75f, 1.5f, 3f }, new int[] { 5, 10, 20 });
-
-                if (overlapped.Count > 0)
-                {
-                    foreach (var unit in overlapped)
-                    {
-                        if (unit != m_ownedUnits[i])
-                        {
-                            unit.SetMoveTarget(targetPositions[i % targetPositions.Count]);
-                            unit.SetState(Unit_Base.UnitStateType.Move);
-                        }
-                    }
-                    yield return new WaitForSeconds(0.2f);
-                }
-            }
-
-            yield return null;
-        }
-    }
-
-    private List<Unit_Base> CheckUnitOverlap(Vector3 pos, Unit_Base caller)
-    {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(pos, caller.circleCollider.radius * 2.0f, 1 << LayerMask.NameToLayer("Unit"));
-        List<Unit_Base> overlappedUnits = new List<Unit_Base>();
-
-        if (hits.Length > 2)
-        {
-            hits = Physics2D.OverlapCircleAll(pos, caller.circleCollider.radius * 10.0f, 1 << LayerMask.NameToLayer("Unit"));
-        }
-
-        for (int i = 0; i < hits.Length; i++)
-        {
-            if (hits[i].gameObject == caller.gameObject) continue;
-
-            Unit_Base hitUnit = hits[i].gameObject.GetComponent<Unit_Base>();
-            if (hitUnit != null && !hitUnit.HasMoveTarget && hitUnit.health.Faction == ownerFaction)
-            {
-                overlappedUnits.Add(hitUnit);
-            }
-        }
-
-        return overlappedUnits;
-    }
-
-    private List<Vector3> GetPositionListCircle(Vector3 startPos, float[] dist, int[] posCount)
-    {
-        List<Vector3> positions = new List<Vector3>();
-        positions.Add(startPos);
-
-        for (int i = 0; i < dist.Length; i++)
-        {
-            positions.AddRange(GetPositionListCircle(startPos, dist[i], posCount[i]));
-        }
-
-        return positions;
-    }
-
-    private List<Vector3> GetPositionListCircle(Vector3 startPos, float dist, int posCount)
-    {
-        List<Vector3> positions = new List<Vector3>();
-
-        for (int i = 0; i < posCount; i++)
-        {
-            float angle = i * (360f / posCount);
-            Vector3 dir = Quaternion.Euler(0f, 0f, angle) * Vector3.right;
-            positions.Add(startPos + dir * dist);
-        }
-
-        return positions;
     }
 
     [System.Serializable]

@@ -27,6 +27,9 @@ public class AgentBehaviour : MonoBehaviour
     public virtual void Update()
     {
         m_position = transform.position;
+
+        if (float.IsNaN(GetSteering().linear.magnitude)) Debug.LogError("x; t: " + Time.time);
+
         agent.SetSteering(GetSteering(), weight);
 
         //if (Vector3.Distance(transform.position, m_moveTarget) < arriveDistance)
@@ -64,7 +67,7 @@ public class AgentBehaviour : MonoBehaviour
         return new Steering();
     }
 
-    public void SetDestination(Vector3 position, float checkRadius = 0.5f)
+    public void SetDestination(Vector3 position)
     {
         position.z = transform.position.z;
         m_moveTarget = position;
@@ -72,7 +75,8 @@ public class AgentBehaviour : MonoBehaviour
 
     public void Stop()
     {
-        m_moveTarget = transform.position;
+        m_moveTarget = m_position;
+        agent.velocity = Vector2.zero;
         agent.SetSteering(new Steering(), 1f);
     }
 }

@@ -453,7 +453,6 @@ GameObject:
   - component: {fileID: 7932924578973166321}
   - component: {fileID: 7932924578973166320}
   - component: {fileID: 252839699913850516}
-  - component: {fileID: 8313288778661166067}
   m_Layer: 0
   m_Name: SoldierSprite
   m_TagString: Untagged
@@ -542,22 +541,3 @@ MonoBehaviour:
   offset: 0
   m_tickRate: 0.2
   updateSorting: 1
---- !u!95 &8313288778661166067
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7932924578973166326}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 05af982c8f946384e85cdb8146e1b31a, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0

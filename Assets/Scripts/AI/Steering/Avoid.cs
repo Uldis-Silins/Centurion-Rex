@@ -22,7 +22,7 @@ public class Avoid : AgentBehaviour
         {
             targets.Clear();
 
-            Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, collisionRadius * 2f, 1 << LayerMask.NameToLayer("Unit"));
+            Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, collisionRadius, 1 << LayerMask.NameToLayer("Unit"));
 
             if (hits.Length > 0)
             {
@@ -63,6 +63,7 @@ public class Avoid : AgentBehaviour
             relativePos = t.transform.position - transform.position;
 
             Vector3 relativeVel = targetAgent.velocity - agent.velocity;
+            relativeVel += transform.right;
             float relativeSpeed = relativeVel.magnitude;
 
             float timeToCollision = Vector3.Dot(relativePos, relativeVel);
@@ -91,11 +92,7 @@ public class Avoid : AgentBehaviour
             return steering;
         }
 
-        if (firstMinSeparation <= 0.0f || firstDistance < collisionRadius * 2)
-        {
-            firstRelativePos = firstTarget.transform.position;
-        }
-        else
+        if (firstMinSeparation <= 0.0f || Mathf.Abs(firstDistance) < collisionRadius * 2)
         {
             firstRelativePos += firstRelativeVel * shortestTime;
         }

@@ -6,7 +6,7 @@ public class Pursue : Seek
     public float maxPrediction = 1.0f;
     public Agent target;
 
-    private Vector3 m_targetAux;
+    private Vector2 m_targetAux;
 
     public override void Awake()
     {
@@ -14,11 +14,17 @@ public class Pursue : Seek
         m_targetAux = m_moveTarget;
     }
 
+    public override void Update()
+    {
+        base.Update();
+    }
+
     public override Steering GetSteering()
     {
         if (target == null) return base.GetSteering();
 
-        Vector3 direction = m_targetAux - transform.position;
+        m_targetAux = target.transform.position;
+        Vector3 direction = m_targetAux - m_position;
         float distance = direction.magnitude;
         float speed = agent.velocity.magnitude;
         float prediction;

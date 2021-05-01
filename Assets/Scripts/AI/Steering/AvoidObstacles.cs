@@ -7,7 +7,12 @@ public class AvoidObstacles : Seek
     public float lookAhead = 2.5f;
     public LayerMask avoidanceLayers;
 
+    public float tickRate = 0.2f;
+
     private float m_radius;
+    private float m_timer;
+    private RaycastHit2D m_hit;
+    private bool m_hasHit;
 
     public override void Awake()
     {
@@ -18,33 +23,53 @@ public class AvoidObstacles : Seek
 
     public override void Update()
     {
+        if (m_timer <= 0f)
+        {
+            m_timer = tickRate;
+
+            m_hasHit = false;
+
+            Vector2 position = transform.position;
+            Vector2 direction = agent.velocity.normalized * lookAhead;
+
+            Vector2[] offsets = new Vector2[]
+            {
+            direction.normalized,
+            (direction +  new Vector2(direction.y, -direction.x)).normalized * 0.5f,
+            (direction + new Vector2(-direction.y, direction.x)).normalized * 0.5f
+            };
+
+            for (int i = 0; i < offsets.Length; i++)
+            {
+                RaycastHit2D hit = Physics2D.Raycast(position, offsets[i], lookAhead * offsets[i].magnitude, avoidanceLayers);
+
+                if (hit)
+                {
+                    m_hasHit = true;
+                    m_hit = hit;
+
+                    break;
+                }
+            }
+        }
+
+        m_timer -= Time.deltaTime;
+
         base.Update();
     }
 
     public override Steering GetSteering()
     {
         Steering steering = new Steering();
-        Vector2 position = transform.position;
-        Vector2 direction = agent.velocity.normalized * lookAhead;
-        Vector2 basePos = agent.velocity.normalized * m_radius;
+        Vector2 position = m_position;
 
-        Vector2[] offsets = new Vector2[]
+        if (m_hasHit && m_hit)
         {
-            new Vector2(basePos.y, -basePos.x),
-            new Vector2(-basePos.y, basePos.x)
-        };
+            position = m_hit.point + m_hit.normal * avoidDistance;
+            //position = m_hit.point + new Vector2(m_hit.normal.y, -m_hit.normal.x) * avoidDistance;
 
-        for (int i = 0; i < 2; i++)
-        {
-            RaycastHit2D hit = Physics2D.Raycast(position + offsets[i], direction, lookAhead, avoidanceLayers);
-            Debug.DrawLine(position + offsets[i], position + offsets[i] + direction * lookAhead, Color.cyan);
-
-            if (hit)
-            {
-                position = hit.point + hit.normal * avoidDistance;
-                m_moveTarget = position;
-                steering = base.GetSteering();
-            }
+            m_moveTarget = position;
+            steering = base.GetSteering();
         }
 
         return steering;

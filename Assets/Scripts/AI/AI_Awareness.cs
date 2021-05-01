@@ -3,79 +3,64 @@ using UnityEngine;
 
 public class AI_Awareness : MonoBehaviour
 {
-    public Player_Controller playerController;
-    public DamageableManager damageableManager;
-    public SelectableManager selectableManager;
+    public Player_Controller ownerController;
+    public Player_Controller enemyController;
 
-    public float minAgroDistance = 3f, maxAgroDistance = 6f;
+    public float tickRate = 0.3f;
 
-    public float tickRate = 1.5f;
-    public float tickDelay = 0.5f;
+    private Dictionary<Unit_Base, HashSet<Unit_Base>> m_unitsAssigned;  // key: enemy; value: assigned owned units
 
     private float m_timer;
-
-    private void Start()
-    {
-        m_timer = tickRate + tickDelay;
-    }
 
     private void Update()
     {
         if(m_timer <= 0f)
         {
-            m_timer = tickRate;
-
-            var units = playerController.OwnedUnits;
-
-            foreach (var unit in units)
+            for (int i = 0; i < ownerController.OwnedUnits.Count; i++)
             {
-                bool isSelectedByPlayer = false;
+                Unit_Base unit = ownerController.OwnedUnits[i];
 
-                if (playerController.enemyFaction == FactionType.Enemy && selectableManager.GetSelectable(unit.gameObject).IsSelected)
+                if (!unit.HasMoveTarget && !unit.HasAttackTarget)
                 {
-                    isSelectedByPlayer = true;   
-                }
+                    List<GridHashList2D.Node> closeEnemies = enemyController.UnitPositions.Find(unit.transform.position, Vector2.one * unit.AttackDistance);
 
-                if(unit != null)
-                {
-                    var closestEnemies = new List<IDamageable>(damageableManager.GetAtPosition(unit.transform.position, unit.visionDistance, playerController.enemyFaction));
-
-                    if(closestEnemies.Count > 0)
+                    if (closeEnemies.Count > 0)
                     {
-                        if (isSelectedByPlayer && !unit.HasMoveTarget)
-                        {
-                            Vector3 closestDist = closestEnemies[0].DamageableGameObject.transform.position;
-                            closestDist.y = unit.transform.position.y;
-
-                            if (Vector3.Distance(closestDist, unit.transform.position) <= unit.AttackDistance)
-                            {
-                                unit.SetAttackTarget(closestEnemies[0]);
-                                unit.SetState(Unit_Base.UnitStateType.Attack);
-                            }
-                        }
-                        else
-                        {
-                            unit.SetAttackTarget(closestEnemies[0]);
-                            unit.SetState(Unit_Base.UnitStateType.Attack);
-                        }
-                    }
-                }
-
-                GameObject attacker = unit.health.Attacker;
-
-                if(attacker != null && !unit.HasAttackTarget)
-                {
-                    IDamageable damageable = attacker.GetComponent<IDamageable>();
-
-                    if(damageable != null)
-                    {
-                        unit.SetAttackTarget(damageable);
+                        Unit_Base selectedEnemy = GetClosest(closeEnemies);
+                        unit.SetAttackTarget(selectedEnemy.health);
                         unit.SetState(Unit_Base.UnitStateType.Attack);
                     }
                 }
             }
+
+            m_timer = tickRate;
         }
 
         m_timer -= Time.deltaTime;
+    }
+
+    private Unit_Base GetClosest(List<GridHashList2D.Node> enemies)
+    {
+        if (enemies.Count == 0) return null;
+
+        Unit_Base closest = enemyController.UnitsByPosition[enemies[0]];
+        if (enemies.Count == 1) return closest;
+
+        Vector2 pos = transform.position;
+        float closestDist = (enemies[0].position - pos).sqrMagnitude;
+
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            float dist = (enemies[i].position - pos).sqrMagnitude;
+
+            if (dist < closestDist)
+            {
+                closest = enemyController.UnitsByPosition[enemies[i]];
+                closestDist = dist;
+
+            }
+        }
+
+        return closest;
     }
 }

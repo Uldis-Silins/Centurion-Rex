@@ -27,16 +27,15 @@ public class Player_UnitSelectController : MonoBehaviour
         {
             m_startDragPosition = Input.mousePosition;
 
-
             selectableManager.DeselectAll();
 
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, hitTestLayers);
 
             if (hit.collider != null)
             {
-                var hitSelectable = hit.collider.gameObject.GetComponent<ISelecteble>();
+                var hitSelectable = selectableManager.GetSelectable(hit.collider.gameObject);
 
-                if (hitSelectable != null && selectableManager.IsObjectSelectable(hit.collider.gameObject))
+                if (hitSelectable != null && hitSelectable is Unit_Base)
                 {
                     hitSelectable.Select();
                 }
@@ -83,14 +82,19 @@ public class Player_UnitSelectController : MonoBehaviour
                 for (int i = 0; i < unitScreenPositions.Length; i++)
                 {
                     Vector2 pos = unitScreenPositions[i];
+                    ISelecteble selectable = selectableManager.GetSelectableAt(i);
 
-                    if (pos.x > min.x && pos.x < max.x && pos.y > min.y && pos.y < max.y)
+                    if (selectable is Unit_Base)
                     {
-                        selectableManager.GetSelectableAt(i).Select();
-                    }
-                    else
-                    {
-                        selectableManager.GetSelectableAt(i).Deselect();
+                        if(pos.x > min.x && pos.x < max.x && pos.y > min.y && pos.y < max.y)
+                        {
+                            selectable.Select();
+                        }
+                        else
+                        {
+                            selectable.Deselect();
+                        }
+                        
                     }
                 }
 

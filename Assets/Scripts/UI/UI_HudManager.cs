@@ -32,7 +32,7 @@ public class UI_HudManager : MonoBehaviour
         m_spawnedSelectionRects = new List<UI_UnitSelectionRect>();
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         if(m_currentSelectebles != null)
         {
@@ -85,7 +85,7 @@ public class UI_HudManager : MonoBehaviour
 
     public void OnSelectionChanged()
     {
-        var selected = new List<GameObject>(selectableManager.GetCurrentSelectedObjects());
+        var selected = new List<ISelecteble>(selectableManager.GetCurrentSelected());
 
         if (selected != null && selected.Count > 0)
         {
@@ -93,8 +93,12 @@ public class UI_HudManager : MonoBehaviour
 
             for (int i = 0; i < selected.Count; i++)
             {
-                Unit_Base unit = selected[i].GetComponent<Unit_Base>();
-                selectedList.Add(unit);
+                Unit_Base unit = selected[i] as Unit_Base;
+
+                if (unit != null)
+                {
+                    selectedList.Add(unit);
+                }
             }
 
             SelectUnits(selectedList);
