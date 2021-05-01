@@ -255,6 +255,13 @@ public class Unit_Raptor : Unit_Base, ISelecteble
 
         if (!m_isDamageApplied && m_attackTimer < attacksDelay / 2f)
         {
+            m_isDamageApplied = true;
+
+            Vector2 lookDir = m_attackTarget.DamageableGameObject.transform.position - transform.position;
+            float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg;
+            Projectile instance = Instantiate(projectilePrefab, transform.position, Quaternion.AngleAxis(angle, Vector3.forward));
+            instance.Spawn(transform.position + Vector3.up, m_attackTarget.DamageableGameObject.transform.position + new Vector3(Random.insideUnitCircle.x * accuracy, Random.insideUnitCircle.y * accuracy, 0f), attackDamage, m_attackTarget, gameObject);
+
             if (!soundSource.isPlaying)
             {
                 soundSource.clip = attackClip;
@@ -266,11 +273,7 @@ public class Unit_Raptor : Unit_Base, ISelecteble
         if (m_attackTimer <= 0f)
         {
             anim.PlayAnimation(animType, false, false);
-
-            Quaternion lookRot = Quaternion.LookRotation(m_attackTarget.DamageableGameObject.transform.position - transform.position);
-            Projectile instance = Instantiate(projectilePrefab, transform.position, lookRot);
-            instance.Spawn(transform.position, m_attackTarget.DamageableGameObject.transform.position + new Vector3(Random.insideUnitCircle.x * accuracy, 0f, Random.insideUnitCircle.y * accuracy), attackDamage, m_attackTarget, gameObject);
-
+            m_isDamageApplied = false;
             m_attackTimer = attacksDelay;
         }
 

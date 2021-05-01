@@ -282,7 +282,7 @@ MonoBehaviour:
   maxAngularAccel: 0
   targetRadius: 0.1
   slowRadius: 0.3
-  cellRadius: 2
+  cellRadius: 1
   timeToTarget: 0.2
   flowField:
     gridSize: {x: 0, y: 0}

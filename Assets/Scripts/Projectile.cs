@@ -34,7 +34,7 @@ public class Projectile : MonoBehaviour
         {
             if(m_flyTimer >= m_flyTime)
             {
-                if (m_target.CurrentHealth > 0)
+                if (m_target.CurrentHealth > 0) // TODO: Check projectile collision with target
                 {
                     m_target.SetDamage(m_damage, m_owner);
                 }

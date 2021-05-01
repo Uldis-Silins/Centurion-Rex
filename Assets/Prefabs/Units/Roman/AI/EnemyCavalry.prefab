@@ -76,9 +76,12 @@ MonoBehaviour:
   attackDistance: 5
   attackDamage: 5
   attacksDelay: 0.5
-  fireParticleParent: {fileID: 0}
+  fireParticleParent: {fileID: 1519150361605317112}
   fireParticles:
-  - {fileID: 0}
+  - {fileID: 9100983978905199193}
+  - {fileID: 2081452156199169873}
+  - {fileID: 1108692481210287110}
+  - {fileID: 6937804923512647551}
   m_selectableObject: {fileID: 0}
 --- !u!114 &8387221090912806377
 MonoBehaviour:
@@ -158,7 +161,7 @@ MonoBehaviour:
   maxAngularAccel: 5
   targetRadius: 0.1
   slowRadius: 0.1
-  cellRadius: 2
+  cellRadius: 1
   timeToTarget: 0.1
   flowField:
     gridSize: {x: 0, y: 0}
@@ -618,6 +621,30 @@ PrefabInstance:
 --- !u!4 &1519150361605317112 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7405806309891563562, guid: faf715baee2d4864e9dadab5deeb7090,
+    type: 3}
+  m_PrefabInstance: {fileID: 8346206595042689490}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &9100983978905199193 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 981395595377812363, guid: faf715baee2d4864e9dadab5deeb7090,
+    type: 3}
+  m_PrefabInstance: {fileID: 8346206595042689490}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &2081452156199169873 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 8012294170367635075, guid: faf715baee2d4864e9dadab5deeb7090,
+    type: 3}
+  m_PrefabInstance: {fileID: 8346206595042689490}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &1108692481210287110 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 8985089577335473620, guid: faf715baee2d4864e9dadab5deeb7090,
+    type: 3}
+  m_PrefabInstance: {fileID: 8346206595042689490}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &6937804923512647551 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 1412905961586667181, guid: faf715baee2d4864e9dadab5deeb7090,
     type: 3}
   m_PrefabInstance: {fileID: 8346206595042689490}
   m_PrefabAsset: {fileID: 0}
