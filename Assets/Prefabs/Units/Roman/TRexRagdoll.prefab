@@ -9,6 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 567564127379134063}
+  - component: {fileID: 8033248622269183880}
+  - component: {fileID: 2336113355896273813}
   m_Layer: 10
   m_Name: TRexRagdoll
   m_TagString: Untagged
@@ -32,6 +34,35 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8033248622269183880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567564127379134060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a7985b802dc83041a89ab5f3d6a5ad0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 2336113355896273813}
+  animType: 13
+--- !u!114 &2336113355896273813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567564127379134060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d6fc5de169056f46bd477ee99879444, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_spriteRenderer: {fileID: 567564128189716000}
+  m_animationData: {fileID: 11400000, guid: c3497e6330883a942bb13f18b06b1348, type: 2}
+  m_currentAnimationType: 13
 --- !u!1 &567564128189716006
 GameObject:
   m_ObjectHideFlags: 0
@@ -43,7 +74,6 @@ GameObject:
   - component: {fileID: 567564128189716001}
   - component: {fileID: 567564128189716000}
   - component: {fileID: 7671116776500003396}
-  - component: {fileID: 6642239452053937308}
   m_Layer: 0
   m_Name: SoldierSprite
   m_TagString: Untagged
@@ -102,7 +132,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1997730693
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: -7733829490714618143, guid: 3d784100be5283e4dac29a5b65f72af9,
     type: 3}
@@ -129,28 +159,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_defaultSortingOrder: 5000
+  scaling: 10
   offset: 0
   m_tickRate: 0.2
-  updateSorting: 1
---- !u!95 &6642239452053937308
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 567564128189716006}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: cf6a83ddd61e1af438e69cd8f7f8f480, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  updateSorting: 0
 --- !u!1 &3708122012144083946
 GameObject:
   m_ObjectHideFlags: 0

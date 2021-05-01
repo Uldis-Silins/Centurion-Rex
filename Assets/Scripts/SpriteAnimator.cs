@@ -47,7 +47,7 @@ public class SpriteAnimator : MonoBehaviour
                 m_timer = 0f;
                 m_curFrameIndex = (m_curFrameIndex + 1) % m_currentFrames.frameCount;
 
-                if (!m_loop && m_curFrameIndex == 0)
+                if (!m_loop && m_curFrameIndex == m_currentFrames.frameCount - 1)
                 {
                     m_isPlaying = false;
                 }
