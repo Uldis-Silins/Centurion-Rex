@@ -26,6 +26,30 @@ TextureImporter:
   - first:
       213: 3269057821019316127
     second: legionnaire_red_die_32x32_7
+  - first:
+      213: -5512292440327448631
+    second: legionnaire_red_die_32x35_0
+  - first:
+      213: -8507515543393112854
+    second: legionnaire_red_die_32x35_1
+  - first:
+      213: -6735239092391237277
+    second: legionnaire_red_die_32x35_2
+  - first:
+      213: -1423515236634808258
+    second: legionnaire_red_die_32x35_3
+  - first:
+      213: 948756459662672669
+    second: legionnaire_red_die_32x35_4
+  - first:
+      213: -6523194197010737218
+    second: legionnaire_red_die_32x35_5
+  - first:
+      213: 2419789519574343647
+    second: legionnaire_red_die_32x35_6
+  - first:
+      213: -1947711229554936019
+    second: legionnaire_red_die_32x35_7
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -135,169 +159,169 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: legionnaire_red_die_32x32_0
+      name: legionnaire_red_die_32x35_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 35
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45714286}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 68ffc6c9164c7c7a0800000000000000
-      internalID: -6356896425494904954
+      spriteID: 9c7163c1b376083b0800000000000000
+      internalID: -5512292440327448631
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: legionnaire_red_die_32x32_1
+      name: legionnaire_red_die_32x35_1
       rect:
         serializedVersion: 2
         x: 32
         y: 0
         width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 35
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45714286}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c1b741dd273755a00800000000000000
-      internalID: 744628250572258076
+      spriteID: aec60f220bb3fe980800000000000000
+      internalID: -8507515543393112854
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: legionnaire_red_die_32x32_2
+      name: legionnaire_red_die_32x35_2
       rect:
         serializedVersion: 2
         x: 64
         y: 0
         width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 35
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45714286}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: afbe2470a19ac87e0800000000000000
-      internalID: -1761847424952636422
+      spriteID: 36922b4fabf9782a0800000000000000
+      internalID: -6735239092391237277
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: legionnaire_red_die_32x32_3
+      name: legionnaire_red_die_32x35_3
       rect:
         serializedVersion: 2
         x: 96
         y: 0
         width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 35
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45714286}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 760f419b6a8910d90800000000000000
-      internalID: -7133252492941004697
+      spriteID: e30b6043f68ae3ce0800000000000000
+      internalID: -1423515236634808258
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: legionnaire_red_die_32x32_4
+      name: legionnaire_red_die_32x35_4
       rect:
         serializedVersion: 2
         x: 128
         y: 0
         width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 35
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45714286}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d9e2cc7dee313d910800000000000000
-      internalID: 1860852987577773725
+      spriteID: d130d8c29f8aa2d00800000000000000
+      internalID: 948756459662672669
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: legionnaire_red_die_32x32_5
+      name: legionnaire_red_die_32x35_5
       rect:
         serializedVersion: 2
         x: 160
         y: 0
         width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 35
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45714286}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 02588986089c55f10800000000000000
-      internalID: 2257932341543994656
+      spriteID: eb7194e6075f875a0800000000000000
+      internalID: -6523194197010737218
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: legionnaire_red_die_32x32_6
+      name: legionnaire_red_die_32x35_6
       rect:
         serializedVersion: 2
         x: 192
         y: 0
         width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 35
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45714286}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c87dd963787d0e3a0800000000000000
-      internalID: -6638068875007240308
+      spriteID: fdf11795fb1d49120800000000000000
+      internalID: 2419789519574343647
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: legionnaire_red_die_32x32_7
+      name: legionnaire_red_die_32x35_7
       rect:
         serializedVersion: 2
         x: 224
         y: 0
         width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 35
+      alignment: 9
+      pivot: {x: 0.5, y: 0.45714286}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f9f911c94c60e5d20800000000000000
-      internalID: 3269057821019316127
+      spriteID: d27b655c4f658f4e0800000000000000
+      internalID: -1947711229554936019
       vertices: []
       indices: 
       edges: []
