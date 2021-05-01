@@ -95,7 +95,10 @@ public abstract class Unit_Base : MonoBehaviour
 
         if (HasAttackTarget)
         {
-            Gizmos.DrawLine(transform.position, m_pursuer.target.transform.position);
+            if (m_pursuer.target != null)
+            {
+                Gizmos.DrawLine(transform.position, m_pursuer.target.transform.position);
+            }
 
             Gizmos.color = Color.yellow;
             Gizmos.DrawLine(transform.position, m_pursuer.MoveTarget);

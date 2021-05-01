@@ -4,6 +4,9 @@ using UnityEngine;
 public class Player_UnitMoveController : MonoBehaviour
 {
     public UI_HudManager hudManager;
+    public VisibilityManager visibilityManager;
+    public Player_Controller enemyController;   // TODO: replace with visibility manager spatializer
+
     [SerializeField] private SelectableManager m_selectableManager;
     [SerializeField] private DamageableManager m_damageableManager;
     [SerializeField] private Renderer m_mapRenderer;
@@ -36,41 +39,56 @@ public class Player_UnitMoveController : MonoBehaviour
         }
 
         // Force attack cursor on building hack
-        RaycastHit2D hit = Physics2D.Raycast(m_mainCam.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, 1 << LayerMask.NameToLayer("Building"));
+        RaycastHit2D hit = Physics2D.Raycast(m_mainCam.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, 1 << LayerMask.NameToLayer("Selectable"));
 
         if (hit.collider != null)
         {
-            var health = hit.collider.gameObject.GetComponent<Building_Health>();
+            Player_Controller.Building hitBuilding = null;
 
-            if (health != null && health.Faction == FactionType.Enemy)
+            foreach (var building in visibilityManager.VisibleBuildings)
             {
-                hudManager.ChangeCursor(UI_HudManager.CursorType.Attack);
-
-                List<GameObject> curSelectedUnits = new List<GameObject>(m_selectableManager.GetCurrentSelectedObjects());
-
-                for (int i = 0; i < curSelectedUnits.Count; i++)
+                if(building.selectable.SelectableGameObject == hit.collider)
                 {
-                    curSelectedUnits[i].GetComponent<Unit_Base>().SetAttackTarget(health);
+                    hitBuilding = building;
                 }
             }
-            else
+
+            if (hitBuilding != null)
             {
-                Building_Resource resourceBuilding = hit.collider.gameObject.GetComponent<Building_Resource>();
+                Building_Base building = hitBuilding.selectable as Building_Base;
 
-                if (resourceBuilding != null && resourceBuilding.ownerFaction != FactionType.Player)
+                if (building.spriteRenderer.enabled)
                 {
-                    hudManager.ChangeCursor(UI_HudManager.CursorType.Capture);
-
-                    List<GameObject> curSelectedUnits = new List<GameObject>(m_selectableManager.GetCurrentSelectedObjects());
-
-                    for (int i = 0; i < curSelectedUnits.Count; i++)
+                    if (!(building is Building_Resource))
                     {
-                        curSelectedUnits[i].GetComponent<Unit_Base>().SetMoveTarget(resourceBuilding.transform.position);
-                        curSelectedUnits[i].GetComponent<Unit_Base>().SetState(Unit_Base.UnitStateType.Move);
+                        hudManager.ChangeCursor(UI_HudManager.CursorType.Attack);
+
+                        List<GameObject> curSelectedUnits = new List<GameObject>(m_selectableManager.GetCurrentSelectedObjects());
+
+                        for (int i = 0; i < curSelectedUnits.Count; i++)
+                        {
+                            curSelectedUnits[i].GetComponent<Unit_Base>().SetAttackTarget(building.health);
+                        }
+                    }
+                    else
+                    {
+                        Building_Resource resourceBuilding = hit.collider.gameObject.GetComponent<Building_Resource>();
+
+                        if (resourceBuilding != null && resourceBuilding.ownerFaction != FactionType.Player)
+                        {
+                            hudManager.ChangeCursor(UI_HudManager.CursorType.Capture);
+
+                            List<GameObject> curSelectedUnits = new List<GameObject>(m_selectableManager.GetCurrentSelectedObjects());
+
+                            for (int i = 0; i < curSelectedUnits.Count; i++)
+                            {
+                                curSelectedUnits[i].GetComponent<Unit_Base>().SetMoveTarget(resourceBuilding.transform.position);
+                                curSelectedUnits[i].GetComponent<Unit_Base>().SetState(Unit_Base.UnitStateType.Move);
+                            }
+                        }
                     }
                 }
             }
-
             return;
         }
         // ~hack
@@ -97,9 +115,20 @@ public class Player_UnitMoveController : MonoBehaviour
             Vector3 hitPos = camRay.GetPoint(dist);
             hitPos.z = 0;
 
-            List<IDamageable> hits = new List<IDamageable>(m_damageableManager.GetAtPosition(hitPos, checkEnemiesRadius, FactionType.Enemy));
+            var hits = enemyController.UnitPositions.Find(hitPos, Vector2.one * radiusPerUnit);
+            List<IDamageable> hitDamageables = new List<IDamageable>();
 
-            if (hits.Count > 0)
+            foreach (var node in hits)
+            {
+                Unit_Base unit = enemyController.UnitsByPosition[node];
+
+                if(visibilityManager.VisibleUnits.Contains(unit))
+                {
+                    hitDamageables.Add(unit.health);
+                }
+            }
+
+            if (hitDamageables.Count > 0)
             {
                 if (curSelectedUnits.Count > 0)
                 {
@@ -110,10 +139,10 @@ public class Player_UnitMoveController : MonoBehaviour
                 {
                     for (int i = 0; i < curSelectedUnits.Count; i++)
                     {
-                        Vector2 enemyPos = hits[i % hits.Count].DamageableGameObject.transform.position;
+                        Vector2 enemyPos = hitDamageables[i % hits.Count].DamageableGameObject.transform.position;
                         List<Vector2> formationPositions = Formations.GetPositionListCircle(enemyPos, new float[] { 1f, 2f, 3f, 4f, 5f }, new int[] { 5, 10, 20, 40, 60 });
                         Unit_Base unit = curSelectedUnits[i] as Unit_Base;
-                        unit.SetAttackTarget(hits[0]);
+                        unit.SetAttackTarget(hitDamageables[i % hits.Count]);
                         unit.SetMoveTarget(Formations.GetAdjustedPosition(formationPositions[i], unit, unit.circleCollider.radius * 1.5f));
                         unit.SetState(Unit_Base.UnitStateType.Move);
                     }

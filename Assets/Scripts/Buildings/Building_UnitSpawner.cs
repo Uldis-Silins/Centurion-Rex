@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Building_UnitSpawner : MonoBehaviour, ISelecteble
+public class Building_UnitSpawner : Building_Base
 {
     public UnitData[] units;
 
@@ -12,14 +12,8 @@ public class Building_UnitSpawner : MonoBehaviour, ISelecteble
 
     public AudioSource audioSource;
 
-    [SerializeField] private Player_Controller m_playerController;
-    [SerializeField] private GameObject m_selectableObject;
-
     private Queue<int> m_buildQueue;
     private float m_buildTimer;
-
-    public bool IsSelected { get; protected set; }
-    public GameObject SelectableGameObject { get { return m_selectableObject; } }
 
     private void Awake()
     {
@@ -72,6 +66,11 @@ public class Building_UnitSpawner : MonoBehaviour, ISelecteble
                     moveTarget.position = camRay.GetPoint(enter);
                 }
             }
+        }
+
+        if (m_playerController.ownedByPlayer)
+        {
+            moveTargetSprite.enabled = IsSelected;
         }
     }
 
@@ -132,20 +131,6 @@ public class Building_UnitSpawner : MonoBehaviour, ISelecteble
         }
 
         return null;
-    }
-
-    public void Select()
-    {
-        IsSelected = true;
-
-        moveTargetSprite.enabled = true;
-    }
-
-    public void Deselect()
-    {
-        IsSelected = false;
-
-        moveTargetSprite.enabled = false;
     }
 
     private Vector2 GetAdjustedPosition(Vector3 worldPosition, float checkRadius, float distance = 0f)

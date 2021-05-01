@@ -61,7 +61,7 @@ public class AI_Strategy : MonoBehaviour
 
         foreach (var unit in m_unitsByCommand[commandIndex])
         {
-            unit.SetMoveTarget((Vector2)enemyController.ownedBuildings[0].selectable.transform.position + Random.insideUnitCircle * 10.0f);
+            unit.SetMoveTarget((Vector2)enemyController.ownedBuildings[0].gameObject.transform.position + Random.insideUnitCircle * 10.0f);
             unit.SetState(Unit_Base.UnitStateType.Move);
         }
     }

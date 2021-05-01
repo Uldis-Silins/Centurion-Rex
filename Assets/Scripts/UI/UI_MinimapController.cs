@@ -48,7 +48,7 @@ public class UI_MinimapController : MonoBehaviour
 
         for (int i = 0; i < playerController.ownedBuildings.Count; i++)
         {
-            DrawMarker(playerController.ownedBuildings[i].selectable.transform.position, buildingMarkerSize, playerMarkerColor);
+            DrawMarker(playerController.ownedBuildings[i].gameObject.transform.position, buildingMarkerSize, playerMarkerColor);
         }
 
         foreach (var unit in visibilityManager.VisibleUnits)
@@ -58,7 +58,7 @@ public class UI_MinimapController : MonoBehaviour
 
         foreach (var building in visibilityManager.VisibleBuildings)
         {
-            DrawMarker(building.transform.position, buildingMarkerSize, enemyMarkerColor);
+            DrawMarker(building.gameObject.transform.position, buildingMarkerSize, enemyMarkerColor);
         }
 
         m_targetTexture.Apply();

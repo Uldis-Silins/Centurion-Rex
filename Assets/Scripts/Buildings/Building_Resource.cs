@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class Building_Resource : MonoBehaviour
+public class Building_Resource : Building_Base
 {
     [System.Serializable]
     public class FactionSprite
@@ -11,8 +11,8 @@ public class Building_Resource : MonoBehaviour
     }
 
     public List<Player_Controller> playerControllers;
+    public SelectableManager selectableManager;
 
-    public SpriteRenderer spriteRenderer;
     public FactionSprite[] factionSprites;
 
     public FactionType ownerFaction;
@@ -28,11 +28,16 @@ public class Building_Resource : MonoBehaviour
 
     private void Awake()
     {
-        m_building = new Player_Controller.Building(gameObject, BuildingType.ResourceProduction);
+        m_building = new Player_Controller.Building(this, BuildingType.ResourceProduction);
     }
 
     private void Start()
     {
+        if(ownerFaction == FactionType.None)
+        {
+            selectableManager.RegisterSelectable(this);
+        }
+
         if(ownerFaction != FactionType.Player)
         {
             fovObject.SetActive(false);
@@ -63,7 +68,7 @@ public class Building_Resource : MonoBehaviour
         {
             for (int i = m_currentPlayerController.ownedBuildings.Count - 1; i >= 0; i--)
             {
-                if(m_currentPlayerController.ownedBuildings[i].selectable = gameObject)
+                if(m_currentPlayerController.ownedBuildings[i].selectable == (this as ISelecteble))
                 {
                     m_currentPlayerController.ownedBuildings.RemoveAt(i);
                     break;

@@ -13,14 +13,18 @@ public class UI_HudManager : MonoBehaviour
     }
 
     public Canvas hudCanvas;
-    public UI_UnitSelectionRect selectionRectPrefab;
+    public UI_UnitSelectionRect unitSelectionRectPrefab;
+    public UI_UnitSelectionRect buildingSelectionRectPrefab;
 
     public SelectableManager selectableManager;
 
     public CursorSprite[] cursorSprites;
 
     private List<UI_UnitSelectionRect> m_spawnedSelectionRects;
-    private List<Unit_Base> m_currentSelectebles;
+    private List<Unit_Base> m_currentSelectedUnits;
+
+    private UI_UnitSelectionRect m_buildingSelectionRect;
+    private ISelecteble m_currentSelectedBuilding;
 
     private Camera m_mainCam;
 
@@ -32,22 +36,33 @@ public class UI_HudManager : MonoBehaviour
         m_spawnedSelectionRects = new List<UI_UnitSelectionRect>();
     }
 
+    private void Start()
+    {
+        m_buildingSelectionRect = Instantiate(buildingSelectionRectPrefab, hudCanvas.transform);
+        m_buildingSelectionRect.gameObject.SetActive(false);
+    }
+
     private void LateUpdate()
     {
-        if(m_currentSelectebles != null)
+        if(m_currentSelectedUnits != null)
         {
-            UpdateSelectionRects();
+            UpdateUnitSelectionRects();
 
-            if(m_currentSelectebles.Count != selectableManager.CurrentSelectedCount)
+            if(m_currentSelectedUnits.Count != selectableManager.CurrentSelectedCount)
             {
                 OnSelectionChanged();
             }
+        }
+
+        if (m_currentSelectedBuilding != null)
+        {
+            UpdateBuildingSelectionRects();
         }
     }
 
     public void SelectUnits(List<Unit_Base> selectables)
     {
-        m_currentSelectebles = selectables;
+        m_currentSelectedUnits = selectables;
 
         for (int i = 0; i < m_spawnedSelectionRects.Count; i++)
         {
@@ -63,23 +78,38 @@ public class UI_HudManager : MonoBehaviour
         }
         else
         {
-            if(m_currentSelectebles.Count > m_spawnedSelectionRects.Count)
+            if(m_currentSelectedUnits.Count > m_spawnedSelectionRects.Count)
             {
-                int count = m_currentSelectebles.Count - m_spawnedSelectionRects.Count;
+                int count = m_currentSelectedUnits.Count - m_spawnedSelectionRects.Count;
 
                 for (int i = 0; i < count; i++)
                 {
-                    m_spawnedSelectionRects.Add(Instantiate<UI_UnitSelectionRect>(selectionRectPrefab, hudCanvas.transform));
+                    m_spawnedSelectionRects.Add(Instantiate<UI_UnitSelectionRect>(unitSelectionRectPrefab, hudCanvas.transform));
                 }
             }
 
-            for (int i = 0; i < m_currentSelectebles.Count; i++)
+            for (int i = 0; i < m_currentSelectedUnits.Count; i++)
             {
                 m_spawnedSelectionRects[i].gameObject.SetActive(true);
                 //m_spawnedSelectionRects[i].selectionRect.rectTransform.sizeDelta = new Vector2(m_currentSelectebles[i].soldierRenderer.sprite.texture.width, m_currentSelectebles[i].soldierRenderer.sprite.texture.height);
             }
 
-            UpdateSelectionRects();
+            UpdateUnitSelectionRects();
+        }
+    }
+
+    public void SelectBuilding(ISelecteble buildingSelectable)
+    {
+        if(buildingSelectable == null)
+        {
+            m_buildingSelectionRect.gameObject.SetActive(false);
+            m_currentSelectedBuilding = null;
+        }
+        else
+        {
+            m_currentSelectedBuilding = buildingSelectable;
+            m_buildingSelectionRect.gameObject.SetActive(true);
+            UpdateBuildingSelectionRects();
         }
     }
 
@@ -126,18 +156,37 @@ public class UI_HudManager : MonoBehaviour
         }
     }
 
-    private void UpdateSelectionRects()
+    private void UpdateUnitSelectionRects()
     {
-        for (int i = 0; i < m_currentSelectebles.Count; i++)
+        const float HEALTH_BAR_THICKNESS = 5f;
+
+        for (int i = 0; i < m_currentSelectedUnits.Count; i++)
         {
-            Unit_Base curSelected = m_currentSelectebles[i];
-            (m_spawnedSelectionRects[i].transform as RectTransform).anchoredPosition = m_mainCam.WorldToScreenPoint(curSelected.soldierRenderer.transform.position);
-            m_spawnedSelectionRects[i].selectionRect.rectTransform.sizeDelta = curSelected.soldierRenderer.sprite.pixelsPerUnit * curSelected.transform.localScale * 0.5f;
+            Unit_Base curSelected = m_currentSelectedUnits[i];
+            (m_spawnedSelectionRects[i].transform as RectTransform).anchoredPosition = m_mainCam.WorldToScreenPoint(curSelected.soldierRenderer.bounds.center);
+            m_spawnedSelectionRects[i].selectionRect.rectTransform.sizeDelta = curSelected.soldierRenderer.bounds.size * curSelected.soldierRenderer.sprite.pixelsPerUnit * 0.25f;
 
             float width = m_spawnedSelectionRects[i].selectionRect.rectTransform.sizeDelta.x;
-            m_spawnedSelectionRects[i].healthBar.rectTransform.sizeDelta = new Vector2(width, width * 0.1f);
+            m_spawnedSelectionRects[i].healthBar.rectTransform.sizeDelta = new Vector2(width, HEALTH_BAR_THICKNESS);
 
-            m_spawnedSelectionRects[i].SetHealthBar(m_currentSelectebles[i].health.CurrentHealth, m_currentSelectebles[i].health.maxHealth);
+            m_spawnedSelectionRects[i].SetHealthBar(m_currentSelectedUnits[i].health.CurrentHealth, m_currentSelectedUnits[i].health.maxHealth);
+        }
+    }
+
+    private void UpdateBuildingSelectionRects()
+    {
+        Building_Base building = m_currentSelectedBuilding as Building_Base;
+        (m_buildingSelectionRect.transform as RectTransform).anchoredPosition = m_mainCam.WorldToScreenPoint(building.spriteRenderer.bounds.center);
+        m_buildingSelectionRect.selectionRect.rectTransform.sizeDelta = building.spriteRenderer.bounds.size * building.spriteRenderer.sprite.pixelsPerUnit * 0.25f;
+        m_buildingSelectionRect.healthBar.gameObject.SetActive(building.health != null);
+
+        if (building.health != null)
+        {
+            const float HEALTH_BAR_THICKNESS = 10f;
+            float width = m_buildingSelectionRect.selectionRect.rectTransform.sizeDelta.x;
+            m_buildingSelectionRect.healthBar.rectTransform.sizeDelta = new Vector2(width, HEALTH_BAR_THICKNESS);
+
+            m_buildingSelectionRect.SetHealthBar(building.health.CurrentHealth, building.health.maxHealth);
         }
     }
 }

@@ -11,12 +11,12 @@ public class VisibilityManager : MonoBehaviour
     private List<FOVElement> m_fovElements;
 
     public HashSet<Unit_Base> VisibleUnits { get; private set; }
-    public HashSet<GameObject> VisibleBuildings { get; private set; }
+    public HashSet<Player_Controller.Building> VisibleBuildings { get; private set; }
 
     private void Awake()
     {
         m_fovElements = new List<FOVElement>(GameObject.FindObjectsOfType<FOVElement>());
-        VisibleBuildings = new HashSet<GameObject>();
+        VisibleBuildings = new HashSet<Player_Controller.Building>();
         VisibleUnits = new HashSet<Unit_Base>();
     }
 
@@ -32,6 +32,11 @@ public class VisibilityManager : MonoBehaviour
             enemyController.OwnedUnits[i].soldierRenderer.enabled = false;
         }
 
+        for (int i = 0; i < enemyController.ownedBuildings.Count; i++)
+        {
+            (enemyController.ownedBuildings[i].selectable as Building_Base).spriteRenderer.enabled = false;
+        }
+
         for (int i = 0; i < playerController.OwnedUnits.Count; i++)
         {
             for (int j = 0; j < enemyController.OwnedUnits.Count; j++)
@@ -45,9 +50,10 @@ public class VisibilityManager : MonoBehaviour
 
             for (int j = 0; j < enemyController.ownedBuildings.Count; j++)
             {
-                if(Vector2.Distance(playerController.OwnedUnits[i].transform.position, enemyController.ownedBuildings[j].selectable.transform.position) <= playerController.OwnedUnits[i].visionDistance)
+                if(Vector2.Distance(playerController.OwnedUnits[i].transform.position, enemyController.ownedBuildings[j].gameObject.transform.position) <= playerController.OwnedUnits[i].visionDistance)
                 {
-                    VisibleBuildings.Add(enemyController.ownedBuildings[j].selectable);
+                    (enemyController.ownedBuildings[i].selectable as Building_Base).spriteRenderer.enabled = true;
+                    VisibleBuildings.Add(enemyController.ownedBuildings[j]);
                 }
             }
         }
