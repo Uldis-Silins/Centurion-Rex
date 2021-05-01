@@ -51,7 +51,7 @@ public class NavigationController : MonoBehaviour
             gridOffset.z = 0;
         }
 
-        CreateFlowField();
+        InitializeFlowField();
     }
 
     private void OnDrawGizmosSelected()
@@ -132,7 +132,7 @@ public class NavigationController : MonoBehaviour
     }
 
     // Template
-    private void CreateFlowField()
+    private void InitializeFlowField()
     {
         Vector2Int size = useTileGridSize ? new Vector2Int(tileGrid.cellBounds.size.x, tileGrid.cellBounds.size.y) : manualGridSize;
         Vector2Int gridSize = size;
@@ -149,12 +149,22 @@ public class NavigationController : MonoBehaviour
         if (!m_cahcedFields.ContainsKey(hash))
         {
             Debug.Log("creating hash: " + hash);
+            System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+            sw.Start();
             FlowField field = new FlowField(m_flowField);
+            sw.Stop();
+            Debug.Log("FlowField cop took " + sw.ElapsedMilliseconds);
             m_cahcedFields.Add(hash, field);
             toPosition += gridOffset;
             FlowField.Cell destinationCell = field.GetCell(toPosition);
+            sw.Start();
             field.CreateIntegrationField(destinationCell);
+            sw.Stop();
+            Debug.Log("CreateIndegrationField took " + sw.ElapsedMilliseconds);
+            sw.Start();
             field.CreateFlowField();
+            sw.Stop();
+            Debug.Log("CreateFlowField took " + sw.ElapsedMilliseconds);
             return field;
         }
         else
