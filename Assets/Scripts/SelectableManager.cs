@@ -85,7 +85,7 @@ public class SelectableManager : MonoBehaviour
     {
         for (int i = 0; i < m_registeredSelectables.Count; i++)
         {
-            if(m_registeredSelectables[i].SelectableGameObject == obj)
+            if((m_registeredSelectables[i] as MonoBehaviour).gameObject == obj || m_registeredSelectables[i].SelectableGameObject == obj)
             {
                 return m_registeredSelectables[i];
             }
