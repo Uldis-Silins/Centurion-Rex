@@ -61,7 +61,7 @@ MonoBehaviour:
   health: {fileID: 8387221090912806377}
   unitType: 3
   soldierRenderer: {fileID: 4095252138988724114}
-  circleCollider: {fileID: 0}
+  circleCollider: {fileID: 3143130226508708588}
   soundSource: {fileID: 6416145593999371635}
   walkClip: {fileID: 8300000, guid: f58121c216e48c34bbec4a26561c473b, type: 3}
   attackClip: {fileID: 8300000, guid: 4174110c4a3c3fd4182e67b7d1420881, type: 3}
@@ -76,7 +76,10 @@ MonoBehaviour:
   attackDistance: 5
   attackDamage: 5
   attacksDelay: 0.5
-  fireParticles: {fileID: 3401896824103507720}
+  fireParticleParent: {fileID: 0}
+  fireParticles:
+  - {fileID: 0}
+  m_selectableObject: {fileID: 0}
 --- !u!114 &8387221090912806377
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -155,6 +158,7 @@ MonoBehaviour:
   maxAngularAccel: 5
   targetRadius: 0.1
   slowRadius: 0.1
+  cellRadius: 2
   timeToTarget: 0.1
   flowField:
     gridSize: {x: 0, y: 0}
@@ -190,6 +194,7 @@ MonoBehaviour:
   avoidanceLayers:
     serializedVersion: 2
     m_Bits: 4608
+  tickRate: 0.2
 --- !u!114 &2550907137768932704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,11 +235,11 @@ MonoBehaviour:
   maxAccel: 50
   maxRotation: 5
   maxAngularAccel: 5
-  radius: 0.5
-  tickRate: 0.2
+  checkRadius: 0.5
   unitLayers:
     serializedVersion: 2
     m_Bits: 0
+  tickRate: 0.2
 --- !u!82 &6416145593999371635
 AudioSource:
   m_ObjectHideFlags: 0
@@ -402,7 +407,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_spriteRenderer: {fileID: 4095252138988724114}
-  m_animationData: {fileID: 11400000, guid: 4b9660430626a1d418127d08e2696ee9, type: 2}
+  m_animationData: {fileID: 11400000, guid: 7d13e283e65564f42aa442d9a8c49d4f, type: 2}
   m_currentAnimationType: 1
 --- !u!50 &8432720919428396585
 Rigidbody2D:
@@ -512,7 +517,7 @@ SpriteRenderer:
   m_SortingLayerID: -1997730693
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: -3478792775534731743, guid: 751bbc76793302b43bef91896e80822d,
+  m_Sprite: {fileID: 2333895362554088190, guid: cf978866f39790e4ea5f61a8ef5ba5e3,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -613,12 +618,6 @@ PrefabInstance:
 --- !u!4 &1519150361605317112 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7405806309891563562, guid: faf715baee2d4864e9dadab5deeb7090,
-    type: 3}
-  m_PrefabInstance: {fileID: 8346206595042689490}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &3401896824103507720 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 6694136365316232922, guid: faf715baee2d4864e9dadab5deeb7090,
     type: 3}
   m_PrefabInstance: {fileID: 8346206595042689490}
   m_PrefabAsset: {fileID: 0}

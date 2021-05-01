@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: deaf0b8d6b1577f439c32eeb938e4fdc, type: 3}
   m_Name: EnemyRaptor
   m_EditorClassIdentifier: 
+  faction: 2
   type: 2
   unitPrefab: {fileID: 7932924578175232700, guid: 3fba0a9ce9655664faaaa1afcebcef6e,
     type: 3}
+  price: 30
+  buildTime: 5

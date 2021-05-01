@@ -232,13 +232,13 @@ public class Player_Controller : MonoBehaviour
         if (ownedByPlayer)
         {
             uiManager.wineAmountText.text = currentResources.ToString();
-        }
 
-        for (int i = 0; i < unitData.Length; i++)
-        {
-            uiManager.buyUnitsButtons[i].interactable = unitData[i].price <= currentResources;
-            uiManager.buyUnitsButtons[i].transform.GetChild(0).GetComponent<UnityEngine.UI.Image>().color = unitData[i].price <= currentResources ? Color.white : Color.gray;
-        }
+            for (int i = 0; i < unitData.Length; i++)
+            {
+                uiManager.buyUnitsButtons[i].interactable = unitData[i].price <= currentResources;
+                uiManager.buyUnitsButtons[i].transform.GetChild(0).GetComponent<UnityEngine.UI.Image>().color = unitData[i].price <= currentResources ? Color.white : Color.gray;
+            }
+        }   
     }
 
     public List<ISelecteble> GetOwnedBuildingsByType(BuildingType type)

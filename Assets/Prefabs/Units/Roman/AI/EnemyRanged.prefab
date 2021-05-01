@@ -78,6 +78,7 @@ MonoBehaviour:
   accuracy: 1
   projectilePrefab: {fileID: 8186089749701993020, guid: 65e3b98f1b3600847b4a220bfc85334a,
     type: 3}
+  m_selectableObject: {fileID: 0}
 --- !u!114 &4036118042232991758
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,6 +157,7 @@ MonoBehaviour:
   maxAngularAccel: 5
   targetRadius: 0.1
   slowRadius: 0.1
+  cellRadius: 2
   timeToTarget: 0.1
   flowField:
     gridSize: {x: 0, y: 0}
@@ -191,6 +193,7 @@ MonoBehaviour:
   avoidanceLayers:
     serializedVersion: 2
     m_Bits: 4608
+  tickRate: 0.2
 --- !u!114 &6674461994962403893
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -231,11 +234,11 @@ MonoBehaviour:
   maxAccel: 50
   maxRotation: 5
   maxAngularAccel: 5
-  radius: 0.5
-  tickRate: 0.2
+  checkRadius: 0.5
   unitLayers:
     serializedVersion: 2
     m_Bits: 1024
+  tickRate: 0.2
 --- !u!82 &-5686660868666005280
 AudioSource:
   m_ObjectHideFlags: 0

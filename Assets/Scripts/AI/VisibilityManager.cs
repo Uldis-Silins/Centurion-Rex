@@ -52,7 +52,7 @@ public class VisibilityManager : MonoBehaviour
             {
                 if(Vector2.Distance(playerController.OwnedUnits[i].transform.position, enemyController.ownedBuildings[j].gameObject.transform.position) <= playerController.OwnedUnits[i].visionDistance)
                 {
-                    (enemyController.ownedBuildings[i].selectable as Building_Base).spriteRenderer.enabled = true;
+                    (enemyController.ownedBuildings[j].selectable as Building_Base).spriteRenderer.enabled = true;
                     VisibleBuildings.Add(enemyController.ownedBuildings[j]);
                 }
             }

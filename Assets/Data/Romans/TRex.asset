@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: deaf0b8d6b1577f439c32eeb938e4fdc, type: 3}
   m_Name: TRex
   m_EditorClassIdentifier: 
+  faction: 0
   type: 3
   unitPrefab: {fileID: 4095252137840500702, guid: 7f36f31d670f539419aaaacfd3562186,
     type: 3}
-  price: 500
-  buildTime: 8
+  price: 60
+  buildTime: 7

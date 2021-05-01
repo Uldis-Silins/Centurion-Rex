@@ -30,13 +30,17 @@ public class Building_UnitSpawner : Building_Base
 
     private void Update()
     {
-        if (m_playerController.ownedByPlayer && m_buildQueue.Count > 0)
+        if (m_buildQueue.Count > 0)
         {
             if (m_buildTimer <= 0f)
             {
                 int unitIndex = m_buildQueue.Dequeue();
                 Spawn(unitIndex);
-                m_playerController.uiManager.RemoveUnitToQueue(unitIndex);
+
+                if (m_playerController.ownedByPlayer)
+                {
+                    m_playerController.uiManager.RemoveUnitToQueue(unitIndex);
+                }
 
                 if (m_buildQueue.Count > 0)
                 {
@@ -44,7 +48,7 @@ public class Building_UnitSpawner : Building_Base
                 }
             }
 
-            if (m_buildQueue.Count > 0)
+            if (m_playerController.ownedByPlayer && m_buildQueue.Count > 0)
             {
                 m_playerController.uiManager.UpdateBuyUnitFill(m_buildQueue.Peek(), m_buildTimer / units[m_buildQueue.Peek()].buildTime);
             }
@@ -52,7 +56,7 @@ public class Building_UnitSpawner : Building_Base
             m_buildTimer -= Time.deltaTime;
         }
 
-        if(IsSelected)
+        if(m_playerController.ownedByPlayer && IsSelected)
         {
             if(Input.GetMouseButtonUp(1))
             {
@@ -76,22 +80,20 @@ public class Building_UnitSpawner : Building_Base
 
     public void OnSpawnUnitClick(int unitIndex)
     {
-        if (m_playerController.ownedByPlayer)
-        {
-            if (m_playerController.currentResources >= units[unitIndex].price)
-            {
-                if (m_buildQueue.Count == 0)
-                {
-                    m_buildTimer = units[unitIndex].buildTime;
-                }
 
-                m_buildQueue.Enqueue(unitIndex);
+        if (m_playerController.currentResources >= units[unitIndex].price)
+        {
+            if (m_buildQueue.Count == 0)
+            {
+                m_buildTimer = units[unitIndex].buildTime;
+            }
+
+            m_buildQueue.Enqueue(unitIndex);
+
+            if (m_playerController.ownedByPlayer)
+            {
                 m_playerController.uiManager.AddUnitToQueue(unitIndex);
             }
-        }
-        else
-        {
-            Spawn(unitIndex);
         }
     }
 
@@ -103,7 +105,7 @@ public class Building_UnitSpawner : Building_Base
         {
             spawned.unitType = units[unitIndex].type;
             m_playerController.AddToOwnedUnits(spawned);
-            Vector2 adjustedPosition = GetAdjustedPosition(moveTarget.position, spawned.circleCollider.radius);
+            Vector2 adjustedPosition = Formations.GetAdjustedPosition(moveTarget.position, spawned, spawned.circleCollider.radius);
             spawned.SetMoveTarget(adjustedPosition);
             spawned.SetState(Unit_Base.UnitStateType.Move);
 
@@ -131,58 +133,5 @@ public class Building_UnitSpawner : Building_Base
         }
 
         return null;
-    }
-
-    private Vector2 GetAdjustedPosition(Vector3 worldPosition, float checkRadius, float distance = 0f)
-    {
-        Vector2 adjustedPosition = worldPosition + (worldPosition - transform.position).normalized * distance;
-
-        LayerMask mask = LayerMask.GetMask("Unit", "Obstacle", "Building");
-
-        Collider2D[] hits = Physics2D.OverlapCircleAll(adjustedPosition, checkRadius, mask);
-
-        if (hits.Length == 0)
-        {
-            return adjustedPosition;
-        }
-
-        List<Vector2> circlePositions = GetPositionListCircle(adjustedPosition, checkRadius * 3.0f, 12);
-
-        for (int i = 0; i < circlePositions.Count; i++)
-        {
-            if ((hits = Physics2D.OverlapCircleAll(circlePositions[i], checkRadius, mask)).Length == 0)
-            {
-                return circlePositions[i];
-            }
-        }
-
-        return adjustedPosition + new Vector2(Random.insideUnitCircle.x * hits.Length * checkRadius, Random.insideUnitCircle.y * hits.Length * checkRadius);
-    }
-
-    private List<Vector2> GetPositionListCircle(Vector2 startPos, float[] dist, int[] posCount)
-    {
-        List<Vector2> positions = new List<Vector2>();
-        positions.Add(startPos);
-
-        for (int i = 0; i < dist.Length; i++)
-        {
-            positions.AddRange(GetPositionListCircle(startPos, dist[i], posCount[i]));
-        }
-
-        return positions;
-    }
-
-    private List<Vector2> GetPositionListCircle(Vector2 startPos, float dist, int posCount)
-    {
-        List<Vector2> positions = new List<Vector2>();
-
-        for (int i = 0; i < posCount; i++)
-        {
-            float angle = i * (360f / posCount);
-            Vector2 dir = Quaternion.Euler(0f, 0f, angle) * Vector3.right;
-            positions.Add(startPos + dir * dist);
-        }
-
-        return positions;
     }
 }

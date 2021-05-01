@@ -22,7 +22,6 @@ GameObject:
   - component: {fileID: 424954229235121098}
   - component: {fileID: 6276870967286039075}
   - component: {fileID: 6549670665910155841}
-  - component: {fileID: 3936014580881852320}
   m_Layer: 10
   m_Name: Raptor
   m_TagString: Untagged
@@ -43,6 +42,7 @@ Transform:
   m_Children:
   - {fileID: 4884607227775040790}
   - {fileID: 4884607226922222838}
+  - {fileID: 5444319083339142009}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -72,14 +72,15 @@ MonoBehaviour:
   m_seeker: {fileID: 1049130474692183050}
   m_avoider: {fileID: 6924561660754553123}
   m_obstacleAvoider: {fileID: -5203476320056888525}
-  m_pursuer: {fileID: 0}
-  m_separator: {fileID: 0}
+  m_pursuer: {fileID: 5481669827955013788}
+  m_separator: {fileID: -6240033588460035018}
   attackDistance: 10
   attackDamage: 5
   attacksDelay: 0.5
   accuracy: 1
   projectilePrefab: {fileID: 8186089749701993020, guid: 65e3b98f1b3600847b4a220bfc85334a,
     type: 3}
+  m_selectableObject: {fileID: 6026764912960982489}
 --- !u!114 &1575660922224551913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,7 +95,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   owningFaction: 1
-  ragdoll: {fileID: 1927671764241883233, guid: 91881c21356601d4eae624c1b21a4069, type: 3}
+  ragdoll: {fileID: 6026764912960982489}
   m_sprite: {fileID: 4884607227775040791}
 --- !u!114 &2487764914265873965
 MonoBehaviour:
@@ -158,6 +159,7 @@ MonoBehaviour:
   maxAngularAccel: 5
   targetRadius: 0.1
   slowRadius: 0.1
+  cellRadius: 2
   timeToTarget: 0.1
   flowField:
     gridSize: {x: 0, y: 0}
@@ -193,6 +195,7 @@ MonoBehaviour:
   avoidanceLayers:
     serializedVersion: 2
     m_Bits: 4608
+  tickRate: 0.2
 --- !u!114 &5481669827955013788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -233,11 +236,11 @@ MonoBehaviour:
   maxAccel: 50
   maxRotation: 5
   maxAngularAccel: 5
-  radius: 0.5
-  tickRate: 0.2
+  checkRadius: 0.5
   unitLayers:
     serializedVersion: 2
     m_Bits: 1024
+  tickRate: 0.2
 --- !u!82 &623293730294965364
 AudioSource:
   m_ObjectHideFlags: 0
@@ -444,22 +447,6 @@ CircleCollider2D:
   m_Offset: {x: 0.03, y: 0.18}
   serializedVersion: 2
   m_Radius: 0.25
---- !u!70 &3936014580881852320
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4884607226475887963}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.75}
-  m_Size: {x: 0.74, y: 1.21}
-  m_Direction: 0
 --- !u!1 &4884607226922222833
 GameObject:
   m_ObjectHideFlags: 0
@@ -639,3 +626,50 @@ MonoBehaviour:
   offset: 0
   m_tickRate: 0.2
   updateSorting: 1
+--- !u!1 &6026764912960982489
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5444319083339142009}
+  - component: {fileID: 218426913399366042}
+  m_Layer: 13
+  m_Name: Selectable
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5444319083339142009
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6026764912960982489}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4884607226475887960}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!70 &218426913399366042
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6026764912960982489}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.83}
+  m_Size: {x: 0.5, y: 1.19}
+  m_Direction: 0

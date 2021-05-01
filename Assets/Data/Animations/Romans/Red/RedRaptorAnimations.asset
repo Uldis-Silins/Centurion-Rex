@@ -38,7 +38,16 @@ MonoBehaviour:
       frameCount: 4
     playbackSpeedModifier: 1
   - type: 3
-    frames: []
+    frames:
+    - frameSprites:
+      - {fileID: -2582994226601125973, guid: 48fe3cd8925158e4b955e489e1f1be39, type: 3}
+      - {fileID: 2359555877387060881, guid: 48fe3cd8925158e4b955e489e1f1be39, type: 3}
+      - {fileID: -1325312639953060414, guid: 48fe3cd8925158e4b955e489e1f1be39, type: 3}
+      - {fileID: -178858188918448431, guid: 48fe3cd8925158e4b955e489e1f1be39, type: 3}
+      frameTime: 0.2
+      flipX: 1
+      flipY: 0
+      frameCount: 4
     playbackSpeedModifier: 1
   - type: 4
     frames:

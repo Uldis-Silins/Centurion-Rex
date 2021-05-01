@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: deaf0b8d6b1577f439c32eeb938e4fdc, type: 3}
   m_Name: EnemyPeditatus
   m_EditorClassIdentifier: 
+  faction: 2
   type: 1
   unitPrefab: {fileID: 4220708611386460244, guid: e7ceb1ff4b41fc34d8f1e9d6e0404382,
     type: 3}
+  price: 10
+  buildTime: 2

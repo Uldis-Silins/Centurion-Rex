@@ -10,6 +10,8 @@ public class Unit_Raptor : Unit_Base, ISelecteble
 
     public Projectile projectilePrefab;
 
+    [SerializeField] private GameObject m_selectableObject;
+
     private Color m_startColor;
     private readonly int m_colorPropID = Shader.PropertyToID("_Color");
 
@@ -20,7 +22,7 @@ public class Unit_Raptor : Unit_Base, ISelecteble
     private UnitStateType m_currentStateType;
 
     public bool IsSelected { get; private set; }
-    public GameObject SelectableGameObject { get { return this.gameObject; } }
+    public GameObject SelectableGameObject { get { return m_selectableObject; } }
     public override float AttackDistance { get { return attackDistance; } }
 
     protected override void Awake()
@@ -134,10 +136,10 @@ public class Unit_Raptor : Unit_Base, ISelecteble
     #region State Handlers
     protected void EnterState_Idle()
     {
+        m_seeker.enabled = false;
+        m_obstacleAvoider.enabled = true;
         m_separator.enabled = true;
-        anim.PlayAnimation(GetIdleAnimation());
         m_currentStateHandler = State_Idle;
-        Debug.Log("EnterState_Idle");
     }
 
     protected void State_Idle()
@@ -145,23 +147,26 @@ public class Unit_Raptor : Unit_Base, ISelecteble
         if (m_currentStateType != UnitStateType.Idle)
         {
             ExitState_Idle(m_currentStateType);
+            return;
         }
+
+        m_moveTarget = transform.position;  // for separator
     }
 
     protected void ExitState_Idle(UnitStateType targetState)
     {
-        m_separator.enabled = false;
         m_currentStateType = targetState;
         m_currentStateHandler = m_states[targetState];
     }
 
     protected void EnterState_Move()
     {
-        Debug.Log("EnterState_Move");
         Debug.Assert(m_hasMoveTarget, "MoveState: No move target set.");
-        //m_avoider.enabled = true;
-        //m_obstacleAvoider.enabled = true;
+        m_seeker.enabled = true;
+        m_avoider.enabled = true;
+        m_obstacleAvoider.enabled = true;
         m_pursuer.enabled = false;
+        m_separator.enabled = false;
 
         m_currentStateHandler = State_Move;
     }
@@ -170,24 +175,21 @@ public class Unit_Raptor : Unit_Base, ISelecteble
     {
         if (m_currentStateType != UnitStateType.Move)
         {
-            Debug.Log("State changed fro move to " + m_currentStateType);
             ExitState_Move(m_currentStateType);
             return;
         }
 
-        if (!m_seeker.IsMoving)
+        if (HasAttackTarget)
         {
-            if (HasAttackTarget)
+            if (Vector2.Distance(transform.position, m_attackTarget.DamageableGameObject.transform.position) <= attackDistance)
             {
-                if (Vector2.Distance(transform.position, m_attackTarget.DamageableGameObject.transform.position) <= attackDistance)
-                {
-                    ExitState_Move(UnitStateType.Attack);
-                    return;
-                }
+                ExitState_Move(UnitStateType.Attack);
+                return;
             }
+        }
 
-            m_hasMoveTarget = false;
-            Debug.Log("Stopped moving, goto idle");
+        if (!m_hasMoveTarget || Vector2.Distance(transform.position, m_moveTarget) <= m_seeker.targetRadius * 1.5f)
+        {
             ExitState_Move(UnitStateType.Idle);
             return;
         }
@@ -195,8 +197,9 @@ public class Unit_Raptor : Unit_Base, ISelecteble
 
     protected void ExitState_Move(UnitStateType targetState)
     {
-        //m_avoider.enabled = false;  // stay enabled and change wight?
+        m_avoider.enabled = false;  // stay enabled and change wight?
         //m_obstacleAvoider.enabled = false;
+        m_moveTarget = transform.position;
         m_hasMoveTarget = false;
         m_seeker.Stop();
 
@@ -209,19 +212,38 @@ public class Unit_Raptor : Unit_Base, ISelecteble
         anim.PlayAnimation(GetAttackAnimation(m_attackTarget.DamageableGameObject.transform.position));
         m_attackTimer = attacksDelay;
         m_isDamageApplied = false;
+
+        m_seeker.enabled = false;
+        m_pursuer.enabled = true;
+        m_obstacleAvoider.enabled = true;
+        m_separator.enabled = true;
+
+        m_pursuer.target = m_attackTarget.DamageableGameObject.GetComponent<Agent>();
         m_currentStateHandler = State_Attack;
     }
 
     protected void State_Attack()
     {
-        if (Vector2.Distance(transform.position, m_attackTarget.DamageableGameObject.transform.position) > attackDistance)
-        {
-            ExitState_Attack(UnitStateType.Move);
-        }
-
         if (m_currentStateType != UnitStateType.Attack)
         {
             ExitState_Attack(m_currentStateType);
+            return;
+        }
+
+        if (!HasAttackTarget || m_attackTarget == null || m_attackTarget.DamageableGameObject == null)
+        {
+            ExitState_Attack(UnitStateType.Idle);
+            return;
+        }
+
+        if (Vector2.Distance(transform.position, m_attackTarget.DamageableGameObject.transform.position) > attackDistance)
+        {
+            m_pursuer.SetDestination(m_attackTarget.DamageableGameObject.transform.position);
+            return;
+        }
+        else
+        {
+            m_pursuer.Stop();
         }
 
         SpriteAnimatorData.AnimationType animType = GetAttackAnimation(m_attackTarget.DamageableGameObject.transform.position);
@@ -257,6 +279,8 @@ public class Unit_Raptor : Unit_Base, ISelecteble
 
     protected void ExitState_Attack(UnitStateType targetState)
     {
+        m_pursuer.enabled = false;
+        m_currentStateType = targetState;
         m_currentStateHandler = m_states[targetState];
     }
 

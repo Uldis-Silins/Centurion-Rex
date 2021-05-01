@@ -169,7 +169,7 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
         m_seeker.enabled = false;
         m_pursuer.enabled = true;
         m_obstacleAvoider.enabled = true;
-        m_separator.enabled = false;
+        m_separator.enabled = true;
 
         m_pursuer.target = m_attackTarget.DamageableGameObject.GetComponent<Agent>();
         m_currentStateHandler = State_Attack;
