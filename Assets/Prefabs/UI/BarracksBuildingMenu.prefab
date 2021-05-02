@@ -3118,6 +3118,7 @@ GameObject:
   - component: {fileID: 6278010324264886250}
   - component: {fileID: 6278010324264886261}
   - component: {fileID: 6278010324264886262}
+  - component: {fileID: 5878563409003777225}
   m_Layer: 5
   m_Name: SpawnRangedButton
   m_TagString: Untagged
@@ -3234,17 +3235,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: OnSpawnUnitClick
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 6278010324264886262}
         m_MethodName: Play
         m_Mode: 1
@@ -3372,6 +3362,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5878563409003777225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6278010324264886248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98959aec4e05e3b45a13274414b683cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  barracks: {fileID: 0}
+  unit: {fileID: 11400000, guid: 855e3c70cee6e5942ab73da060d276dc, type: 2}
 --- !u!1 &6278010324452945146
 GameObject:
   m_ObjectHideFlags: 0
@@ -3580,17 +3584,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: OnSpawnUnitClick
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 6278010324670942913}
         m_MethodName: Play
         m_Mode: 1
@@ -4091,6 +4084,7 @@ GameObject:
   - component: {fileID: 6278010325248170803}
   - component: {fileID: 6278010325248170814}
   - component: {fileID: 6278010325248170815}
+  - component: {fileID: 7855861180115830005}
   m_Layer: 5
   m_Name: SpawnCavalryButton
   m_TagString: Untagged
@@ -4207,17 +4201,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: OnSpawnUnitClick
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 6278010325248170815}
         m_MethodName: Play
         m_Mode: 1
@@ -4345,6 +4328,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7855861180115830005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6278010325248170801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98959aec4e05e3b45a13274414b683cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  barracks: {fileID: 0}
+  unit: {fileID: 11400000, guid: df1193560ec3a7d4aabd9834aa96548a, type: 2}
 --- !u!1 &6362800515641519984
 GameObject:
   m_ObjectHideFlags: 0

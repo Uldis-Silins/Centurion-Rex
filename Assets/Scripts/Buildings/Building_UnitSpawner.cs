@@ -12,12 +12,12 @@ public class Building_UnitSpawner : Building_Base
 
     public AudioSource audioSource;
 
-    private Queue<int> m_buildQueue;
+    private List<int> m_buildQueue;
     private float m_buildTimer;
 
     private void Awake()
     {
-        m_buildQueue = new Queue<int>();
+        m_buildQueue = new List<int>();
     }
 
     private void Start()
@@ -34,23 +34,40 @@ public class Building_UnitSpawner : Building_Base
         {
             if (m_buildTimer <= 0f)
             {
-                int unitIndex = m_buildQueue.Dequeue();
+                int unitIndex = m_buildQueue[0];
+                m_buildQueue.RemoveAt(0);
+
                 Spawn(unitIndex);
 
                 if (m_playerController.ownedByPlayer)
                 {
                     m_playerController.uiManager.RemoveUnitToQueue(unitIndex);
+
+                    List<UnitData> unitList = new List<UnitData>();
+
+                    for (int i = 0; i < m_buildQueue.Count; i++)
+                    {
+                        unitList.Add(units[m_buildQueue[i]]);
+                    }
+
+                    m_playerController.uiManager.SetBuildQueue(unitList);
+
+                    if (m_buildQueue.Count == 0)
+                    {
+                        m_playerController.uiManager.UpdateBuyUnitFill(unitIndex, 1f);
+                    }
                 }
 
                 if (m_buildQueue.Count > 0)
                 {
-                    m_buildTimer = units[m_buildQueue.Peek()].buildTime;
+                    m_buildTimer = units[m_buildQueue[0]].buildTime;
                 }
             }
 
             if (m_playerController.ownedByPlayer && m_buildQueue.Count > 0)
             {
-                m_playerController.uiManager.UpdateBuyUnitFill(m_buildQueue.Peek(), m_buildTimer / units[m_buildQueue.Peek()].buildTime);
+                float t = m_buildTimer / units[m_buildQueue[0]].buildTime;
+                m_playerController.uiManager.UpdateBuyUnitFill(m_buildQueue[0], 1f - t);
             }
 
             m_buildTimer -= Time.deltaTime;
@@ -78,8 +95,18 @@ public class Building_UnitSpawner : Building_Base
         }
     }
 
-    public void OnSpawnUnitClick(int unitIndex)
+    public void OnSpawnUnitClick(UnitData unit)
     {
+        int unitIndex = -1;
+
+        for (int i = 0; i < units.Length; i++)
+        {
+            if(unit.type == units[i].type)
+            {
+                unitIndex = i;
+                break;
+            }
+        }
 
         if (m_playerController.currentResources >= units[unitIndex].price)
         {
@@ -88,11 +115,61 @@ public class Building_UnitSpawner : Building_Base
                 m_buildTimer = units[unitIndex].buildTime;
             }
 
-            m_buildQueue.Enqueue(unitIndex);
+            m_buildQueue.Add(unitIndex);
+            m_playerController.AddResource(-units[unitIndex].price);
 
             if (m_playerController.ownedByPlayer)
             {
                 m_playerController.uiManager.AddUnitToQueue(unitIndex);
+
+                List<UnitData> unitList = new List<UnitData>();
+
+                for (int i = 0; i < m_buildQueue.Count; i++)
+                {
+                    unitList.Add(units[m_buildQueue[i]]);
+                }
+
+                m_playerController.uiManager.SetBuildQueue(unitList);
+            }
+        }
+    }
+
+    public void OnCancelBuildClick(UnitData unit)
+    {
+        int unitIndex = -1;
+
+        for (int i = 0; i < units.Length; i++)
+        {
+            if (unit.type == units[i].type)
+            {
+                unitIndex = i;
+                break;
+            }
+        }
+
+        if (m_buildQueue.Contains(unitIndex))
+        {
+            m_buildTimer = m_buildQueue.Count > 0 ? units[m_buildQueue[0]].buildTime : 1f;
+
+            if (m_playerController.ownedByPlayer)
+            {
+                m_playerController.uiManager.RemoveUnitToQueue(unitIndex);
+                m_playerController.uiManager.UpdateBuyUnitFill(unitIndex, m_buildTimer);
+            }
+
+            m_buildQueue.Remove(unitIndex);
+            m_playerController.AddResource(units[unitIndex].price);
+
+            if(m_playerController.ownedByPlayer)
+            {
+                List<UnitData> unitList = new List<UnitData>();
+
+                for (int i = 0; i < m_buildQueue.Count; i++)
+                {
+                    unitList.Add(units[m_buildQueue[i]]);
+                }
+
+                m_playerController.uiManager.SetBuildQueue(unitList);
             }
         }
     }
@@ -126,7 +203,7 @@ public class Building_UnitSpawner : Building_Base
                 {
                     var instance = Instantiate(units[i].unitPrefab, spawnPoint.position, Quaternion.identity) as GameObject;
                     instance.name = units[i].unitPrefab.name + m_playerController.CurrentPopulation;
-                    m_playerController.AddResource(-units[i].price);
+                    
                     return instance.GetComponent<Unit_Base>();
                 }
             }

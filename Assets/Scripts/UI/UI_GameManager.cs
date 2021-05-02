@@ -22,6 +22,8 @@ public class UI_GameManager : MonoBehaviour
     public Image[] buyUnitFill;
     public Text[] buyUnitButtonTexts;
 
+    public Image[] buildQueue;
+
     public Text wineAmountText;
 
     private BuildingPanel m_curBuildingPanel;
@@ -40,6 +42,11 @@ public class UI_GameManager : MonoBehaviour
         gameOverMenu.gameObject.SetActive(false);
 
         m_unitQueueAmounts = new int[buyUnitButtonTexts.Length];
+
+        for (int i = 0; i < buildQueue.Length; i++)
+        {
+            buildQueue[i].enabled = false;
+        }
     }
 
     public void CloseBuildingMenu()
@@ -98,6 +105,22 @@ public class UI_GameManager : MonoBehaviour
     public void UpdateBuyUnitFill(int buttonIndex, float amount)
     {
         buyUnitFill[buttonIndex].fillAmount = amount;
+    }
+
+    public void SetBuildQueue(List<UnitData> units)
+    {
+        for (int i = 0; i < buildQueue.Length; i++)
+        {
+            buildQueue[i].enabled = false;
+        }
+
+        int num = units.Count > buildQueue.Length ? buildQueue.Length : units.Count;
+
+        for (int i = 0; i < num; i++)
+        {
+            buildQueue[i].sprite = units[i].uiSprite;
+            buildQueue[i].enabled = true;
+        }
     }
 
     public void OnQuitClick()

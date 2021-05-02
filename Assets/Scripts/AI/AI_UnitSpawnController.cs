@@ -24,7 +24,7 @@ public class AI_UnitSpawnController : MonoBehaviour
 
                 if (spawner != null)
                 {
-                    spawner.OnSpawnUnitClick(Random.Range(0, spawner.units.Length));
+                    spawner.OnSpawnUnitClick(spawner.units[Random.Range(0, spawner.units.Length)]);
                 }
             }
 
