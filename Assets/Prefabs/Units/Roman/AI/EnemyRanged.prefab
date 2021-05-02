@@ -76,7 +76,7 @@ MonoBehaviour:
   attackDamage: 5
   attacksDelay: 0.5
   accuracy: 1
-  projectilePrefab: {fileID: 8186089749701993020, guid: 65e3b98f1b3600847b4a220bfc85334a,
+  projectilePrefab: {fileID: 8186089749701993020, guid: 1e70d15ad67c54c4c9a019c86ecb7b13,
     type: 3}
   m_selectableObject: {fileID: 0}
 --- !u!114 &4036118042232991758

@@ -158,7 +158,7 @@ public class UI_HudManager : MonoBehaviour
 
     private void UpdateUnitSelectionRects()
     {
-        float scaleRatio = (Screen.width / 800f) * 0.5f;
+        float scaleRatio = (Screen.width / 1920f) * 0.5f;
         const float HEALTH_BAR_THICKNESS = 5f;
 
         for (int i = 0; i < m_currentSelectedUnits.Count; i++)

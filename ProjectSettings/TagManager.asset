@@ -50,3 +50,6 @@ TagManager:
   - name: Sprites
     uniqueID: 2297236603
     locked: 0
+  - name: Fog
+    uniqueID: 863966307
+    locked: 0
