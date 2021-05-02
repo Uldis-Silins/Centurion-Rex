@@ -20,11 +20,6 @@ public class Player_UnitMoveController : MonoBehaviour
     {
         m_mainCam = Camera.main;
         m_groundPlane = new Plane(-Vector3.forward, m_mapRenderer.transform.position);
-
-        hudManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<UI_HudManager>();
-        visibilityManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<VisibilityManager>();
-        m_selectableManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<SelectableManager>();
-        m_damageableManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<DamageableManager>();
     }
 
     private void OnDrawGizmos()

@@ -298,7 +298,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonClickSFX: {fileID: 8300000, guid: 2b274d1b9fe272646be5f1da74ac2a38, type: 3}
-  audioManager: {fileID: 0}
 --- !u!1 &98536829
 GameObject:
   m_ObjectHideFlags: 0
@@ -1305,7 +1304,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonClickSFX: {fileID: 8300000, guid: 2b274d1b9fe272646be5f1da74ac2a38, type: 3}
-  audioManager: {fileID: 0}
 --- !u!1 &511107719
 GameObject:
   m_ObjectHideFlags: 0
@@ -1537,7 +1535,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonClickSFX: {fileID: 8300000, guid: 2b274d1b9fe272646be5f1da74ac2a38, type: 3}
-  audioManager: {fileID: 0}
 --- !u!1 &588064386
 GameObject:
   m_ObjectHideFlags: 0
@@ -2214,7 +2211,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: coming soon
+  m_Text: SELECT
 --- !u!222 &858783320
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2464,7 +2461,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonClickSFX: {fileID: 8300000, guid: 2b274d1b9fe272646be5f1da74ac2a38, type: 3}
-  audioManager: {fileID: 0}
 --- !u!1 &929364174
 GameObject:
   m_ObjectHideFlags: 0
@@ -2518,7 +2514,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonClickSFX: {fileID: 8300000, guid: 2b274d1b9fe272646be5f1da74ac2a38, type: 3}
-  audioManager: {fileID: 0}
 --- !u!114 &929364177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2787,7 +2782,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonClickSFX: {fileID: 8300000, guid: 2b274d1b9fe272646be5f1da74ac2a38, type: 3}
-  audioManager: {fileID: 0}
 --- !u!1 &1065036183
 GameObject:
   m_ObjectHideFlags: 0
@@ -3119,7 +3113,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonClickSFX: {fileID: 8300000, guid: 2b274d1b9fe272646be5f1da74ac2a38, type: 3}
-  audioManager: {fileID: 0}
 --- !u!1 &1128846928
 GameObject:
   m_ObjectHideFlags: 0
@@ -3442,7 +3435,7 @@ GameObject:
   - component: {fileID: 1316521205}
   - component: {fileID: 1316521204}
   m_Layer: 5
-  m_Name: MenuCanvas
+  m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4899,7 +4892,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonClickSFX: {fileID: 8300000, guid: 2b274d1b9fe272646be5f1da74ac2a38, type: 3}
-  audioManager: {fileID: 0}
 --- !u!114 &2061818933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4943,6 +4935,28 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 511107719}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1067203736}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 2061818932}
         m_MethodName: PlayClickSound
         m_Mode: 1
@@ -4973,7 +4987,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7c35334c2b9492448bad7135ecc66244, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bdcb5300900675d49a42f2f089e9f67f, type: 3}
   m_Type: 1
   m_PreserveAspect: 1
   m_FillCenter: 1

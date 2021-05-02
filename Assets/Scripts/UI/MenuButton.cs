@@ -7,14 +7,10 @@ public class MenuButton : MonoBehaviour
 {
     [SerializeField]
     AudioClip buttonClickSFX;
-    [SerializeField]
     AudioManager audioManager;
-
 
     private void Start()
     {
-       // Time.timeScale = 0;
-        if (audioManager == null)
         audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
     }
 
@@ -26,7 +22,6 @@ public class MenuButton : MonoBehaviour
 
     public void StartExitGame()
     {
-        Time.timeScale = 1;
         StartCoroutine(ExitGameAfterXSeconds(0.5f));
     }
 
@@ -42,9 +37,8 @@ public class MenuButton : MonoBehaviour
     }
 
     public void LoadRomeLevel()
-    {
-        Debug.Log(Time.timeScale);
-        Time.timeScale = 1;
+    { 
+        SceneManager.LoadScene("SampleScene");
     }
 
     public void LoadMainMenu()
