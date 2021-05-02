@@ -17,5 +17,5 @@ MonoBehaviour:
   unitPrefab: {fileID: 7932924578175232700, guid: 3fba0a9ce9655664faaaa1afcebcef6e,
     type: 3}
   uiSprite: {fileID: 0}
-  price: 30
+  price: 41
   buildTime: 4

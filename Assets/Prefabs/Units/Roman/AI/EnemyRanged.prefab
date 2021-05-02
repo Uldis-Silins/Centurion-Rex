@@ -62,8 +62,8 @@ MonoBehaviour:
   soldierRenderer: {fileID: 7932924578973166320}
   circleCollider: {fileID: 1570036637370775680}
   soundSource: {fileID: -5686660868666005280}
-  walkClip: {fileID: 8300000, guid: 3494d283d70ae304aaf659a65546e24f, type: 3}
-  attackClip: {fileID: 8300000, guid: e4b0de4fe98b3004fb7afb6a6eb066ce, type: 3}
+  walkClip: {fileID: 8300000, guid: 8a7345e0017c63543a9e45328084aa80, type: 3}
+  attackClip: {fileID: 8300000, guid: c68620ff818f6e04e887b569611dd890, type: 3}
   visionDistance: 10
   fovTransform: {fileID: 0}
   m_agent: {fileID: 9145141018364628441}
@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c40d5d16be0323e43bbde5c082548c98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 12
+  maxHealth: 20
   owningFaction: 2
   ragdoll: {fileID: 2120004536777161031, guid: 7aaf4255082511d43b63d7ce109c9392, type: 3}
   m_sprite: {fileID: 7932924578973166320}

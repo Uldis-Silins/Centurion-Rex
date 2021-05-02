@@ -64,7 +64,7 @@ MonoBehaviour:
   circleCollider: {fileID: 3143130226508708588}
   soundSource: {fileID: 6416145593999371635}
   walkClip: {fileID: 8300000, guid: f58121c216e48c34bbec4a26561c473b, type: 3}
-  attackClip: {fileID: 8300000, guid: 4174110c4a3c3fd4182e67b7d1420881, type: 3}
+  attackClip: {fileID: 8300000, guid: a6e596428a0b4f147a010e342fbcc2a2, type: 3}
   visionDistance: 15
   fovTransform: {fileID: 0}
   m_agent: {fileID: 8722644879541080341}
@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c40d5d16be0323e43bbde5c082548c98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 25
+  maxHealth: 30
   owningFaction: 2
   ragdoll: {fileID: 8903666255083401664, guid: a7cc3005631f579419ff0eb8e8f5d91e, type: 3}
   m_sprite: {fileID: 4095252138988724114}

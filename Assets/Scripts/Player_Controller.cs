@@ -49,6 +49,12 @@ public class Player_Controller : MonoBehaviour
 
     public int CurrentPopulation { get { return m_ownedUnits.Count; } }
 
+    float enemyIncomeRate = 1f;
+    float enemyBonusIncome = 1;
+    float enemyNextIncomeTime = 0;
+
+
+
     private void Awake()
     {
         m_ownedUnits = new List<Unit_Base>();
@@ -100,6 +106,11 @@ public class Player_Controller : MonoBehaviour
 
     private void Update()
     {
+        if (!ownedByPlayer && Time.time > enemyNextIncomeTime)
+        {
+            currentResources += enemyBonusIncome;
+            enemyNextIncomeTime += enemyIncomeRate;
+        }
         if (ownedByPlayer && Input.GetKeyDown(KeyCode.Escape))
         {
             if (currentGameState == GameState.Playing)
