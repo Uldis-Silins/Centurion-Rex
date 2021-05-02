@@ -7,12 +7,9 @@ public class MenuButton : MonoBehaviour
 {
     [SerializeField]
     AudioClip buttonClickSFX;
+    [SerializeField]
     AudioManager audioManager;
 
-    private void Start()
-    {
-        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
-    }
 
     public void PlayClickSound()
     {

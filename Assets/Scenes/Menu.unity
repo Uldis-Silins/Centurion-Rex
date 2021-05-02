@@ -298,6 +298,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonClickSFX: {fileID: 8300000, guid: 2b274d1b9fe272646be5f1da74ac2a38, type: 3}
+  audioManager: {fileID: 718105744}
 --- !u!1 &98536829
 GameObject:
   m_ObjectHideFlags: 0
@@ -1304,6 +1305,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonClickSFX: {fileID: 8300000, guid: 2b274d1b9fe272646be5f1da74ac2a38, type: 3}
+  audioManager: {fileID: 718105744}
 --- !u!1 &511107719
 GameObject:
   m_ObjectHideFlags: 0
@@ -1535,6 +1537,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonClickSFX: {fileID: 8300000, guid: 2b274d1b9fe272646be5f1da74ac2a38, type: 3}
+  audioManager: {fileID: 718105744}
 --- !u!1 &588064386
 GameObject:
   m_ObjectHideFlags: 0
@@ -2211,7 +2214,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: SELECT
+  m_Text: COMING SOON
 --- !u!222 &858783320
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2461,6 +2464,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonClickSFX: {fileID: 8300000, guid: 2b274d1b9fe272646be5f1da74ac2a38, type: 3}
+  audioManager: {fileID: 718105744}
 --- !u!1 &929364174
 GameObject:
   m_ObjectHideFlags: 0
@@ -2514,6 +2518,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonClickSFX: {fileID: 8300000, guid: 2b274d1b9fe272646be5f1da74ac2a38, type: 3}
+  audioManager: {fileID: 718105744}
 --- !u!114 &929364177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2782,6 +2787,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonClickSFX: {fileID: 8300000, guid: 2b274d1b9fe272646be5f1da74ac2a38, type: 3}
+  audioManager: {fileID: 718105744}
 --- !u!1 &1065036183
 GameObject:
   m_ObjectHideFlags: 0
@@ -3113,6 +3119,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonClickSFX: {fileID: 8300000, guid: 2b274d1b9fe272646be5f1da74ac2a38, type: 3}
+  audioManager: {fileID: 718105744}
 --- !u!1 &1128846928
 GameObject:
   m_ObjectHideFlags: 0
@@ -4892,6 +4899,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonClickSFX: {fileID: 8300000, guid: 2b274d1b9fe272646be5f1da74ac2a38, type: 3}
+  audioManager: {fileID: 718105744}
 --- !u!114 &2061818933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4935,28 +4943,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 511107719}
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1067203736}
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 2061818932}
         m_MethodName: PlayClickSound
         m_Mode: 1
@@ -5201,6 +5187,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 511107719}
+    - target: {fileID: 3672401559245743014, guid: b0a8c2fcbb0cfa143a704181d329b426,
+        type: 3}
+      propertyPath: audioManager
+      value: 
+      objectReference: {fileID: 718105744}
     - target: {fileID: 3672401559245743037, guid: b0a8c2fcbb0cfa143a704181d329b426,
         type: 3}
       propertyPath: m_Name
