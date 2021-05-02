@@ -199,13 +199,13 @@ public class Building_UnitSpawner : Building_Base
         {
             if(units[i].type == type)
             {
-                if (m_playerController.currentResources >= units[i].price)
-                {
+                //if (m_playerController.currentResources >= units[i].price)
+                //{
                     var instance = Instantiate(units[i].unitPrefab, spawnPoint.position, Quaternion.identity) as GameObject;
                     instance.name = units[i].unitPrefab.name + m_playerController.CurrentPopulation;
                     
                     return instance.GetComponent<Unit_Base>();
-                }
+                //}
             }
         }
 

@@ -201,7 +201,7 @@ MonoBehaviour:
   m_pursuer: {fileID: -6935352028890680209}
   m_separator: {fileID: 2898546333530889532}
   attackDistance: 1
-  attackDamage: 5
+  attackDamage: 9
   attacksDelay: 0.5
   m_selectableObject: {fileID: 8897255321994208}
 --- !u!114 &7820143654597645030
@@ -216,7 +216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c40d5d16be0323e43bbde5c082548c98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 20
   owningFaction: 1
   ragdoll: {fileID: 4220708611386460244, guid: e73faecd617904b46a82d8b9f2accfe4, type: 3}
   m_sprite: {fileID: 4220708612654221336}
