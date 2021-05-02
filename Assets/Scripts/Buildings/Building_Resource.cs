@@ -51,7 +51,7 @@ public class Building_Resource : Building_Base
 
     private void Update()
     {
-        if(ownerFaction == FactionType.Player && m_resourceTimer <= 0f)
+        if(m_currentPlayerController != null && m_resourceTimer <= 0f)
         {
             m_currentPlayerController.AddResource(productionPerSecond);
             m_resourceTimer = 1f;

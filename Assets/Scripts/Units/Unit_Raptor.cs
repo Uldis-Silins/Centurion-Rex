@@ -104,6 +104,13 @@ public class Unit_Raptor : Unit_Base, ISelecteble
         base.LateUpdate();
     }
 
+    private void OnDrawGizmos()
+    {
+#if UNITY_EDITOR
+        UnityEditor.Handles.Label(transform.position + Vector3.up * 1.5f, m_currentStateType.ToString());
+#endif
+    }
+
     public override void SetState(UnitStateType type)
     {
         m_currentStateType = type;
@@ -150,6 +157,24 @@ public class Unit_Raptor : Unit_Base, ISelecteble
             return;
         }
 
+        Unit_Base attacker = health.Attacker;
+
+        if (!IsSelected && attacker != null)
+        {
+            if (attacker.unitType != UnitData.UnitType.Soldier)
+            {
+                SetAttackTarget(attacker.health);
+                ExitState_Idle(UnitStateType.Attack);
+                return;
+            }
+            else
+            {
+                SetMoveTarget(transform.position + (transform.position - attacker.transform.position).normalized * attackDistance);
+                ExitState_Idle(UnitStateType.Move);
+                return;
+            }
+        }
+
         m_moveTarget = transform.position;  // for separator
     }
 
@@ -185,6 +210,26 @@ public class Unit_Raptor : Unit_Base, ISelecteble
             {
                 ExitState_Move(UnitStateType.Attack);
                 return;
+            }
+        }
+        else
+        {
+            Unit_Base attacker = health.Attacker;
+
+            if (!IsSelected && attacker != null)
+            {
+                if (attacker.unitType != UnitData.UnitType.Soldier)
+                {
+                    SetAttackTarget(attacker.health);
+                    ExitState_Idle(UnitStateType.Attack);
+                    return;
+                }
+                else
+                {
+                    SetMoveTarget(transform.position + (transform.position - attacker.transform.position).normalized * attackDistance);
+                    ExitState_Idle(UnitStateType.Move);
+                    return;
+                }
             }
         }
 
@@ -246,6 +291,18 @@ public class Unit_Raptor : Unit_Base, ISelecteble
             m_pursuer.Stop();
         }
 
+        Unit_Base attacker = health.Attacker;
+
+        if (!IsSelected && attacker != null && Vector2.Distance(m_pursuer.MoveTarget, transform.position) < 0.1f)   // Check if pursuer is stopped
+        {
+            if (attacker.unitType == UnitData.UnitType.Soldier)
+            {
+                SetMoveTarget(transform.position + (transform.position - attacker.transform.position).normalized * attackDistance);
+                ExitState_Idle(UnitStateType.Move);
+                return;
+            }
+        }
+
         SpriteAnimatorData.AnimationType animType = GetAttackAnimation(m_attackTarget.DamageableGameObject.transform.position);
 
         if (anim.CurrentAnimationType != animType)
@@ -260,7 +317,7 @@ public class Unit_Raptor : Unit_Base, ISelecteble
             Vector2 lookDir = m_attackTarget.DamageableGameObject.transform.position - transform.position;
             float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg;
             Projectile instance = Instantiate(projectilePrefab, transform.position, Quaternion.AngleAxis(angle, Vector3.forward));
-            instance.Spawn(transform.position + Vector3.up, m_attackTarget.DamageableGameObject.transform.position + new Vector3(Random.insideUnitCircle.x * accuracy, Random.insideUnitCircle.y * accuracy, 0f), attackDamage, m_attackTarget, gameObject);
+            instance.Spawn(transform.position + Vector3.up, m_attackTarget.DamageableGameObject.transform.position + new Vector3(Random.insideUnitCircle.x * accuracy, Random.insideUnitCircle.y * accuracy, 0f), attackDamage, m_attackTarget, this);
 
             if (!soundSource.isPlaying)
             {

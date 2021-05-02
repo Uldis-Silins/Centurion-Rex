@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -142,36 +143,48 @@ public class NavigationController : MonoBehaviour
         m_flowField.CreateCostField(m_layerCosts);
     }
 
-    public FlowField GetFlowField(Vector3 fromPosition, Vector3 toPosition)
+    public FlowField GetFlowField(Unit_Base unit, Vector3 toPosition)
     {
-        int hash = GetGridHash(m_flowField.GetCell(fromPosition + gridOffset), m_flowField.GetCell(toPosition + gridOffset));
+        int hash = GetGridHash(m_flowField.GetCell(unit.transform.position + gridOffset), m_flowField.GetCell(toPosition + gridOffset));
 
         if (!m_cahcedFields.ContainsKey(hash))
         {
             Debug.Log("creating hash: " + hash);
-            System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
-            sw.Start();
-            FlowField field = new FlowField(m_flowField);
-            sw.Stop();
-            Debug.Log("FlowField cop took " + sw.ElapsedMilliseconds);
-            m_cahcedFields.Add(hash, field);
+
+            //FlowField field = new FlowField(m_flowField);
+            
             toPosition += gridOffset;
-            FlowField.Cell destinationCell = field.GetCell(toPosition);
-            sw.Start();
-            field.CreateIntegrationField(destinationCell);
-            sw.Stop();
-            Debug.Log("CreateIndegrationField took " + sw.ElapsedMilliseconds);
-            sw.Start();
-            field.CreateFlowField();
-            sw.Stop();
-            Debug.Log("CreateFlowField took " + sw.ElapsedMilliseconds);
-            return field;
+            //FlowField.Cell destinationCell = field.GetCell(toPosition);
+            //field.CreateIntegrationField(destinationCell);
+            //field.CreateFlowField();
+
+            Thread runFlowField = new Thread(() => { GetFlowField(toPosition, unit, hash); });
+            runFlowField.Start();
+
+            return null;
         }
         else
         {
             Debug.Log("found hash: " + hash);
             return m_cahcedFields[hash];
         }
+    }
+
+    private void GetFlowField(Vector3 position, Unit_Base unit, int hash)
+    {
+        FlowField field = new FlowField(m_flowField);
+        FlowField.Cell destinationCell = field.GetCell(position);
+
+        field.CreateIntegrationField(destinationCell);
+
+        field.CreateFlowField();
+
+        if (!m_cahcedFields.ContainsKey(hash))
+        {
+            m_cahcedFields.Add(hash, field);
+        }
+
+        unit.SetSeekerFlowField(field);
     }
 
     private int GetGridHash(FlowField.Cell fromCell, FlowField.Cell toCell)

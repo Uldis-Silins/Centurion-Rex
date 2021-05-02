@@ -35,8 +35,8 @@ public class AvoidObstacles : Seek
             Vector2[] offsets = new Vector2[]
             {
             direction.normalized,
-            (direction +  new Vector2(direction.y, -direction.x)).normalized * 0.5f,
-            (direction + new Vector2(-direction.y, direction.x)).normalized * 0.5f
+            //(direction +  new Vector2(direction.y, -direction.x)).normalized * 0.5f,
+            //(direction + new Vector2(-direction.y, direction.x)).normalized * 0.5f
             };
 
             for (int i = 0; i < offsets.Length; i++)

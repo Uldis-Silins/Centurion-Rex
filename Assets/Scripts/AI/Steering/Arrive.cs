@@ -10,7 +10,84 @@ public class Arrive : AgentBehaviour
     public FlowField flowField;
     public Vector3 gridWorldOffset;
 
+    [Header("Debug")]
+    public bool debugFlowField;
+    public enum DebugModeType { CostField, IntegrationField, FlowField }
+    public DebugModeType debugMode;
+
     public bool IsMoving { get; private set; }
+
+    public override void Awake()
+    {
+        base.Awake();
+    }
+
+    public override void Update()
+    {
+        base.Update();
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (debugFlowField && flowField != null && flowField.cells != null)
+        {
+            Color prevColor = Gizmos.color;
+            Gizmos.color = Color.gray;
+            Vector2 startPos = transform.position;
+
+            for (int x = 0; x < flowField.gridSize.x; x++)
+            {
+                for (int y = 0; y < flowField.gridSize.y; y++)
+                {
+                    Vector2 minPos = new Vector2(flowField.cells[x, y].worldPosition.x - flowField.cellRadius, flowField.cells[x, y].worldPosition.y - flowField.cellRadius);
+                    Vector2 maxPos = new Vector2(flowField.cells[x, y].worldPosition.x + flowField.cellRadius, flowField.cells[x, y].worldPosition.y + flowField.cellRadius);
+
+                    Gizmos.DrawLine(minPos, new Vector3(minPos.x, maxPos.y, 0f));
+                    Gizmos.DrawLine(minPos, new Vector3(maxPos.x, minPos.y, 0f));
+                    Gizmos.DrawLine(new Vector3(minPos.x, maxPos.y, 0f), maxPos);
+                    Gizmos.DrawLine(maxPos, new Vector3(maxPos.x, minPos.y, 0f));
+                }
+            }
+
+
+            Gizmos.color = Color.white;
+
+            GUIStyle style = new GUIStyle(GUI.skin.label);
+            style.alignment = TextAnchor.MiddleCenter;
+#if UNITY_EDITOR
+            switch (debugMode)
+            {
+                case DebugModeType.CostField:
+                    foreach (var cell in flowField.cells)
+                    {
+                        if (cell.cost < 2) continue;
+
+                        UnityEditor.Handles.Label(cell.worldPosition, cell.cost.ToString(), style);
+                    }
+                    break;
+                case DebugModeType.IntegrationField:
+                    foreach (var cell in flowField.cells)
+                    {
+                        if (cell.bestCost > 20) continue;
+
+                        UnityEditor.Handles.Label(cell.worldPosition, cell.bestCost.ToString(), style);
+                    }
+                    break;
+                case DebugModeType.FlowField:
+                    Gizmos.color = Color.yellow;
+                    foreach (var cell in flowField.cells)
+                    {
+                        Gizmos.DrawLine(cell.worldPosition, cell.worldPosition + new Vector2(cell.bestDirection.vector.x, cell.bestDirection.vector.y) * flowField.cellRadius);
+                    }
+                    break;
+                default:
+                    break;
+            }
+#endif
+            Gizmos.color = prevColor;
+        }
+    }
+
 
     public override Steering GetSteering()
     {

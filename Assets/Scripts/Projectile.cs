@@ -20,7 +20,7 @@ public class Projectile : MonoBehaviour
 
     private Vector3 m_prevPosition;
 
-    private GameObject m_owner;
+    private Unit_Base m_owner;
 
     private Vector3 m_startPosition, m_targetPosition;
     private Vector3 m_defaultScale;
@@ -71,7 +71,7 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    public void Spawn(Vector3 startPosition, Vector3 targetPosition, float damage, IDamageable target, GameObject owner)
+    public void Spawn(Vector3 startPosition, Vector3 targetPosition, float damage, IDamageable target, Unit_Base owner)
     {
         m_startPosition = startPosition;
         m_targetPosition = targetPosition;

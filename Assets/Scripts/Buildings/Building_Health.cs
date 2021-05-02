@@ -20,12 +20,16 @@ public class Building_Health : MonoBehaviour, IDamageable
     [SerializeField] private SpriteRenderer m_sprite;
     private float m_damageTimer;
 
+    [SerializeField] private float m_damageableRadius;
+    [SerializeField] private GameObject m_damageableObject;
+
     private float m_damagePerFireSprite;
     private int m_curActiveFireSprites;
 
     public float CurrentHealth { get; protected set; }
-    public GameObject DamageableGameObject { get { return this.gameObject; } }
+    public GameObject DamageableGameObject { get { return m_damageableObject; } }
     public FactionType Faction { get { return owningFaction; } }
+    public float DamageableRadius { get { return m_damageableRadius; } }
 
     private void Start()
     {
@@ -50,7 +54,15 @@ public class Building_Health : MonoBehaviour, IDamageable
         }
     }
 
-    public void SetDamage(float damage, GameObject attacker)
+    private void OnDrawGizmosSelected()
+    {
+        Color prevColor = Gizmos.color;
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(DamageableGameObject.transform.position, DamageableRadius);
+        Gizmos.color = prevColor;
+    }
+
+    public void SetDamage(float damage, Unit_Base attacker)
     {
         CurrentHealth -= damage;
 

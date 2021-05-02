@@ -14,20 +14,23 @@ public class Unit_Health : MonoBehaviour, IDamageable
     [SerializeField] private SpriteRenderer m_sprite;
     private float m_damageTimer;
 
-    private GameObject m_lastAttacker;
+    [SerializeField] private float m_damageableRadius;
+
+    private Unit_Base m_lastAttacker;
 
     public float CurrentHealth { get; protected set; }
     public GameObject DamageableGameObject { get { return this.gameObject; } }
     public FactionType Faction { get { return owningFaction; } }
+    public float DamageableRadius { get { return m_damageableRadius; } }
 
     /// <summary>
     /// SideFX auto clear
     /// </summary>
-    public GameObject Attacker
+    public Unit_Base Attacker
     {
         get
         {
-            GameObject attacker = m_lastAttacker;
+            Unit_Base attacker = m_lastAttacker;
             m_lastAttacker = null;
             return attacker;
         }
@@ -47,7 +50,15 @@ public class Unit_Health : MonoBehaviour, IDamageable
         }
     }
 
-    public void SetDamage(float damage, GameObject attacker)
+    private void OnDrawGizmosSelected()
+    {
+        Color prevColor = Gizmos.color;
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(DamageableGameObject.transform.position, DamageableRadius);
+        Gizmos.color = prevColor;
+    }
+
+    public void SetDamage(float damage, Unit_Base attacker)
     {
         CurrentHealth -= damage;
 

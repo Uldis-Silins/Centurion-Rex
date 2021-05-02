@@ -47,7 +47,7 @@ public class Player_UnitMoveController : MonoBehaviour
 
             foreach (var building in visibilityManager.VisibleBuildings)
             {
-                if(building.selectable.SelectableGameObject == hit.collider)
+                if(building.selectable.SelectableGameObject == hit.collider.gameObject)
                 {
                     hitBuilding = building;
                 }
@@ -63,11 +63,17 @@ public class Player_UnitMoveController : MonoBehaviour
                     {
                         hudManager.ChangeCursor(UI_HudManager.CursorType.Attack);
 
-                        List<GameObject> curSelectedUnits = new List<GameObject>(m_selectableManager.GetCurrentSelectedObjects());
-
-                        for (int i = 0; i < curSelectedUnits.Count; i++)
+                        if (Input.GetMouseButtonDown(1))
                         {
-                            curSelectedUnits[i].GetComponent<Unit_Base>().SetAttackTarget(building.health);
+                            List<ISelecteble> curSelectedUnits = new List<ISelecteble>(m_selectableManager.GetCurrentSelected());
+
+                            for (int i = 0; i < curSelectedUnits.Count; i++)
+                            {
+                                Unit_Base unit = curSelectedUnits[i] as Unit_Base;
+                                unit.SetAttackTarget(building.health);
+                                unit.SetMoveTarget(building.health.transform.position);
+                                unit.SetState(Unit_Base.UnitStateType.Move);
+                            }
                         }
                     }
                     else
@@ -78,12 +84,16 @@ public class Player_UnitMoveController : MonoBehaviour
                         {
                             hudManager.ChangeCursor(UI_HudManager.CursorType.Capture);
 
-                            List<GameObject> curSelectedUnits = new List<GameObject>(m_selectableManager.GetCurrentSelectedObjects());
-
-                            for (int i = 0; i < curSelectedUnits.Count; i++)
+                            if (Input.GetMouseButtonDown(1))
                             {
-                                curSelectedUnits[i].GetComponent<Unit_Base>().SetMoveTarget(resourceBuilding.transform.position);
-                                curSelectedUnits[i].GetComponent<Unit_Base>().SetState(Unit_Base.UnitStateType.Move);
+                                List<ISelecteble> curSelectedUnits = new List<ISelecteble>(m_selectableManager.GetCurrentSelected());
+
+                                for (int i = 0; i < curSelectedUnits.Count; i++)
+                                {
+                                    Unit_Base unit = curSelectedUnits[i] as Unit_Base;
+                                    unit.SetMoveTarget(resourceBuilding.transform.position);
+                                    unit.SetState(Unit_Base.UnitStateType.Move);
+                                }
                             }
                         }
                     }
@@ -161,7 +171,6 @@ public class Player_UnitMoveController : MonoBehaviour
                         Unit_Base unit = curSelectedUnits[i] as Unit_Base;
                         unit.SetAttackTarget(null);
 
-                        
                         unit.SetMoveTarget(Formations.GetAdjustedPosition(formationPositions[i], unit, unit.circleCollider.radius * 1.5f));
                         unit.SetState(Unit_Base.UnitStateType.Move);
                     }

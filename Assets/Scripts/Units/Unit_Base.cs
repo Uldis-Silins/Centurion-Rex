@@ -135,14 +135,26 @@ public abstract class Unit_Base : MonoBehaviour
 
         if (dist > MIN_NAVIGATION_DISTANCE && hit != circleCollider)
         {
-            Debug.Log(gameObject.name + ": Requesting navigation");
-            m_seeker.flowField = m_navigationController.GetFlowField(transform.position, targetPosition);
-            m_seeker.gridWorldOffset = m_navigationController.gridOffset;
+            FlowField flowField = m_navigationController.GetFlowField(this, targetPosition);
+            Debug.Log(gameObject.name + ": requesting navigation; t: " + Time.time);
+
+            if (flowField != null)
+            {
+                Debug.Log(gameObject.name + ": Got cached navigation; t: " + Time.time);
+                m_seeker.flowField = flowField;
+                m_seeker.gridWorldOffset = m_navigationController.gridOffset;
+            }
         }
 
         m_seeker.SetDestination(targetPosition);
         m_moveTarget = targetPosition;
         m_hasMoveTarget = true;
+    }
+
+    public void SetSeekerFlowField(FlowField flowField)
+    {
+        m_seeker.flowField = flowField;
+        m_seeker.gridWorldOffset = m_navigationController.gridOffset;
     }
 
     public bool CanSeeUnit(Unit_Base unit)

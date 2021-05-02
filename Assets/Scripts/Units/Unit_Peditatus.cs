@@ -103,6 +103,27 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
             return;
         }
 
+        Unit_Base attacker = health.Attacker;
+
+        if(!IsSelected && attacker != null)
+        {
+            const float ATTACK_REPLY_DIST_MOD = 1.5f;
+
+            if (attacker.unitType == UnitData.UnitType.Soldier || Vector2.Distance(attacker.transform.position, transform.position) < attackDistance * ATTACK_REPLY_DIST_MOD)
+            {
+                SetAttackTarget(attacker.health);
+                ExitState_Idle(UnitStateType.Attack);
+                return;
+            }
+            else
+            {
+                const float FLEE_DIST_MOD = 1.2f;
+                SetMoveTarget(transform.position + (transform.position - attacker.transform.position).normalized * attacker.AttackDistance * FLEE_DIST_MOD);
+                ExitState_Idle(UnitStateType.Move);
+                return;
+            }
+        }
+
         m_moveTarget = transform.position;  // for separator
     }
 
@@ -134,8 +155,21 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
 
         if (HasAttackTarget)
         {
-            if (Vector2.Distance(transform.position, m_attackTarget.DamageableGameObject.transform.position) <= attackDistance)
+            if (Vector2.Distance(transform.position, m_attackTarget.DamageableGameObject.transform.position) <= attackDistance + m_attackTarget.DamageableRadius)
             {
+                ExitState_Move(UnitStateType.Attack);
+                return;
+            }
+        }
+        else
+        {
+            Unit_Base attacker = health.Attacker;
+            const float ATTACK_REPLY_DIST_MOD = 1.5f;
+
+            // Move to attack even if selected
+            if (attacker != null && Vector2.Distance(attacker.transform.position, transform.position) < attackDistance * ATTACK_REPLY_DIST_MOD)
+            {
+                SetAttackTarget(attacker.health);
                 ExitState_Move(UnitStateType.Attack);
                 return;
             }
@@ -167,7 +201,12 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
         m_isDamageApplied = false;
 
         m_seeker.enabled = false;
-        m_pursuer.enabled = true;
+
+        if (m_attackTarget is Unit_Health)
+        {
+            m_pursuer.enabled = true;
+        }
+
         m_obstacleAvoider.enabled = true;
         m_separator.enabled = true;
 
@@ -189,14 +228,17 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
             return;
         }
 
-        if (Vector2.Distance(transform.position, m_attackTarget.DamageableGameObject.transform.position) > attackDistance)
+        if (m_attackTarget is Unit_Health)
         {
-            m_pursuer.SetDestination(m_attackTarget.DamageableGameObject.transform.position);
-            return;
-        }
-        else
-        {
-            m_pursuer.Stop();
+            if (Vector2.Distance(transform.position, m_attackTarget.DamageableGameObject.transform.position) > attackDistance)
+            {
+                m_pursuer.SetDestination(m_attackTarget.DamageableGameObject.transform.position);
+                return;
+            }
+            else
+            {
+                m_pursuer.Stop();
+            }
         }
 
         SpriteAnimatorData.AnimationType animType = GetAttackAnimation(m_attackTarget.DamageableGameObject.transform.position);
@@ -208,9 +250,9 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
 
         if (!m_isDamageApplied && m_attackTimer < attacksDelay / 2f)
         {
-            if (Vector2.Distance(transform.position, m_attackTarget.DamageableGameObject.transform.position) <= attackDistance)
+            if (Vector2.Distance(transform.position, m_attackTarget.DamageableGameObject.transform.position) <= attackDistance + m_attackTarget.DamageableRadius)
             {
-                m_attackTarget.SetDamage(attackDamage, gameObject);
+                m_attackTarget.SetDamage(attackDamage, this);
                 m_isDamageApplied = true;
             }
 

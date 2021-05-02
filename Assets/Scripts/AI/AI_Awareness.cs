@@ -6,37 +6,61 @@ public class AI_Awareness : MonoBehaviour
     public Player_Controller ownerController;
     public Player_Controller enemyController;
 
-    public float tickRate = 0.3f;
+    //private Dictionary<Unit_Base, List<Unit_Base>> m_unitsAssigned;  // key: enemy; value: assigned owned units
 
-    private Dictionary<Unit_Base, HashSet<Unit_Base>> m_unitsAssigned;  // key: enemy; value: assigned owned units
-
-    private float m_timer;
+    private int m_maxUnitsPerTick = 10;
+    private int m_unitTickCounter;
 
     private void Update()
     {
-        if(m_timer <= 0f)
+        m_unitTickCounter = 0;
+
+        for (int i = 0; i < ownerController.OwnedUnits.Count; i++)
         {
-            for (int i = 0; i < ownerController.OwnedUnits.Count; i++)
+            if (m_unitTickCounter >= m_maxUnitsPerTick) break;
+
+            Unit_Base unit = ownerController.OwnedUnits[i];
+
+            if (!(unit as ISelecteble).IsSelected && !unit.HasMoveTarget && !unit.HasAttackTarget)
             {
-                Unit_Base unit = ownerController.OwnedUnits[i];
-
-                if (!unit.HasMoveTarget && !unit.HasAttackTarget)
+                for (int j = 0; j < enemyController.ownedBuildings.Count; j++)
                 {
-                    List<GridHashList2D.Node> closeEnemies = enemyController.UnitPositions.Find(unit.transform.position, Vector2.one * unit.AttackDistance);
-
-                    if (closeEnemies.Count > 0)
+                    if (Vector2.Distance(enemyController.ownedBuildings[j].gameObject.transform.position, unit.transform.position) <= unit.visionDistance)
                     {
-                        Unit_Base selectedEnemy = GetClosest(closeEnemies);
+                        Building_Base building = enemyController.ownedBuildings[j].selectable as Building_Base;
+
+                        if (building.health != null)
+                        {
+                            unit.SetAttackTarget(building.health);
+                            unit.SetState(Unit_Base.UnitStateType.Attack);
+                            m_unitTickCounter++;
+                            continue;
+                        }
+                    }
+                }
+
+                List<GridHashList2D.Node> closeEnemies = enemyController.UnitPositions.Find(unit.transform.position, Vector2.one * unit.visionDistance);
+
+                if (closeEnemies.Count > 0)
+                {
+                    Unit_Base selectedEnemy = GetClosest(closeEnemies);
+
+                    if ((unit.unitType == UnitData.UnitType.Soldier && selectedEnemy.unitType == UnitData.UnitType.Ranged && Vector2.Distance(selectedEnemy.transform.position, unit.transform.position) > unit.visionDistance / 2f) ||
+                        (unit.unitType == UnitData.UnitType.Ranged && selectedEnemy.unitType == UnitData.UnitType.Soldier && Vector2.Distance(selectedEnemy.transform.position, unit.transform.position) < unit.visionDistance / 2f))
+                    {
+                        unit.SetMoveTarget(unit.transform.position + (selectedEnemy.transform.position - unit.transform.position).normalized * unit.visionDistance);
+                        unit.SetState(Unit_Base.UnitStateType.Move);
+                    }
+                    else
+                    {
                         unit.SetAttackTarget(selectedEnemy.health);
                         unit.SetState(Unit_Base.UnitStateType.Attack);
                     }
+
+                    m_unitTickCounter++;
                 }
             }
-
-            m_timer = tickRate;
         }
-
-        m_timer -= Time.deltaTime;
     }
 
     private Unit_Base GetClosest(List<GridHashList2D.Node> enemies)

@@ -102,6 +102,13 @@ public class Unit_Trex : Unit_Base, ISelecteble
         base.LateUpdate();
     }
 
+    private void OnDrawGizmos()
+    {
+#if UNITY_EDITOR
+        UnityEditor.Handles.Label(transform.position + Vector3.up * 1.5f, m_currentStateType.ToString());
+#endif
+    }
+
     public override void SetState(UnitStateType type)
     {
         m_currentStateType = type;
@@ -148,6 +155,24 @@ public class Unit_Trex : Unit_Base, ISelecteble
             return;
         }
 
+        Unit_Base attacker = health.Attacker;
+
+        if (!IsSelected && attacker != null)
+        {
+            if (attacker.unitType != UnitData.UnitType.Soldier)
+            {
+                SetAttackTarget(attacker.health);
+                ExitState_Idle(UnitStateType.Attack);
+                return;
+            }
+            else
+            {
+                SetMoveTarget(transform.position + (transform.position - attacker.transform.position).normalized * attackDistance);
+                ExitState_Idle(UnitStateType.Move);
+                return;
+            }
+        }
+
         m_moveTarget = transform.position;  // for separator
     }
 
@@ -179,8 +204,20 @@ public class Unit_Trex : Unit_Base, ISelecteble
 
         if (HasAttackTarget)
         {
-            if (Vector2.Distance(transform.position, m_attackTarget.DamageableGameObject.transform.position) <= attackDistance)
+            if (Vector2.Distance(transform.position, m_attackTarget.DamageableGameObject.transform.position) <= attackDistance + m_attackTarget.DamageableRadius)
             {
+                ExitState_Move(UnitStateType.Attack);
+                return;
+            }
+        }
+        else
+        {
+            Unit_Base attacker = health.Attacker;
+
+            // Move to attack only if not selected and ignore soldiers
+            if (!IsSelected && attacker != null && attacker.unitType != UnitData.UnitType.Soldier && Vector2.Distance(attacker.transform.position, transform.position) < attackDistance)
+            {
+                SetAttackTarget(attacker.health);
                 ExitState_Move(UnitStateType.Attack);
                 return;
             }
@@ -234,14 +271,38 @@ public class Unit_Trex : Unit_Base, ISelecteble
             return;
         }
 
-        if (Vector2.Distance(transform.position, m_attackTarget.DamageableGameObject.transform.position) > attackDistance)
+        if (m_attackTarget is Unit_Health)
         {
-            m_pursuer.SetDestination(m_attackTarget.DamageableGameObject.transform.position);
-            return;
+            if (Vector2.Distance(transform.position, m_attackTarget.DamageableGameObject.transform.position) > attackDistance)
+            {
+                m_pursuer.SetDestination(m_attackTarget.DamageableGameObject.transform.position);
+                return;
+            }
+            else
+            {
+                m_pursuer.Stop();
+            }
         }
         else
         {
-            m_pursuer.Stop();
+            if (Vector2.Distance(transform.position, m_attackTarget.DamageableGameObject.transform.position) > attackDistance + m_attackTarget.DamageableRadius)
+            {
+                m_moveTarget = m_attackTarget.DamageableGameObject.transform.position;
+                ExitState_Attack(UnitStateType.Move);
+                return;
+            }
+        }
+
+        Unit_Base attacker = health.Attacker;
+
+        if (!IsSelected && attacker != null && Vector2.Distance(m_pursuer.MoveTarget, transform.position) < 0.1f)   // Check if pursuer is stopped
+        {
+            if (attacker.unitType == UnitData.UnitType.Soldier)
+            {
+                SetMoveTarget(transform.position + (transform.position - attacker.transform.position).normalized * attackDistance);
+                ExitState_Idle(UnitStateType.Move);
+                return;
+            }
         }
 
         SpriteAnimatorData.AnimationType animType = GetAttackAnimation(m_attackTarget.DamageableGameObject.transform.position);
@@ -273,7 +334,7 @@ public class Unit_Trex : Unit_Base, ISelecteble
                 fireParticles[i].Play();
             }
 
-            m_attackTarget.SetDamage(attackDamage, gameObject);
+            m_attackTarget.SetDamage(attackDamage, this);
             m_attackTimer = attacksDelay;
         }
 

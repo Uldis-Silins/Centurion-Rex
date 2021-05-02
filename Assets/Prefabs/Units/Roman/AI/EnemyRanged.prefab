@@ -95,6 +95,7 @@ MonoBehaviour:
   owningFaction: 2
   ragdoll: {fileID: 2120004536777161031, guid: 7aaf4255082511d43b63d7ce109c9392, type: 3}
   m_sprite: {fileID: 7932924578973166320}
+  m_damageableRadius: 0
 --- !u!114 &9145141018364628441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,6 +170,8 @@ MonoBehaviour:
       cost: 0
       bestCost: 0
   gridWorldOffset: {x: 0, y: 0, z: 0}
+  debugFlowField: 0
+  debugMode: 0
 --- !u!114 &-5915530817883424669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -181,7 +184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76d5b9276ba3d0143a443c5126af0766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weight: 1.5
+  weight: 0.6
   m_moveTarget: {x: 0, y: 0}
   dest: {x: 0, y: 0, z: 0}
   maxSpeed: 50
@@ -189,11 +192,11 @@ MonoBehaviour:
   maxRotation: 5
   maxAngularAccel: 5
   avoidDistance: 2
-  lookAhead: 3.5
+  lookAhead: 1.2
   avoidanceLayers:
     serializedVersion: 2
     m_Bits: 4608
-  tickRate: 0.2
+  tickRate: 0.1
 --- !u!114 &6674461994962403893
 MonoBehaviour:
   m_ObjectHideFlags: 0

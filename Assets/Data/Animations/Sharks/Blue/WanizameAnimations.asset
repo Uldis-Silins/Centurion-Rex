@@ -130,7 +130,18 @@ MonoBehaviour:
       frameCount: 6
     playbackSpeedModifier: 1
   - type: 9
-    frames: []
+    frames:
+    - frameSprites:
+      - {fileID: -1893851955355296037, guid: f8c204383fd3feb44b13bcace3f41f41, type: 3}
+      - {fileID: 9169515250436016263, guid: f8c204383fd3feb44b13bcace3f41f41, type: 3}
+      - {fileID: 5741533861587088436, guid: f8c204383fd3feb44b13bcace3f41f41, type: 3}
+      - {fileID: 5484304491736335609, guid: f8c204383fd3feb44b13bcace3f41f41, type: 3}
+      - {fileID: -9061522988581240708, guid: f8c204383fd3feb44b13bcace3f41f41, type: 3}
+      - {fileID: 8829784966688216379, guid: f8c204383fd3feb44b13bcace3f41f41, type: 3}
+      frameTime: 0.2
+      flipX: 0
+      flipY: 0
+      frameCount: 6
     playbackSpeedModifier: 1
   - type: 10
     frames:

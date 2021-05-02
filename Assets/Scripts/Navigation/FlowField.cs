@@ -168,9 +168,10 @@ public class FlowField
 
     private List<Cell> GetNeighborCells(Vector2Int cellIndex, List<FlowDirection> directions)
     {
-        List<Cell> neighbors = new List<Cell>();
+        int numDirections = directions.Count;
+        List<Cell> neighbors = new List<Cell>(numDirections);
 
-        for (int i = 0; i < directions.Count; i++)
+        for (int i = 0; i < numDirections; i++)
         {
             Cell neighbor = GetCellAtDirection(cellIndex, directions[i]);
 
