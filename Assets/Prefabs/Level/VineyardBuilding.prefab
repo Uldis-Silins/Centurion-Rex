@@ -325,13 +325,13 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.13282776, y: 4.945352}
-      - {x: -1.7828369, y: 4.9640965}
-      - {x: -2.9366674, y: 3.6794822}
-      - {x: -2.9372864, y: -0.10196787}
-      - {x: -0.5146269, y: -0.49547744}
-      - {x: 1.4443985, y: -0.025174022}
-      - {x: 1.502593, y: 3.6271925}
+    - - {x: 0.87742615, y: 7.492667}
+      - {x: -2.723381, y: 4.0235486}
+      - {x: -4.4650564, y: 3.992998}
+      - {x: -4.544052, y: -1.3168414}
+      - {x: -0.5538115, y: -1.5535932}
+      - {x: 4.65793, y: -1.3968052}
+      - {x: 4.716132, y: 3.9015186}
 --- !u!1 &2671044253618964315
 GameObject:
   m_ObjectHideFlags: 0
@@ -683,6 +683,7 @@ MonoBehaviour:
   playerControllers:
   - {fileID: 0}
   - {fileID: 0}
+  selectableManager: {fileID: 0}
   factionSprites:
   - type: 1
     sprite: {fileID: 21300000, guid: 9b8a7ed57094ec64ba6855d52da4f056, type: 3}
@@ -705,7 +706,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.81, y: 0.45}
+  m_Offset: {x: -0.113033295, y: 1.0933521}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -716,7 +717,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4.4, y: 1}
+  m_Size: {x: 8.653282, y: 5.0030794}
   m_EdgeRadius: 0
 --- !u!1 &6313685652789394096
 GameObject:

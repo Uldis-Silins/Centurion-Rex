@@ -40,4 +40,9 @@ public class MenuButton : MonoBehaviour
     { 
         SceneManager.LoadScene("SampleScene");
     }
+
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene("Menu");
+    }
 }
