@@ -5,18 +5,6 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     AudioSource audioSource;
-    public static AudioManager instance;
-
-    private void Awake()
-    {
-        if (instance == null)
-            instance = this;
-
-        else if (instance != this)
-            Destroy(gameObject);
-
-        DontDestroyOnLoad(this.gameObject);
-    }
 
     private void Start()
     {

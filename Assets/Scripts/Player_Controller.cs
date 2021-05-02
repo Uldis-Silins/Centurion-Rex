@@ -51,6 +51,11 @@ public class Player_Controller : MonoBehaviour
 
     private void Awake()
     {
+        uiManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<UI_GameManager>();
+        hudManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<UI_HudManager>();
+        selectableManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<SelectableManager>();
+        damageableManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<DamageableManager>();
+
         m_ownedUnits = new List<Unit_Base>();
 
         for (int i = 0; i < ownedBuildings.Count; i++)
@@ -69,6 +74,8 @@ public class Player_Controller : MonoBehaviour
         m_unitPositionList = new GridHashList2D(new Rect(min.x, min.y, max.x - min.x, max.y - min.y), new Vector2Int(walkableTilemap.cellBounds.size.x, walkableTilemap.cellBounds.size.y));
         m_unitsByPosition = new Dictionary<GridHashList2D.Node, Unit_Base>();
         m_unitsByType = new Dictionary<UnitData.UnitType, List<Unit_Base>>();
+
+       
     }
 
     private void OnEnable()

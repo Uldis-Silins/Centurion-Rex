@@ -16,6 +16,12 @@ public class Player_UnitSelectController : MonoBehaviour
     private readonly float m_dragThreshold = 5;
     private bool m_inDrag;
 
+
+    private void Start()
+    {
+        selectableManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<SelectableManager>();
+        hudManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<UI_HudManager>();
+    }
     private void Update()
     {
         if(Player_Controller.currentGameState != GameState.Playing)
