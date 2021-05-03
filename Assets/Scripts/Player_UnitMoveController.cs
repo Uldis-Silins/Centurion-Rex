@@ -39,7 +39,18 @@ public class Player_UnitMoveController : MonoBehaviour
         }
 
         // Force attack cursor on building hack
-        RaycastHit2D hit = Physics2D.Raycast(m_mainCam.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Building", "Selectable"));
+        RaycastHit2D[]buildingHits = Physics2D.RaycastAll(m_mainCam.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Building", "Selectable"));
+
+        RaycastHit2D hit = new RaycastHit2D();
+
+        for (int i = 0; i < buildingHits.Length; i++)
+        {
+            if(buildingHits[i].collider.gameObject.layer == LayerMask.NameToLayer("Selectable"))
+            {
+                hit = buildingHits[i];
+                break;
+            }
+        }
 
         if (hit.collider != null)
         {

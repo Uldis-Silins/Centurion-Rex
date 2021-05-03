@@ -247,6 +247,18 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
                 m_pursuer.Stop();
             }
         }
+        else
+        {
+            if (Vector2.Distance(transform.position, m_attackTarget.DamageableGameObject.transform.position) > attackDistance + m_attackTarget.DamageableRadius)
+            {
+                m_seeker.SetDestination(m_attackTarget.DamageableGameObject.transform.position + (transform.position - m_attackTarget.DamageableGameObject.transform.position).normalized * m_attackTarget.DamageableRadius);
+                return;
+            }
+            else
+            {
+                m_seeker.Stop();
+            }
+        }
 
         SpriteAnimatorData.AnimationType animType = GetAttackAnimation(m_attackTarget.DamageableGameObject.transform.position);
 

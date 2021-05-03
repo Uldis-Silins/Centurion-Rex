@@ -49,21 +49,21 @@ public class AI_Awareness : MonoBehaviour
                 {
                     Unit_Base selectedEnemy = GetClosest(closeEnemies);
 
-                    if ((unit.unitType == UnitData.UnitType.Soldier && selectedEnemy.unitType == UnitData.UnitType.Ranged && Vector2.Distance(selectedEnemy.transform.position, unit.transform.position) > unit.visionDistance / 2f) ||
-                        (unit.unitType == UnitData.UnitType.Ranged && selectedEnemy.unitType == UnitData.UnitType.Soldier && Vector2.Distance(selectedEnemy.transform.position, unit.transform.position) < unit.visionDistance / 2f))
-                    {
-                        unit.SetMoveTarget(unit.transform.position + (selectedEnemy.transform.position - unit.transform.position).normalized * unit.visionDistance);
-                        unit.SetState(Unit_Base.UnitStateType.Move);
-                    }
-                    else
+                    //if ((unit.unitType == UnitData.UnitType.Soldier && selectedEnemy.unitType == UnitData.UnitType.Ranged && Vector2.Distance(selectedEnemy.transform.position, unit.transform.position) > unit.visionDistance / 2f) ||
+                    //    (unit.unitType == UnitData.UnitType.Ranged && selectedEnemy.unitType == UnitData.UnitType.Soldier && Vector2.Distance(selectedEnemy.transform.position, unit.transform.position) < unit.visionDistance / 2f))
+                    //{
+                    //    unit.SetMoveTarget(unit.transform.position + (selectedEnemy.transform.position - unit.transform.position).normalized * unit.visionDistance);
+                    //    unit.SetState(Unit_Base.UnitStateType.Move);
+                    //}
+                    //else
                     {
                         unit.SetAttackTarget(selectedEnemy.health);
                         unit.SetState(Unit_Base.UnitStateType.Attack);
                     }
-
-                    m_unitTickCounter++;
                 }
             }
+
+            m_unitTickCounter++;
         }
     }
 

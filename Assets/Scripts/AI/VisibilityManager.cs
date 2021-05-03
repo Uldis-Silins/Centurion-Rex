@@ -20,6 +20,17 @@ public class VisibilityManager : MonoBehaviour
         VisibleUnits = new HashSet<Unit_Base>();
     }
 
+    private void Start()
+    {
+        for (int i = 0; i < enemyController.ownedBuildings.Count; i++)
+        {
+            if (enemyController.ownedBuildings[i].gameObject != null)
+            {
+                (enemyController.ownedBuildings[i].selectable as Building_Base).spriteRenderer.enabled = false;
+            }
+        }
+    }
+
     private void Update()
     {
         if (enemyController == null || enemyController.OwnedUnits == null || !checkUnitVisibility) return;
@@ -30,14 +41,6 @@ public class VisibilityManager : MonoBehaviour
         for (int i = 0; i < enemyController.OwnedUnits.Count; i++)
         {
             enemyController.OwnedUnits[i].soldierRenderer.enabled = false;
-        }
-
-        for (int i = 0; i < enemyController.ownedBuildings.Count; i++)
-        {
-            if (enemyController.ownedBuildings[i].gameObject != null)
-            {
-                (enemyController.ownedBuildings[i].selectable as Building_Base).spriteRenderer.enabled = false;
-            }
         }
 
         for (int i = 0; i < playerController.OwnedUnits.Count; i++)
