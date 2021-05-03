@@ -9,4 +9,5 @@ public interface ISelecteble
 
     bool IsSelected { get; }
     GameObject SelectableGameObject { get; }
+    Bounds SelectableBounds { get; }
 }

@@ -159,6 +159,17 @@ public class Player_Controller : MonoBehaviour
                             m_selectedBuilding = selectable;
                             selectable.Select();
                             uiManager.ShowBuildingMenu(ownedBuildings[i].type);
+
+                            if(ownedBuildings[i].type == BuildingType.UnitSpawn)
+                            {
+                                for (int j = 0; j < uiManager.buyUnitsButtons.Length; j++)
+                                {
+                                    uiManager.buyUnitsButtons[j].button.interactable = uiManager.buyUnitsButtons[j].unit.price <= currentResources;
+                                    uiManager.buyUnitsButtons[j].progressBarFill.color = uiManager.buyUnitsButtons[j].unit.price <= currentResources ? Color.white : Color.gray;
+                                }
+                            }
+
+                            break;
                         }
                     }
 
@@ -245,14 +256,14 @@ public class Player_Controller : MonoBehaviour
 
         if (ownedByPlayer)
         {
-            uiManager.wineAmountText.text = currentResources.ToString();
-
-            for (int i = 0; i < unitData.Length; i++)
+            for (int i = 0; i < uiManager.buyUnitsButtons.Length; i++)
             {
-                uiManager.buyUnitsButtons[i].interactable = unitData[i].price <= currentResources;
-                uiManager.buyUnitsButtons[i].transform.GetChild(0).GetComponent<UnityEngine.UI.Image>().color = unitData[i].price <= currentResources ? Color.white : Color.gray;
+                uiManager.buyUnitsButtons[i].button.interactable = uiManager.buyUnitsButtons[i].unit.price <= currentResources;
+                uiManager.buyUnitsButtons[i].progressBarFill.color = unitData[i].price <= currentResources ? Color.white : Color.gray;
             }
-        }   
+
+            uiManager.wineAmountText.text = currentResources.ToString();
+        } 
     }
 
     public List<ISelecteble> GetOwnedBuildingsByType(BuildingType type)

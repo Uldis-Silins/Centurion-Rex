@@ -59,7 +59,7 @@ public class Player_UnitMoveController : MonoBehaviour
 
                 if (building.spriteRenderer.enabled)
                 {
-                    if (!(building is Building_Resource))
+                    if (!(building is Building_Resource) && building.health != null)
                     {
                         hudManager.ChangeCursor(UI_HudManager.CursorType.Attack);
 
@@ -119,13 +119,13 @@ public class Player_UnitMoveController : MonoBehaviour
                 }
             }
 
-            const float radiusPerUnit = 0.25f;
+            const float radiusPerUnit = 0.1f;
             float checkEnemiesRadius = curSelectedUnits.Count * radiusPerUnit;
 
             Vector3 hitPos = camRay.GetPoint(dist);
             hitPos.z = 0;
 
-            var hits = enemyController.UnitPositions.Find(hitPos, Vector2.one * radiusPerUnit);
+            var hits = enemyController.UnitPositions.Find(hitPos, Vector2.one * checkEnemiesRadius);
             List<IDamageable> hitDamageables = new List<IDamageable>();
 
             foreach (var node in hits)

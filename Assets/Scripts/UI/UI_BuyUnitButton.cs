@@ -1,12 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class UI_BuyUnitButton : MonoBehaviour, IPointerClickHandler
 {
+    public Button button;
     public Building_UnitSpawner barracks;
     public UnitData unit;
+    public Image progressBarFill;
 
     public void OnPointerClick(PointerEventData eventData)
     {

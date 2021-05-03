@@ -165,7 +165,7 @@ public class UI_HudManager : MonoBehaviour
         {
             Unit_Base curSelected = m_currentSelectedUnits[i];
             (m_spawnedSelectionRects[i].transform as RectTransform).anchoredPosition = m_mainCam.WorldToScreenPoint(curSelected.soldierRenderer.bounds.center);
-            m_spawnedSelectionRects[i].selectionRect.rectTransform.sizeDelta = curSelected.soldierRenderer.bounds.size * curSelected.soldierRenderer.sprite.pixelsPerUnit * scaleRatio;
+            m_spawnedSelectionRects[i].selectionRect.rectTransform.sizeDelta = (curSelected as ISelecteble).SelectableBounds.size * curSelected.soldierRenderer.sprite.pixelsPerUnit * scaleRatio;
 
             float width = m_spawnedSelectionRects[i].selectionRect.rectTransform.sizeDelta.x;
             m_spawnedSelectionRects[i].healthBar.rectTransform.sizeDelta = new Vector2(width, HEALTH_BAR_THICKNESS);
@@ -178,8 +178,8 @@ public class UI_HudManager : MonoBehaviour
     {
         float scaleRatio = (Screen.width / 1920f) * 0.5f;
         Building_Base building = m_currentSelectedBuilding as Building_Base;
-        (m_buildingSelectionRect.transform as RectTransform).anchoredPosition = m_mainCam.WorldToScreenPoint(building.spriteRenderer.bounds.center);
-        m_buildingSelectionRect.selectionRect.rectTransform.sizeDelta = building.spriteRenderer.bounds.size * building.spriteRenderer.sprite.pixelsPerUnit * scaleRatio;
+        m_buildingSelectionRect.selectionRect.rectTransform.anchoredPosition = m_mainCam.WorldToScreenPoint(building.spriteRenderer.bounds.center);
+        m_buildingSelectionRect.selectionRect.rectTransform.sizeDelta = building.SelectableBounds.size * building.spriteRenderer.sprite.pixelsPerUnit * scaleRatio;
         m_buildingSelectionRect.healthBar.gameObject.SetActive(building.health != null);
 
         if (building.health != null)

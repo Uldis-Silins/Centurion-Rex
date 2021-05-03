@@ -16,8 +16,10 @@ public class Building_UnitSpawner : Building_Base
     private float m_buildTimer;
     private bool m_inChangeMoveTarget;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         m_buildQueue = new List<int>();
     }
 

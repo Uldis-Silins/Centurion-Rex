@@ -9,6 +9,7 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
     public float attacksDelay = 0.5f;
 
     [SerializeField] private GameObject m_selectableObject;
+    private Bounds m_selectableBounds;
 
     private Color m_startColor;
     private readonly int m_colorPropID = Shader.PropertyToID("_Color");
@@ -21,6 +22,7 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
 
     public bool IsSelected { get; private set; }
     public GameObject SelectableGameObject { get { return m_selectableObject; } }
+    public Bounds SelectableBounds { get { return m_selectableBounds; } }
     public override float AttackDistance { get { return attackDistance; } }
 
     protected override void Awake()
@@ -28,6 +30,11 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
         base.Awake();
 
         m_startColor = soldierRenderer.material.GetColor(m_colorPropID);
+
+        if (m_selectableObject != null)
+        {
+            m_selectableBounds = m_selectableObject.GetComponent<Collider2D>().bounds;
+        }
 
         m_states = new Dictionary<UnitStateType, StateHandler>();
         m_states.Add(UnitStateType.None, () => { });

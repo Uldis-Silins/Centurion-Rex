@@ -26,8 +26,9 @@ public class Building_Resource : Building_Base
 
     private float m_resourceTimer;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         m_building = new Player_Controller.Building(this, BuildingType.ResourceProduction);
     }
 

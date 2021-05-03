@@ -18,7 +18,7 @@ public class UI_GameManager : MonoBehaviour
     public RectTransform gameOverMenu;
     public RectTransform resourcePanel;
 
-    public Button[] buyUnitsButtons;
+    public UI_BuyUnitButton[] buyUnitsButtons;
     public Image[] buyUnitFill;
     public Text[] buyUnitButtonTexts;
 
