@@ -9,15 +9,19 @@ public class AI_Awareness : MonoBehaviour
     //private Dictionary<Unit_Base, List<Unit_Base>> m_unitsAssigned;  // key: enemy; value: assigned owned units
 
     private int m_maxUnitsPerTick = 10;
-    private int m_unitTickCounter;
+    private int m_unitTickCounter = 1;
 
     private void Update()
     {
-        m_unitTickCounter = 0;
+        if (ownerController.OwnedUnits.Count == 0) return;
 
-        for (int i = 0; i < ownerController.OwnedUnits.Count; i++)
+        int startCheckUnit = ownerController.OwnedUnits.Count % m_unitTickCounter;
+        int endCheckUnit = ownerController.OwnedUnits.Count <= m_maxUnitsPerTick ? ownerController.OwnedUnits.Count : m_maxUnitsPerTick;
+        endCheckUnit += startCheckUnit;
+
+        for (int i = startCheckUnit; i < ownerController.OwnedUnits.Count; i++)
         {
-            if (m_unitTickCounter >= m_maxUnitsPerTick) break;
+            if (m_unitTickCounter >= endCheckUnit) break;
 
             Unit_Base unit = ownerController.OwnedUnits[i];
 

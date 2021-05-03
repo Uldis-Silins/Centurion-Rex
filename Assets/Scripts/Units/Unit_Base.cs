@@ -45,6 +45,13 @@ public abstract class Unit_Base : MonoBehaviour
 
     private Vector2Int m_prevAnimDirection;
 
+    private Vector3 m_prevSafePosition;
+    private Vector3 m_safeMovePrevTarget;
+    private float m_safeMoveCheckDist = 0.5f;
+    private float m_safeMoveTimer;
+    private int m_failedMoveChecks;
+    private float m_safeMoveTick = 1f;
+
     public bool HasAttackTarget { get { return m_attackTarget != null && m_attackTarget.CurrentHealth > 0 && m_attackTarget.DamageableGameObject != null; } }
     public virtual float AttackDistance { get; }
 
@@ -71,6 +78,31 @@ public abstract class Unit_Base : MonoBehaviour
     {
         Debug.Assert(m_currentStateHandler != null, "No state set.");
         m_currentStateHandler();
+
+        if(m_hasMoveTarget && m_safeMoveTimer <= 0)
+        {
+            m_safeMoveTimer = m_safeMoveTick;
+
+            if(Vector2.Distance(transform.position, m_prevSafePosition) < m_safeMoveCheckDist)
+            {
+                m_failedMoveChecks++;
+            }
+            else
+            {
+                m_prevSafePosition = transform.position;
+            }
+
+            if(m_failedMoveChecks > 4)
+            {
+                m_safeMovePrevTarget = m_moveTarget;
+                SetMoveTarget(m_prevSafePosition);
+            }
+        }
+
+        if (m_seeker.IsMoving)
+        {
+            m_safeMoveTimer -= Time.deltaTime;
+        }
     }
 
     protected virtual void LateUpdate()
@@ -145,6 +177,10 @@ public abstract class Unit_Base : MonoBehaviour
                 m_seeker.gridWorldOffset = m_navigationController.gridOffset;
             }
         }
+
+        m_safeMoveTimer = m_safeMoveTick;
+        m_prevSafePosition = transform.position;
+        m_failedMoveChecks = 0;
 
         m_seeker.SetDestination(targetPosition);
         m_moveTarget = targetPosition;
