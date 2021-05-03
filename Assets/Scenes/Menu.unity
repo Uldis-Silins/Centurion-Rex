@@ -3705,10 +3705,10 @@ RectTransform:
   m_Father: {fileID: 1440666177}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -1.7100067}
-  m_SizeDelta: {x: 353, y: 67.173706}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -5.8}
+  m_SizeDelta: {x: 501, y: 259.44977}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1434973015
 MonoBehaviour:
@@ -4173,7 +4173,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000061035156, y: 0}
+  m_AnchoredPosition: {x: -0.00012207031, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1605225504
@@ -4247,8 +4247,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -28.453432}
-  m_SizeDelta: {x: 0, y: 56.906616}
+  m_AnchoredPosition: {x: 0, y: -228.467}
+  m_SizeDelta: {x: 0, y: 456.93408}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1606312043
 MonoBehaviour:
@@ -4282,14 +4282,14 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Pretty much AoE2.
-
-
-    Just much much more simple and buggy.
-
-
-    Capture
-    vineyards to generate resources. '
+  m_Text: "\rPretty much AoE2. Just much much more simple and buggy.\r\n\r\nCapture
+    vineyards to generate resources. \r\n\nCONTROLS\r\n\u2022 Left click to select
+    a building\r\n\u2022 Use WASD/arrow keys to move the camera\r\n\u2022 Click on
+    a position in minimap to go to that location\r\n\u2022 Left click or left click
+    and drag a selection box to select a unit\r\n\u2022 Right click with a unit selected
+    to order it to attack or move\r\n\u2022 Move next to a vineyard to capture it\r\n\u2022
+    Right click on a unit in barracks to remove it from training queue\r\n\u2022
+    With barracks selected, right click on a location to set a new rally point\r\n\r\n"
 --- !u!222 &1606312044
 CanvasRenderer:
   m_ObjectHideFlags: 0
