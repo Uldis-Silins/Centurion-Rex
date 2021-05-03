@@ -99,7 +99,7 @@ public class AI_Strategy : MonoBehaviour
                 {
                     if(!unit.HasAttackTarget)
                     {
-                        unit.SetAttackTarget(enemyController.UnitsByPosition[positions[posIndex % m_idleUnits.Count]].health);
+                        unit.SetAttackTarget(enemyController.UnitsByPosition[positions[posIndex % positions.Count]].health);
                         unit.SetState(Unit_Base.UnitStateType.Attack);
                         posIndex++;
                     }
