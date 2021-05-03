@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    public Camera cam;
     public Transform startTarget;
     public bool mouseMove = true;
     public bool keyboardMove = true;
@@ -55,8 +56,8 @@ public class CameraController : MonoBehaviour
             m_targetCamPosition = transform.position + dir;
         }
 
-        m_targetCamPosition.x = Mathf.Clamp(m_targetCamPosition.x, m_levelBounds.min.x, m_levelBounds.max.x);
-        m_targetCamPosition.y = Mathf.Clamp(m_targetCamPosition.y, m_levelBounds.min.y, m_levelBounds.max.y);
+        m_targetCamPosition.x = Mathf.Clamp(m_targetCamPosition.x, m_levelBounds.min.x + cam.orthographicSize * cam.aspect, m_levelBounds.max.x - cam.orthographicSize * cam.aspect);
+        m_targetCamPosition.y = Mathf.Clamp(m_targetCamPosition.y, m_levelBounds.min.y + cam.orthographicSize, m_levelBounds.max.y - cam.orthographicSize);
     }
 
     private void LateUpdate()
@@ -68,8 +69,8 @@ public class CameraController : MonoBehaviour
     public void SetPosition(Vector3 position)
     {
         m_targetCamPosition = position;
-        m_targetCamPosition.x = Mathf.Clamp(m_targetCamPosition.x, m_levelBounds.min.x, m_levelBounds.max.x);
-        m_targetCamPosition.y = Mathf.Clamp(m_targetCamPosition.y, m_levelBounds.min.y, m_levelBounds.max.y);
+        m_targetCamPosition.x = Mathf.Clamp(m_targetCamPosition.x, m_levelBounds.min.x + cam.orthographicSize * cam.aspect, m_levelBounds.max.x - cam.orthographicSize * cam.aspect);
+        m_targetCamPosition.y = Mathf.Clamp(m_targetCamPosition.y, m_levelBounds.min.y + cam.orthographicSize, m_levelBounds.max.y - cam.orthographicSize);
         transform.position = m_targetCamPosition;
         m_prevCamPosition = transform.position;
     }

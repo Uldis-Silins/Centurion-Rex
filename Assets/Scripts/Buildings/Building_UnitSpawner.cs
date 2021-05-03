@@ -14,6 +14,7 @@ public class Building_UnitSpawner : Building_Base
 
     private List<int> m_buildQueue;
     private float m_buildTimer;
+    private bool m_inChangeMoveTarget;
 
     private void Awake()
     {
@@ -73,19 +74,23 @@ public class Building_UnitSpawner : Building_Base
             m_buildTimer -= Time.deltaTime;
         }
 
-        if(m_playerController.ownedByPlayer && IsSelected)
+        m_playerController.BlockBuildingInteraction = m_inChangeMoveTarget;
+
+        if (m_inChangeMoveTarget && m_playerController.ownedByPlayer && IsSelected && !UI_Helpers.IsPointerOverUIElement())
         {
-            if(Input.GetMouseButtonUp(1))
+            Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            Plane groundPlane = new Plane(-Vector3.forward, spawnPoint.transform.position.z);
+            float enter = 0.0f;
+
+            if (groundPlane.Raycast(camRay, out enter))
             {
-                Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+                moveTarget.position = camRay.GetPoint(enter);
+            }
 
-                Plane groundPlane = new Plane(-Vector3.forward, spawnPoint.transform.position.z);
-                float enter = 0.0f;
-
-                if(groundPlane.Raycast(camRay, out enter))
-                {
-                    moveTarget.position = camRay.GetPoint(enter);
-                }
+            if (Input.GetMouseButtonDown(0))
+            {
+                m_inChangeMoveTarget = false;
             }
         }
 
@@ -172,6 +177,20 @@ public class Building_UnitSpawner : Building_Base
                 m_playerController.uiManager.SetBuildQueue(unitList);
             }
         }
+    }
+
+    public void OnRemoveFromBuildQueueClick(int buttonIndex)
+    {
+        if(m_buildQueue.Count >= buttonIndex)
+        {
+            OnCancelBuildClick(units[m_buildQueue[buttonIndex]]);
+        }
+    }
+
+    public void OnChangeMoveTargetClick()
+    {
+        m_inChangeMoveTarget = true;
+        m_playerController.BlockBuildingInteraction = true;
     }
 
     private void Spawn(int unitIndex)

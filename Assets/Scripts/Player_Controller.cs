@@ -53,7 +53,8 @@ public class Player_Controller : MonoBehaviour
     float enemyBonusIncome = 1;
     float enemyNextIncomeTime = 0;
 
-
+    public bool HasBuildingSelected { get { return m_selectedBuilding != null; } }
+    public bool BlockBuildingInteraction { get; set; }
 
     private void Awake()
     {
@@ -112,6 +113,7 @@ public class Player_Controller : MonoBehaviour
             enemyNextIncomeTime += enemyIncomeRate;
             Debug.Log(currentResources);
         }
+
         if (ownedByPlayer && Input.GetKeyDown(KeyCode.Escape))
         {
             if (currentGameState == GameState.Playing)
@@ -140,7 +142,7 @@ public class Player_Controller : MonoBehaviour
             Destroy(killedObj);
         }
 
-        if (ownedByPlayer && Input.GetMouseButtonDown(0) && !UI_Helpers.IsPointerOverUIElement())
+        if (ownedByPlayer && Input.GetMouseButtonDown(0) && !UI_Helpers.IsPointerOverUIElement() && !BlockBuildingInteraction)
         {
             RaycastHit2D hit = Physics2D.Raycast(m_mainCam.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, selectableLayer);
 

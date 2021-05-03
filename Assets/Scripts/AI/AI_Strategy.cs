@@ -27,7 +27,7 @@ public class AI_Strategy : MonoBehaviour
     private Building_Resource m_curResourceBuilding;
 
     private bool m_baseInDanger;
-    private float m_earlyHarrasmentChance = 0.3f;
+    private float m_earlyHarrasmentChance = 0.1f;
 
     private bool HasHalfOfResourceBuildings { get { return m_ownedResourceBuildings.Count > resourceBuildings.Count / 2; } }
     private bool HasHarrasmentAttackCommenced { get { return m_unitsByCommand.ContainsKey((int)UnitCommandType.MoveToEnemyBase) && m_unitsByCommand[(int)UnitCommandType.MoveToEnemyBase].Count > 0; } }
@@ -70,7 +70,7 @@ public class AI_Strategy : MonoBehaviour
             {
                 AssignIdleUnits(UnitCommandType.MoveToEnemyBase, 0.5f);
             }
-            else if(m_idleUnits.Count >= 10 && m_resourceBuildingQueue.Count > 0 && m_curResourceBuilding == null)
+            else if((m_idleUnits.Count >= 10 || ownerController.currentResources < 150) && m_resourceBuildingQueue.Count > 0 && m_curResourceBuilding == null)
             {
                 m_curResourceBuilding = m_resourceBuildingQueue.Dequeue();
                 AssignIdleUnits(UnitCommandType.GetResourceBuilding, Mathf.Lerp(0.8f, 0.1f, (float)m_ownedResourceBuildings.Count / resourceBuildings.Count));

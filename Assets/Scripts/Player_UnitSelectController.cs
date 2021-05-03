@@ -8,6 +8,7 @@ public class Player_UnitSelectController : MonoBehaviour
     public SelectableManager selectableManager;
     public RectTransform selectionBox;
     public UI_HudManager hudManager;
+    public Canvas minimapCanvas;
 
     public LayerMask hitTestLayers;
 
@@ -23,11 +24,19 @@ public class Player_UnitSelectController : MonoBehaviour
             return;
         }
 
-        if (Input.GetMouseButtonDown(0))
+        bool isMinimapHit = UI_Helpers.IsPointerOverCanvasElement(minimapCanvas);
+
+        if (!isMinimapHit && Input.GetMouseButtonDown(0))
         {
             m_startDragPosition = Input.mousePosition;
 
-            selectableManager.DeselectAll();
+            foreach (var item in selectableManager.GetCurrentSelected())
+            {
+                if(item is Unit_Base)
+                {
+                    item.Deselect();
+                }
+            }
 
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, hitTestLayers);
 
@@ -56,7 +65,7 @@ public class Player_UnitSelectController : MonoBehaviour
         {
             if(!m_inDrag)
             {
-                if ((new Vector2(Input.mousePosition.x, Input.mousePosition.y) - m_startDragPosition).magnitude > m_dragThreshold)
+                if (!isMinimapHit && (new Vector2(Input.mousePosition.x, Input.mousePosition.y) - m_startDragPosition).magnitude > m_dragThreshold)
                 {
                     m_inDrag = true;
 

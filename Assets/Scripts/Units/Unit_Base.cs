@@ -61,7 +61,7 @@ public abstract class Unit_Base : MonoBehaviour
 
         if (fovTransform != null)
         {
-            fovTransform.localScale = new Vector3(visionDistance * 2f, 1f, visionDistance * 2f);
+            fovTransform.localScale = new Vector3(visionDistance * 2f, visionDistance * 2f, visionDistance * 2f);
         }
 
         m_navigationController = GameObject.FindObjectOfType<NavigationController>();
