@@ -15,6 +15,10 @@ public static class Formations
         {
             return adjustedPosition;
         }
+        //else
+        //{
+        //    adjustedPosition = hits[0].ClosestPoint(unit.transform.position) + (Vector2)(unit.transform.position - hits[0].transform.position).normalized * unit.circleCollider.radius;
+        //}
 
         List<Vector2> formationPositions = GetPositionListCircle(adjustedPosition, new float[] { 1f, 2f, 3f, 4f, 5f }, new int[] { 5, 10, 20, 40, 60 });
 

@@ -59,7 +59,10 @@ public class UI_MinimapController : MonoBehaviour
 
         foreach (var building in visibilityManager.VisibleBuildings)
         {
-            DrawMarker(building.gameObject.transform.position, buildingMarkerSize, enemyMarkerColor);
+            if (building.gameObject != null)
+            {
+                DrawMarker(building.gameObject.transform.position, buildingMarkerSize, enemyMarkerColor);
+            }
         }
 
         m_targetTexture.Apply();

@@ -165,7 +165,7 @@ public abstract class Unit_Base : MonoBehaviour
 
         m_seeker.flowField = null;
 
-        if (dist > MIN_NAVIGATION_DISTANCE && hit != circleCollider)
+        if (dist > MIN_NAVIGATION_DISTANCE && hit && !hit.isTrigger && hit != circleCollider)
         {
             FlowField flowField = m_navigationController.GetFlowField(this, targetPosition);
             Debug.Log(gameObject.name + ": requesting navigation; t: " + Time.time);

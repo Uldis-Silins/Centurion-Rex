@@ -34,7 +34,10 @@ public class VisibilityManager : MonoBehaviour
 
         for (int i = 0; i < enemyController.ownedBuildings.Count; i++)
         {
-            (enemyController.ownedBuildings[i].selectable as Building_Base).spriteRenderer.enabled = false;
+            if (enemyController.ownedBuildings[i].gameObject != null)
+            {
+                (enemyController.ownedBuildings[i].selectable as Building_Base).spriteRenderer.enabled = false;
+            }
         }
 
         for (int i = 0; i < playerController.OwnedUnits.Count; i++)

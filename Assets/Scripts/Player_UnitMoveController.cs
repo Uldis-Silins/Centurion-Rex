@@ -39,7 +39,7 @@ public class Player_UnitMoveController : MonoBehaviour
         }
 
         // Force attack cursor on building hack
-        RaycastHit2D hit = Physics2D.Raycast(m_mainCam.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, 1 << LayerMask.NameToLayer("Selectable"));
+        RaycastHit2D hit = Physics2D.Raycast(m_mainCam.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Building", "Selectable"));
 
         if (hit.collider != null)
         {
@@ -50,6 +50,7 @@ public class Player_UnitMoveController : MonoBehaviour
                 if(building.selectable.SelectableGameObject == hit.collider.gameObject)
                 {
                     hitBuilding = building;
+                    break;
                 }
             }
 
@@ -71,8 +72,9 @@ public class Player_UnitMoveController : MonoBehaviour
                             {
                                 Unit_Base unit = curSelectedUnits[i] as Unit_Base;
                                 unit.SetAttackTarget(building.health);
-                                unit.SetMoveTarget(building.health.transform.position);
-                                unit.SetState(Unit_Base.UnitStateType.Move);
+                                Vector2 moveTarget = building.health.transform.position + (unit.transform.position - building.health.transform.position).normalized * (building.health.DamageableRadius + unit.AttackDistance);
+                                unit.SetMoveTarget(moveTarget);
+                                unit.SetState(Unit_Base.UnitStateType.Attack);
                             }
                         }
                     }
@@ -91,15 +93,19 @@ public class Player_UnitMoveController : MonoBehaviour
                                 for (int i = 0; i < curSelectedUnits.Count; i++)
                                 {
                                     Unit_Base unit = curSelectedUnits[i] as Unit_Base;
-                                    unit.SetMoveTarget(resourceBuilding.transform.position);
+                                    Vector2 targetPos = resourceBuilding.transform.position + (unit.transform.position - resourceBuilding.transform.position).normalized * resourceBuilding.captureRadius;
+                                    Debug.DrawLine(unit.transform.position, targetPos, Color.red);
+                                    Debug.Break();
+                                    unit.SetMoveTarget(targetPos);
                                     unit.SetState(Unit_Base.UnitStateType.Move);
                                 }
                             }
                         }
                     }
+
+                    return;
                 }
             }
-            return;
         }
         // ~hack
 
