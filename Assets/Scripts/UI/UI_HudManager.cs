@@ -164,7 +164,7 @@ public class UI_HudManager : MonoBehaviour
         for (int i = 0; i < m_currentSelectedUnits.Count; i++)
         {
             Unit_Base curSelected = m_currentSelectedUnits[i];
-            if(curSelected.gameObject == null || curSelected.soldierRenderer == null)
+            if(curSelected == null || curSelected.gameObject == null || curSelected.soldierRenderer == null)
             {
                 m_spawnedSelectionRects[i].gameObject.SetActive(false);
                 continue;

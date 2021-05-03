@@ -278,26 +278,14 @@ public class Unit_Trex : Unit_Base, ISelecteble
             return;
         }
 
-        if (m_attackTarget is Unit_Health)
+        if (Vector2.Distance(transform.position, m_attackTarget.DamageableGameObject.transform.position) > attackDistance)
         {
-            if (Vector2.Distance(transform.position, m_attackTarget.DamageableGameObject.transform.position) > attackDistance)
-            {
-                m_pursuer.SetDestination(m_attackTarget.DamageableGameObject.transform.position);
-                return;
-            }
-            else
-            {
-                m_pursuer.Stop();
-            }
+            m_pursuer.SetDestination(m_attackTarget.DamageableGameObject.transform.position);
+            return;
         }
         else
         {
-            if (Vector2.Distance(transform.position, m_attackTarget.DamageableGameObject.transform.position) > attackDistance + m_attackTarget.DamageableRadius)
-            {
-                m_moveTarget = m_attackTarget.DamageableGameObject.transform.position;
-                ExitState_Attack(UnitStateType.Move);
-                return;
-            }
+            m_pursuer.Stop();
         }
 
         Unit_Base attacker = health.Attacker;

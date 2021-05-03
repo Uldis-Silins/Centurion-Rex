@@ -6,26 +6,19 @@ public class AI_Awareness : MonoBehaviour
     public Player_Controller ownerController;
     public Player_Controller enemyController;
 
-    //private Dictionary<Unit_Base, List<Unit_Base>> m_unitsAssigned;  // key: enemy; value: assigned owned units
+    public bool canCancelMove;
 
-    private int m_maxUnitsPerTick = 10;
-    private int m_unitTickCounter = 1;
+    //private Dictionary<Unit_Base, List<Unit_Base>> m_unitsAssigned;  // key: enemy; value: assigned owned units
 
     private void Update()
     {
-        if (ownerController.OwnedUnits.Count == 0) return;
+        if (Player_Controller.currentGameState != GameState.Playing) return;
 
-        int startCheckUnit = ownerController.OwnedUnits.Count % m_unitTickCounter;
-        int endCheckUnit = ownerController.OwnedUnits.Count <= m_maxUnitsPerTick ? ownerController.OwnedUnits.Count : m_maxUnitsPerTick;
-        endCheckUnit += startCheckUnit;
-
-        for (int i = startCheckUnit; i < ownerController.OwnedUnits.Count; i++)
+        for (int i = 0; i < ownerController.OwnedUnits.Count; i++)
         {
-            if (m_unitTickCounter >= endCheckUnit) break;
-
             Unit_Base unit = ownerController.OwnedUnits[i];
 
-            if (!(unit as ISelecteble).IsSelected && !unit.HasMoveTarget && !unit.HasAttackTarget)
+            if (!(unit as ISelecteble).IsSelected && (canCancelMove || !unit.HasMoveTarget) && !unit.HasAttackTarget)
             {
                 for (int j = 0; j < enemyController.ownedBuildings.Count; j++)
                 {
@@ -37,7 +30,6 @@ public class AI_Awareness : MonoBehaviour
                         {
                             unit.SetAttackTarget(building.health);
                             unit.SetState(Unit_Base.UnitStateType.Attack);
-                            m_unitTickCounter++;
                             continue;
                         }
                     }
@@ -62,8 +54,6 @@ public class AI_Awareness : MonoBehaviour
                     }
                 }
             }
-
-            m_unitTickCounter++;
         }
     }
 

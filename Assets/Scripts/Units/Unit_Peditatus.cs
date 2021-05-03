@@ -112,7 +112,7 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
 
         Unit_Base attacker = health.Attacker;
 
-        if(!IsSelected && attacker != null)
+        if (!IsSelected && attacker != null)
         {
             const float ATTACK_REPLY_DIST_MOD = 1.5f;
 
@@ -209,10 +209,8 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
 
         m_seeker.enabled = false;
 
-        if (m_attackTarget is Unit_Health)
-        {
-            m_pursuer.enabled = true;
-        }
+
+        m_pursuer.enabled = true;
 
         m_obstacleAvoider.enabled = true;
         m_separator.enabled = true;
@@ -229,35 +227,20 @@ public class Unit_Peditatus : Unit_Base, ISelecteble
             return;
         }
 
-        if(!HasAttackTarget || m_attackTarget == null || m_attackTarget.DamageableGameObject == null)
+        if (!HasAttackTarget || m_attackTarget == null || m_attackTarget.DamageableGameObject == null)
         {
             ExitState_Attack(UnitStateType.Idle);
             return;
         }
 
-        if (m_attackTarget is Unit_Health)
+        if (Vector2.Distance(transform.position, m_attackTarget.DamageableGameObject.transform.position) > attackDistance + m_attackTarget.DamageableRadius)
         {
-            if (Vector2.Distance(transform.position, m_attackTarget.DamageableGameObject.transform.position) > attackDistance)
-            {
-                m_pursuer.SetDestination(m_attackTarget.DamageableGameObject.transform.position);
-                return;
-            }
-            else
-            {
-                m_pursuer.Stop();
-            }
+            m_pursuer.SetDestination(m_attackTarget.DamageableGameObject.transform.position);
+            return;
         }
         else
         {
-            if (Vector2.Distance(transform.position, m_attackTarget.DamageableGameObject.transform.position) > attackDistance + m_attackTarget.DamageableRadius)
-            {
-                m_seeker.SetDestination(m_attackTarget.DamageableGameObject.transform.position + (transform.position - m_attackTarget.DamageableGameObject.transform.position).normalized * m_attackTarget.DamageableRadius);
-                return;
-            }
-            else
-            {
-                m_seeker.Stop();
-            }
+            m_pursuer.Stop();
         }
 
         SpriteAnimatorData.AnimationType animType = GetAttackAnimation(m_attackTarget.DamageableGameObject.transform.position);

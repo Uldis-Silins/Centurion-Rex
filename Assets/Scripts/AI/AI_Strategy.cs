@@ -60,6 +60,8 @@ public class AI_Strategy : MonoBehaviour
 
     private void Update()
     {
+        if (Player_Controller.currentGameState != GameState.Playing) return;
+
         if(m_reassignTimer <= 0f)
         {
             m_reassignTimer = reassignTickRate;
@@ -70,7 +72,12 @@ public class AI_Strategy : MonoBehaviour
             {
                 AssignIdleUnits(UnitCommandType.MoveToEnemyBase, 0.5f);
             }
-            else if((m_idleUnits.Count >= 10 || ownerController.currentResources < 150) && m_resourceBuildingQueue.Count > 0 && m_curResourceBuilding == null)
+            else if(ownerController.currentResources < 150 && m_resourceBuildingQueue.Count > 0 && m_curResourceBuilding == null)
+            {
+                m_curResourceBuilding = m_resourceBuildingQueue.Dequeue();
+                AssignIdleUnits(UnitCommandType.GetResourceBuilding, 1f);
+            }
+            else if(m_idleUnits.Count >= 10 && m_resourceBuildingQueue.Count > 0 && m_curResourceBuilding == null)
             {
                 m_curResourceBuilding = m_resourceBuildingQueue.Dequeue();
                 AssignIdleUnits(UnitCommandType.GetResourceBuilding, Mathf.Lerp(0.8f, 0.1f, (float)m_ownedResourceBuildings.Count / resourceBuildings.Count));
@@ -82,17 +89,17 @@ public class AI_Strategy : MonoBehaviour
 
             // Find player units near AI base and set base attacked flag if enemy unit count is larger than base defense unit count
             var positions = enemyController.UnitPositions.Find(ownerController.ownedBuildings[0].gameObject.transform.position, Vector2.one * 50.0f);
-            m_baseInDanger = positions.Count > m_idleUnits.Count;
+            m_baseInDanger = positions.Count > 0;
 
-            if(m_baseInDanger)
+            if(m_baseInDanger && m_idleUnits.Count > 0)
             {
                 int posIndex = 0;
 
                 foreach (var unit in m_idleUnits)
                 {
-                    if(!unit.HasAttackTarget && !unit.HasMoveTarget)
+                    if(!unit.HasAttackTarget)
                     {
-                        unit.SetAttackTarget(enemyController.UnitsByPosition[positions[posIndex]].health);
+                        unit.SetAttackTarget(enemyController.UnitsByPosition[positions[posIndex % m_idleUnits.Count]].health);
                         unit.SetState(Unit_Base.UnitStateType.Attack);
                         posIndex++;
                     }
@@ -138,7 +145,7 @@ public class AI_Strategy : MonoBehaviour
     {
         Stack<Unit_Base> removedUnits = new Stack<Unit_Base>();
 
-        if (m_baseInDanger && m_unitsByCommand[curCommand].Count > 0)
+        if (m_baseInDanger && m_unitsByCommand[curCommand].Count > 0 && (UnitCommandType)curCommand != UnitCommandType.MoveHome)
         {
             foreach (var unit in m_unitsByCommand[curCommand])
             {
@@ -178,7 +185,7 @@ public class AI_Strategy : MonoBehaviour
                     case UnitCommandType.MoveHome:
                         if (!unit.HasMoveTarget)
                         {
-                            unit.SetMoveTarget(ownerController.ownedBuildings[0].gameObject.transform.position * Random.insideUnitCircle * 30.0f);
+                            unit.SetMoveTarget(ownerController.ownedBuildings[0].gameObject.transform.position * Random.insideUnitCircle * 20.0f);
                             unit.SetState(Unit_Base.UnitStateType.Move);
                         }
                         break;

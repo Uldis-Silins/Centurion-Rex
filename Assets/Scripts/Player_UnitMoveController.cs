@@ -82,6 +82,7 @@ public class Player_UnitMoveController : MonoBehaviour
                             for (int i = 0; i < curSelectedUnits.Count; i++)
                             {
                                 Unit_Base unit = curSelectedUnits[i] as Unit_Base;
+                                if (unit == null) break;
                                 unit.SetAttackTarget(building.health);
                                 Vector2 moveTarget = building.health.transform.position + (unit.transform.position - building.health.transform.position).normalized * (building.health.DamageableRadius + unit.AttackDistance);
                                 unit.SetMoveTarget(moveTarget);
@@ -104,6 +105,7 @@ public class Player_UnitMoveController : MonoBehaviour
                                 for (int i = 0; i < curSelectedUnits.Count; i++)
                                 {
                                     Unit_Base unit = curSelectedUnits[i] as Unit_Base;
+                                    if (unit == null) break;
                                     Vector2 targetPos = resourceBuilding.transform.position + (unit.transform.position - resourceBuilding.transform.position).normalized * resourceBuilding.captureRadius;
                                     Debug.DrawLine(unit.transform.position, targetPos, Color.red);
                                     Debug.Break();
