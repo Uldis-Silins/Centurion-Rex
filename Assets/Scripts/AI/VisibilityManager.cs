@@ -33,6 +33,7 @@ public class VisibilityManager : MonoBehaviour
 
     private void Update()
     {
+        if (Player_Controller.currentGameState != GameState.Playing) return;
         if (enemyController == null || enemyController.OwnedUnits == null || !checkUnitVisibility) return;
 
         VisibleBuildings.Clear();

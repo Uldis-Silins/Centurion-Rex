@@ -111,7 +111,6 @@ public class Player_Controller : MonoBehaviour
         {
             currentResources += enemyBonusIncome;
             enemyNextIncomeTime += enemyIncomeRate;
-            Debug.Log(currentResources);
         }
 
         if (ownedByPlayer && Input.GetKeyDown(KeyCode.Escape))

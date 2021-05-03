@@ -274,7 +274,7 @@ public class Unit_Wanizame : Unit_Base, ISelecteble
             return;
         }
 
-        if (!HasAttackTarget || m_attackTarget == null || m_attackTarget.DamageableGameObject == null)
+        if (!HasAttackTarget || m_attackTarget == null || m_attackTarget.DamageableGameObject == null || m_attackTarget.CurrentHealth <= 0)
         {
             ExitState_Attack(UnitStateType.Idle);
             return;

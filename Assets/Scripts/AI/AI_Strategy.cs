@@ -12,6 +12,7 @@ public class AI_Strategy : MonoBehaviour
     public Player_Controller enemyController;
 
     public List<Building_Resource> resourceBuildings;
+    public bool sortResourceBuildingsByDistance;
 
     private Dictionary<int, HashSet<Unit_Base>> m_unitsByCommand;
     private List<Unit_Base> m_idleUnits;
@@ -42,7 +43,12 @@ public class AI_Strategy : MonoBehaviour
     private void Start()
     {
         List<Building_Resource> resBuildings = new List<Building_Resource>(resourceBuildings);
-        resBuildings.Sort(new ResourceBuildingDistanceComparer(ownerController.ownedBuildings[0].gameObject.transform.position));
+
+        if (sortResourceBuildingsByDistance)
+        {
+            resBuildings.Sort(new ResourceBuildingDistanceComparer(ownerController.ownedBuildings[0].gameObject.transform.position));
+        }
+
         m_resourceBuildingQueue = new Queue<Building_Resource>(resBuildings);
     }
 
@@ -58,11 +64,27 @@ public class AI_Strategy : MonoBehaviour
         ownerController.onOwnedUnitRemoved -= HandleOwnedUnitKilled;
     }
 
+    private void OnDrawGizmos()
+    {
+        if (m_unitsByCommand != null)
+        {
+            foreach (var item in m_unitsByCommand)
+            {
+                foreach (var unit in m_unitsByCommand[item.Key])
+                {
+#if UNITY_EDITOR
+                    UnityEditor.Handles.Label(transform.position + Vector3.up * 2.5f, ((UnitCommandType)item.Key).ToString());
+#endif
+                }
+            }
+        }
+    }
+
     private void Update()
     {
         if (Player_Controller.currentGameState != GameState.Playing) return;
 
-        if(m_reassignTimer <= 0f)
+        if(m_reassignTimer <= 0f && m_idleUnits.Count > 0)
         {
             m_reassignTimer = reassignTickRate;
 
@@ -72,7 +94,7 @@ public class AI_Strategy : MonoBehaviour
             {
                 AssignIdleUnits(UnitCommandType.MoveToEnemyBase, 0.5f);
             }
-            else if(ownerController.currentResources < 150 && m_resourceBuildingQueue.Count > 0 && m_curResourceBuilding == null)
+            else if (ownerController.currentResources < 150 && m_resourceBuildingQueue.Count > 0 && m_curResourceBuilding == null)
             {
                 m_curResourceBuilding = m_resourceBuildingQueue.Dequeue();
                 AssignIdleUnits(UnitCommandType.GetResourceBuilding, 1f);
@@ -161,7 +183,7 @@ public class AI_Strategy : MonoBehaviour
                     case UnitCommandType.None:
                         break;
                     case UnitCommandType.MoveToEnemyBase:
-                        if (unit.HasMoveTarget) break;
+                        if (unit.HasMoveTarget || unit.HasAttackTarget) break;
 
                         if (!unit.HasAttackTarget)
                         {
@@ -170,7 +192,7 @@ public class AI_Strategy : MonoBehaviour
                         }
                         break;
                     case UnitCommandType.GetResourceBuilding:
-                        if (unit.HasMoveTarget) break;
+                        if (unit.HasMoveTarget || unit.HasAttackTarget) break;
 
                         if(m_curResourceBuilding == null)
                         {
@@ -185,7 +207,7 @@ public class AI_Strategy : MonoBehaviour
                     case UnitCommandType.MoveHome:
                         if (!unit.HasMoveTarget)
                         {
-                            unit.SetMoveTarget(ownerController.ownedBuildings[0].gameObject.transform.position * Random.insideUnitCircle * 20.0f);
+                            unit.SetMoveTarget((Vector2)ownerController.ownedBuildings[0].gameObject.transform.position + Random.insideUnitCircle * 20.0f);
                             unit.SetState(Unit_Base.UnitStateType.Move);
                         }
                         break;

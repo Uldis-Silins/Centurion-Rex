@@ -168,11 +168,9 @@ public abstract class Unit_Base : MonoBehaviour
         if (dist > MIN_NAVIGATION_DISTANCE && hit && !hit.isTrigger && hit != circleCollider)
         {
             FlowField flowField = m_navigationController.GetFlowField(this, targetPosition);
-            Debug.Log(gameObject.name + ": requesting navigation; t: " + Time.time);
 
             if (flowField != null)
             {
-                Debug.Log(gameObject.name + ": Got cached navigation; t: " + Time.time);
                 m_seeker.flowField = flowField;
                 m_seeker.gridWorldOffset = m_navigationController.gridOffset;
             }

@@ -18,7 +18,9 @@ public class AI_Awareness : MonoBehaviour
         {
             Unit_Base unit = ownerController.OwnedUnits[i];
 
-            if (!(unit as ISelecteble).IsSelected && (canCancelMove || !unit.HasMoveTarget) && !unit.HasAttackTarget)
+            if ((unit as ISelecteble).IsSelected) continue;
+
+            if ((canCancelMove || !unit.HasMoveTarget) && !unit.HasAttackTarget)
             {
                 for (int j = 0; j < enemyController.ownedBuildings.Count; j++)
                 {
@@ -40,6 +42,7 @@ public class AI_Awareness : MonoBehaviour
                 if (closeEnemies.Count > 0)
                 {
                     Unit_Base selectedEnemy = GetClosest(closeEnemies);
+                    Debug.Log(name + ": " + unit.name + " is attacking " + selectedEnemy.name);
 
                     //if ((unit.unitType == UnitData.UnitType.Soldier && selectedEnemy.unitType == UnitData.UnitType.Ranged && Vector2.Distance(selectedEnemy.transform.position, unit.transform.position) > unit.visionDistance / 2f) ||
                     //    (unit.unitType == UnitData.UnitType.Ranged && selectedEnemy.unitType == UnitData.UnitType.Soldier && Vector2.Distance(selectedEnemy.transform.position, unit.transform.position) < unit.visionDistance / 2f))

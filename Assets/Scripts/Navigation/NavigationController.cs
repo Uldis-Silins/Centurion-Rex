@@ -149,8 +149,6 @@ public class NavigationController : MonoBehaviour
 
         if (!m_cahcedFields.ContainsKey(hash))
         {
-            Debug.Log("creating hash: " + hash);
-
             //FlowField field = new FlowField(m_flowField);
             
             toPosition += gridOffset;
