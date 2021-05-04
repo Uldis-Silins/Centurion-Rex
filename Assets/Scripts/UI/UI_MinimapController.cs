@@ -39,6 +39,8 @@ public class UI_MinimapController : MonoBehaviour
 
     private void Update()
     {
+        if (Player_Controller.currentGameState != GameState.Playing) return;
+
         RenderTexture.active = m_renderTexture;
         m_targetTexture.ReadPixels(new Rect(0, 0, m_renderTexture.width, m_renderTexture.height), 0, 0);
 

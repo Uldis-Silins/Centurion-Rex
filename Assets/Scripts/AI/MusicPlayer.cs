@@ -6,15 +6,35 @@ public class MusicPlayer : MonoBehaviour
     public AudioSource menuMusic;
     public AudioSource gameMusic;
 
+    public bool fadeOnStart;
+
     private float m_fadeTimer;
     private readonly float m_fadeTime = 2f;
 
     private GameState m_curGameState;
     private bool m_isFading;
 
+    private static MusicPlayer m_instance;
+
     private void Awake()
     {
-        //DontDestroyOnLoad(gameObject);
+        if(m_instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        DontDestroyOnLoad(gameObject);
+        m_instance = this;
+    }
+
+    private void Start()
+    {
+        if(!fadeOnStart)
+        {
+            m_fadeTimer = m_fadeTime;
+            m_curGameState = Player_Controller.currentGameState;
+        }
     }
 
     private void Update()
