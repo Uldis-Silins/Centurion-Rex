@@ -42,4 +42,9 @@ public class MenuButton : MonoBehaviour
     {
         SceneManager.LoadScene("Menu");
     }
+
+    public void LoadSharkLevel()
+    {
+        SceneManager.LoadScene("SharkScene");
+    }
 }
