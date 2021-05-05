@@ -130,5 +130,10 @@ public class UI_GameManager : MonoBehaviour
 #else
       Application.Quit();
 #endif
+    }    
+    public void OnMainMenuClick()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
+
     }
 }

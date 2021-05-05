@@ -105,6 +105,24 @@ public class Player_Controller : MonoBehaviour
         }
     }
 
+    public void PauseGame()
+    {
+        if (currentGameState == GameState.Playing)
+        {
+            hudManager.ChangeCursor(UI_HudManager.CursorType.None);
+            uiManager.pauseMenu.gameObject.SetActive(true);
+            currentGameState = GameState.Pause;
+            Time.timeScale = 0f;
+        }
+        else if (currentGameState == GameState.Pause)
+        {
+            hudManager.ChangeCursor(UI_HudManager.CursorType.Default);
+            uiManager.pauseMenu.gameObject.SetActive(false);
+            currentGameState = GameState.Playing;
+            Time.timeScale = 1f;
+        }
+    }
+
     private void Update()
     {
         if (!ownedByPlayer && Time.time > enemyNextIncomeTime)
@@ -115,20 +133,7 @@ public class Player_Controller : MonoBehaviour
 
         if (ownedByPlayer && Input.GetKeyDown(KeyCode.Escape))
         {
-            if (currentGameState == GameState.Playing)
-            {
-                hudManager.ChangeCursor(UI_HudManager.CursorType.None);
-                uiManager.pauseMenu.gameObject.SetActive(true);
-                currentGameState = GameState.Pause;
-                Time.timeScale = 0f;
-            }
-            else if(currentGameState == GameState.Pause)
-            {
-                hudManager.ChangeCursor(UI_HudManager.CursorType.Default);
-                uiManager.pauseMenu.gameObject.SetActive(false);
-                currentGameState = GameState.Playing;
-                Time.timeScale = 1f;
-            }
+            PauseGame();
         }
 
         while (m_waitingForKill.Count > 0)

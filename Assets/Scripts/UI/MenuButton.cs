@@ -9,6 +9,8 @@ public class MenuButton : MonoBehaviour
     AudioClip buttonClickSFX;
     [SerializeField]
     AudioManager audioManager;
+    [SerializeField]
+    Player_Controller player_Controller;
 
 
     public void PlayClickSound()
@@ -46,5 +48,10 @@ public class MenuButton : MonoBehaviour
     public void LoadSharkLevel()
     {
         SceneManager.LoadScene("SharkScene");
+    }
+
+    public void ExitPauseMenu()
+    {
+        player_Controller.PauseGame();
     }
 }

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deaf0b8d6b1577f439c32eeb938e4fdc, type: 3}
+  m_Name: PlayerSamurai
+  m_EditorClassIdentifier: 
+  faction: 0
+  type: 1
+  unitPrefab: {fileID: 4220708611386460244, guid: 21ee0f35e21af4d4e941d0afba3dc5ea,
+    type: 3}
+  uiSprite: {fileID: 21300000, guid: 31d68009cf6038b45845dcc8494c0c39, type: 3}
+  price: 15
+  buildTime: 2
