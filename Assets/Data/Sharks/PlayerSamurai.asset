@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: deaf0b8d6b1577f439c32eeb938e4fdc, type: 3}
   m_Name: PlayerSamurai
   m_EditorClassIdentifier: 
-  faction: 0
+  faction: 2
   type: 1
   unitPrefab: {fileID: 4220708611386460244, guid: 21ee0f35e21af4d4e941d0afba3dc5ea,
     type: 3}
