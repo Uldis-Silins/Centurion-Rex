@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 603981428558588298}
   - component: {fileID: 1570036637370775680}
   m_Layer: 10
-  m_Name: EnemyRanged
+  m_Name: AI_RomanRanged 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62,8 +62,8 @@ MonoBehaviour:
   soldierRenderer: {fileID: 7932924578973166320}
   circleCollider: {fileID: 1570036637370775680}
   soundSource: {fileID: -5686660868666005280}
-  walkClip: {fileID: 8300000, guid: 8a7345e0017c63543a9e45328084aa80, type: 3}
-  attackClip: {fileID: 8300000, guid: c68620ff818f6e04e887b569611dd890, type: 3}
+  walkClip: {fileID: 8300000, guid: 3494d283d70ae304aaf659a65546e24f, type: 3}
+  attackClip: {fileID: 8300000, guid: e4b0de4fe98b3004fb7afb6a6eb066ce, type: 3}
   visionDistance: 10
   fovTransform: {fileID: 0}
   m_agent: {fileID: 9145141018364628441}
@@ -76,7 +76,7 @@ MonoBehaviour:
   attackDamage: 10
   attacksDelay: 0.5
   accuracy: 1
-  projectilePrefab: {fileID: 8186089749701993020, guid: 1e70d15ad67c54c4c9a019c86ecb7b13,
+  projectilePrefab: {fileID: 8186089749701993020, guid: 65e3b98f1b3600847b4a220bfc85334a,
     type: 3}
   m_selectableObject: {fileID: 0}
 --- !u!114 &4036118042232991758
@@ -93,7 +93,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 20
   owningFaction: 2
-  ragdoll: {fileID: 2120004536777161031, guid: 7aaf4255082511d43b63d7ce109c9392, type: 3}
+  ragdoll: {fileID: 2120004536777161031, guid: 30d4cff5055c06e419fc9f811f217215, type: 3}
   m_sprite: {fileID: 7932924578973166320}
   m_damageableRadius: 0
 --- !u!114 &9145141018364628441
@@ -409,7 +409,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_spriteRenderer: {fileID: 7932924578973166320}
-  m_animationData: {fileID: 11400000, guid: f3cc980ec472c1242ab150b6c420ed00, type: 2}
+  m_animationData: {fileID: 11400000, guid: a1e32b72036e4454e81f9873a93fa79c, type: 2}
   m_currentAnimationType: 1
 --- !u!50 &603981428558588298
 Rigidbody2D:
@@ -519,7 +519,8 @@ SpriteRenderer:
   m_SortingLayerID: -1997730693
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 168756190566447370, guid: 2998c3dc2b6b05f438402e2053982c19, type: 3}
+  m_Sprite: {fileID: -7566860896783485313, guid: 5bcd9753f32baf8409c91b5762ce9902,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0

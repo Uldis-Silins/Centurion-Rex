@@ -158,7 +158,7 @@ MonoBehaviour:
   attackDistance: 5
   attackDamage: 10
   attacksDelay: 0.5
-  fireParticleParent: {fileID: 0}
+  fireParticleParent: {fileID: 2175874890905905620}
   fireParticles:
   - {fileID: 0}
   - {fileID: 0}
@@ -722,6 +722,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4095252137840500701}
     m_Modifications:
+    - target: {fileID: 1147255617712836128, guid: 66a93365f22923345a36090e022dcbe4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2052425111901112090, guid: 66a93365f22923345a36090e022dcbe4,
         type: 3}
       propertyPath: m_RootOrder
@@ -791,6 +796,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: WanizameLaser
+      objectReference: {fileID: 0}
+    - target: {fileID: 4864689324588739951, guid: 66a93365f22923345a36090e022dcbe4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7937016750304382383, guid: 66a93365f22923345a36090e022dcbe4,
         type: 3}

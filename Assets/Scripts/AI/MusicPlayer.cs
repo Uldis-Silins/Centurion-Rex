@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MusicPlayer : MonoBehaviour
 {
     public AudioSource menuMusic;
     public AudioSource gameMusic;
+    public AudioSource samuraiGameMusic;
+    private AudioSource currentGameMusic;
 
     public bool fadeOnStart;
 
@@ -18,7 +21,7 @@ public class MusicPlayer : MonoBehaviour
 
     private void Awake()
     {
-        if(m_instance != null)
+        if (m_instance != null)
         {
             Destroy(gameObject);
             return;
@@ -26,16 +29,43 @@ public class MusicPlayer : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
         m_instance = this;
+
+       
     }
 
     private void Start()
     {
-        if(!fadeOnStart)
+        
+        if (!fadeOnStart)
         {
             m_fadeTimer = m_fadeTime;
             m_curGameState = Player_Controller.currentGameState;
         }
     }
+
+    private void OnEnable()
+    {
+       
+        Debug.Log("OnEnable called");
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Debug.Log("OnSceneLoaded: " + scene.name);
+        Debug.Log(mode);
+        if (SceneManager.GetActiveScene().name == "SharkScene")
+        {
+            currentGameMusic = samuraiGameMusic;
+        }
+        else
+        {
+            currentGameMusic = gameMusic;
+
+        }
+    }
+
+
 
     private void Update()
     {
@@ -48,23 +78,31 @@ public class MusicPlayer : MonoBehaviour
 
         if (m_isFading)
         {
-            m_fadeTimer += Time.unscaledDeltaTime;
+            FadeMusic();
+        }
+    }
 
-            if (m_curGameState == GameState.Playing)
-            {
-                gameMusic.volume = Mathf.Lerp(0f, 1f, m_fadeTimer / m_fadeTime);
-                menuMusic.volume = Mathf.Lerp(1f, 0f, m_fadeTimer / m_fadeTime);
-            }
-            else
-            {
-                gameMusic.volume = Mathf.Lerp(1f, 0f, m_fadeTimer / m_fadeTime);
-                menuMusic.volume = Mathf.Lerp(0f, 1f, m_fadeTimer / m_fadeTime);
-            }
+    private void FadeMusic()
 
-            if (m_fadeTimer >= m_fadeTime)
-            {
-                m_isFading = false;
-            }
+    {
+        m_fadeTimer += Time.unscaledDeltaTime;
+
+        if (m_curGameState == GameState.Playing)
+        {
+            currentGameMusic.volume = Mathf.Lerp(0f, 1f, m_fadeTimer / m_fadeTime);
+            menuMusic.volume = Mathf.Lerp(1f, 0f, m_fadeTimer / m_fadeTime);
+        }
+
+        else
+        {
+            gameMusic.volume = Mathf.Lerp(1f, 0f, m_fadeTimer / m_fadeTime);
+            samuraiGameMusic.volume = Mathf.Lerp(1f, 0f, m_fadeTimer / m_fadeTime);
+            menuMusic.volume = Mathf.Lerp(0f, 1f, m_fadeTimer / m_fadeTime);
+        }
+
+        if (m_fadeTimer >= m_fadeTime)
+        {
+            m_isFading = false;
         }
     }
 }

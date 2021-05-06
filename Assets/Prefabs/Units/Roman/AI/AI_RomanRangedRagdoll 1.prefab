@@ -71,7 +71,7 @@ SpriteRenderer:
   m_SortingLayerID: -1997730693
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: -3592766071164158414, guid: 763cb2c9a05ced24a8637b276c3609a6,
+  m_Sprite: {fileID: -3517909984081310228, guid: 45e719cc4847ae649b3be5c81b26f874,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
@@ -112,7 +112,7 @@ GameObject:
   - component: {fileID: 7982575945392507370}
   - component: {fileID: 3611207419587960302}
   m_Layer: 10
-  m_Name: EnemyRangedRagdoll
+  m_Name: AI_RomanRangedRagdoll 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -161,7 +161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_spriteRenderer: {fileID: 2120004535410833675}
-  m_animationData: {fileID: 11400000, guid: f3cc980ec472c1242ab150b6c420ed00, type: 2}
+  m_animationData: {fileID: 11400000, guid: a1e32b72036e4454e81f9873a93fa79c, type: 2}
   m_currentAnimationType: 13
 --- !u!1 &6945138669288176568
 GameObject:

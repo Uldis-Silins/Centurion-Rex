@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 7651970116640661779}
   - component: {fileID: 5297835380276921224}
   m_Layer: 10
-  m_Name: EnemySoldier
+  m_Name: AI_RomanSoldier 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62,8 +62,8 @@ MonoBehaviour:
   soldierRenderer: {fileID: 4220708612654221336}
   circleCollider: {fileID: 5297835380276921224}
   soundSource: {fileID: 6963665858929961176}
-  walkClip: {fileID: 8300000, guid: 98c9ad495ead1a243bb76042a77650a7, type: 3}
-  attackClip: {fileID: 8300000, guid: 03adde3d84fc5c1438abb263a8baad8d, type: 3}
+  walkClip: {fileID: 8300000, guid: 927c667fc0b12184d8d3fded742ed85d, type: 3}
+  attackClip: {fileID: 8300000, guid: d78080f604d2c73448e93c7db36526e7, type: 3}
   visionDistance: 5
   fovTransform: {fileID: 0}
   m_agent: {fileID: 4710290147687922626}
@@ -90,7 +90,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 30
   owningFaction: 2
-  ragdoll: {fileID: 4220708611386460244, guid: 3680bb87c3378a24d8dd788ba9108f53, type: 3}
+  ragdoll: {fileID: 4220708611386460244, guid: 57c79daf84b16fb4fac68926deec5ff0, type: 3}
   m_sprite: {fileID: 4220708612654221336}
   m_damageableRadius: 0
 --- !u!114 &4710290147687922626
@@ -406,7 +406,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_spriteRenderer: {fileID: 4220708612654221336}
-  m_animationData: {fileID: 11400000, guid: 4b9660430626a1d418127d08e2696ee9, type: 2}
+  m_animationData: {fileID: 11400000, guid: 48076d06bed3cbf418521d06cdc13467, type: 2}
   m_currentAnimationType: 1
 --- !u!50 &7651970116640661779
 Rigidbody2D:
@@ -516,7 +516,7 @@ SpriteRenderer:
   m_SortingLayerID: -1997730693
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: -3478792775534731743, guid: 751bbc76793302b43bef91896e80822d,
+  m_Sprite: {fileID: -180845600035683907, guid: 6d91519a0ddc9254090a2bf89b8591db,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
