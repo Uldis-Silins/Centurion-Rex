@@ -6,20 +6,30 @@ using UnityEngine.UI;
 public class Player_UnitSelectController : MonoBehaviour
 {
     public SelectableManager selectableManager;
+    public Player_Controller ownerController;
     public RectTransform selectionBox;
     public UI_HudManager hudManager;
     public Canvas minimapCanvas;
 
-    public LayerMask hitTestLayers;
-
     private Vector2 m_startDragPosition;
+    private Camera m_mainCam;
 
     private readonly float m_dragThreshold = 5;
     private bool m_inDrag;
 
+    private void Awake()
+    {
+        m_mainCam = Camera.main;
+    }
+
     private void Update()
     {
         if(Player_Controller.currentGameState != GameState.Playing)
+        {
+            return;
+        }
+
+        if(ownerController.BlockBuildingInteraction)
         {
             return;
         }
@@ -32,21 +42,23 @@ public class Player_UnitSelectController : MonoBehaviour
 
             foreach (var item in selectableManager.GetCurrentSelected())
             {
-                if(item is Unit_Base)
+                //if(item is Unit_Base)
                 {
                     item.Deselect();
                 }
             }
 
-            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, hitTestLayers);
+            //RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, hitTestLayers);
+            Vector2 worldPos = m_mainCam.ScreenToWorldPoint(Input.mousePosition);
+            var hits = ownerController.UnitPositions.Find(worldPos, Vector2.one * 0.5f);
 
-            if (hit.collider != null)
+            if (hits.Count > 0)
             {
-                var hitSelectable = selectableManager.GetSelectable(hit.collider.gameObject);
+                var unit = ownerController.UnitsByPosition[hits[0]];
 
-                if (hitSelectable != null && hitSelectable is Unit_Base)
+                if (unit != null && unit is ISelecteble s)
                 {
-                    hitSelectable.Select();
+                    s.Select();
                 }
             }
 
@@ -86,26 +98,49 @@ public class Player_UnitSelectController : MonoBehaviour
                 Vector2 min = selectionBox.anchoredPosition - selectionBox.sizeDelta / 2;
                 Vector2 max = selectionBox.anchoredPosition + selectionBox.sizeDelta / 2;
 
-                var unitScreenPositions = selectableManager.GetAllScreenPositions();
+                Vector2 worldMin = m_mainCam.ScreenToWorldPoint(min);
+                Vector2 worldMax = m_mainCam.ScreenToWorldPoint(max);
 
-                for (int i = 0; i < unitScreenPositions.Length; i++)
+                var hits = ownerController.UnitPositions.Find(worldMin + (worldMax - worldMin) * 0.5f, Vector2.one * (worldMax - worldMin));
+
+                foreach (var item in selectableManager.GetCurrentSelected())
                 {
-                    Vector2 pos = unitScreenPositions[i];
-                    ISelecteble selectable = selectableManager.GetSelectableAt(i);
+                    item.Deselect();
+                }
 
-                    if (selectable is Unit_Base)
+                if (hits.Count > 0)
+                {
+                    for (int i = 0; i < hits.Count; i++)
                     {
-                        if(pos.x > min.x && pos.x < max.x && pos.y > min.y && pos.y < max.y)
+                        var unit = ownerController.UnitsByPosition[hits[i]];
+
+                        if (unit != null && unit is ISelecteble s)
                         {
-                            selectable.Select();
+                            s.Select();
                         }
-                        else
-                        {
-                            selectable.Deselect();
-                        }
-                        
                     }
                 }
+
+                //var unitScreenPositions = selectableManager.GetAllScreenPositions();
+
+                //for (int i = 0; i < unitScreenPositions.Length; i++)
+                //{
+                //    Vector2 pos = unitScreenPositions[i];
+                //    ISelecteble selectable = selectableManager.GetSelectableAt(i);
+
+                //    if (selectable is Unit_Base)
+                //    {
+                //        if(pos.x > min.x && pos.x < max.x && pos.y > min.y && pos.y < max.y)
+                //        {
+                //            selectable.Select();
+                //        }
+                //        else
+                //        {
+                //            selectable.Deselect();
+                //        }
+
+                //    }
+                //}
 
                 hudManager.OnSelectionChanged();
             }

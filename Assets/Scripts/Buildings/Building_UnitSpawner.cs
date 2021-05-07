@@ -193,8 +193,8 @@ public class Building_UnitSpawner : Building_Base
 
     public void OnChangeMoveTargetClick()
     {
-        m_inChangeMoveTarget = true;
-        m_playerController.BlockBuildingInteraction = true;
+        m_inChangeMoveTarget = !m_inChangeMoveTarget;
+        m_playerController.BlockBuildingInteraction = m_inChangeMoveTarget;
     }
 
     private void Spawn(int unitIndex)
