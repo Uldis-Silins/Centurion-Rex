@@ -53,6 +53,7 @@ public abstract class Unit_Base : MonoBehaviour
     private float m_safeMoveTick = 1f;
 
     public bool HasAttackTarget { get { return m_attackTarget != null && m_attackTarget.CurrentHealth > 0 && m_attackTarget.DamageableGameObject != null; } }
+    public IDamageable AttackTarget { get { return m_attackTarget; } }
     public virtual float AttackDistance { get; }
 
     public bool HasMoveTarget { get { return m_hasMoveTarget; } }
