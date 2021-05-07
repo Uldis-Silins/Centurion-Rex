@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: deaf0b8d6b1577f439c32eeb938e4fdc, type: 3}
-  m_Name: EnemyTRex
+  m_Name: Enemy_SharksSamurai
   m_EditorClassIdentifier: 
   faction: 2
-  type: 3
-  unitPrefab: {fileID: 4095252137840500702, guid: dd3ca871faa80134da6b2468a57bc90d,
+  type: 1
+  unitPrefab: {fileID: 4220708611386460244, guid: e7ceb1ff4b41fc34d8f1e9d6e0404382,
     type: 3}
   uiSprite: {fileID: 0}
-  price: 60
-  buildTime: 5
+  price: 15
+  buildTime: 2

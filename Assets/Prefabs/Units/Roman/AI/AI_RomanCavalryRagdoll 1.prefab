@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 7523922550850954126}
   - component: {fileID: 6679461325488477543}
   m_Layer: 10
-  m_Name: EnemyCavalryRagdoll
+  m_Name: AI_RomanCavalryRagdoll 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -188,7 +188,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_spriteRenderer: {fileID: 8903666256265113996}
-  m_animationData: {fileID: 11400000, guid: 7d13e283e65564f42aa442d9a8c49d4f, type: 2}
+  m_animationData: {fileID: 11400000, guid: c3497e6330883a942bb13f18b06b1348, type: 2}
   m_currentAnimationType: 13
 --- !u!1 &8903666256265113994
 GameObject:
@@ -261,7 +261,7 @@ SpriteRenderer:
   m_SortingLayerID: -1997730693
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7493304127658516993, guid: 4035e5f082080dc4bbc0906959f82f7e,
+  m_Sprite: {fileID: -7733829490714618143, guid: 3d784100be5283e4dac29a5b65f72af9,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

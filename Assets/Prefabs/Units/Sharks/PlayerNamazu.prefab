@@ -64,8 +64,8 @@ MonoBehaviour:
   soldierRenderer: {fileID: 4884607227775040791}
   circleCollider: {fileID: 6549670665910155841}
   soundSource: {fileID: 623293730294965364}
-  walkClip: {fileID: 8300000, guid: 3494d283d70ae304aaf659a65546e24f, type: 3}
-  attackClip: {fileID: 8300000, guid: e4b0de4fe98b3004fb7afb6a6eb066ce, type: 3}
+  walkClip: {fileID: 8300000, guid: 8a7345e0017c63543a9e45328084aa80, type: 3}
+  attackClip: {fileID: 8300000, guid: c68620ff818f6e04e887b569611dd890, type: 3}
   visionDistance: 10
   fovTransform: {fileID: 4884607226922222838}
   m_agent: {fileID: 2487764914265873965}
@@ -78,7 +78,7 @@ MonoBehaviour:
   attackDamage: 6
   attacksDelay: 0.5
   accuracy: 1
-  projectilePrefab: {fileID: 8186089749701993020, guid: 65e3b98f1b3600847b4a220bfc85334a,
+  projectilePrefab: {fileID: 8186089749701993020, guid: 2b049c87dff74af458096e5b785afc4a,
     type: 3}
   m_selectableObject: {fileID: 6026764912960982489}
 --- !u!114 &1575660922224551913
@@ -447,9 +447,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.03, y: 0.18}
+  m_Offset: {x: 0.029999971, y: -0.2100451}
   serializedVersion: 2
-  m_Radius: 0.25
+  m_Radius: 0.40710127
 --- !u!1 &4884607226922222833
 GameObject:
   m_ObjectHideFlags: 0
@@ -672,6 +672,6 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.43}
-  m_Size: {x: 0.7, y: 1.19}
+  m_Offset: {x: -0.11229932, y: 0.47597817}
+  m_Size: {x: 0.95529866, y: 2.5744047}
   m_Direction: 0
