@@ -6,8 +6,8 @@ public class MusicPlayer : MonoBehaviour
 {
     public AudioSource menuMusic;
     public AudioSource gameMusic;
-    public AudioSource samuraiGameMusic;
-    private AudioSource currentGameMusic;
+    public AudioClip samuraiClip;
+    public AudioClip romanClip;
 
     public bool fadeOnStart;
 
@@ -29,13 +29,10 @@ public class MusicPlayer : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
         m_instance = this;
-
-       
     }
 
     private void Start()
     {
-        
         if (!fadeOnStart)
         {
             m_fadeTimer = m_fadeTime;
@@ -45,7 +42,6 @@ public class MusicPlayer : MonoBehaviour
 
     private void OnEnable()
     {
-       
         Debug.Log("OnEnable called");
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
@@ -56,16 +52,16 @@ public class MusicPlayer : MonoBehaviour
         Debug.Log(mode);
         if (SceneManager.GetActiveScene().name == "SharkScene")
         {
-            currentGameMusic = samuraiGameMusic;
+            gameMusic.clip = samuraiClip;
         }
         else
         {
-            currentGameMusic = gameMusic;
-
+            gameMusic.clip = romanClip;
         }
+
+        gameMusic.time = menuMusic.time;
+        gameMusic.Play();
     }
-
-
 
     private void Update()
     {
@@ -89,14 +85,13 @@ public class MusicPlayer : MonoBehaviour
 
         if (m_curGameState == GameState.Playing)
         {
-            currentGameMusic.volume = Mathf.Lerp(0f, 1f, m_fadeTimer / m_fadeTime);
+            gameMusic.volume = Mathf.Lerp(0f, 1f, m_fadeTimer / m_fadeTime);
             menuMusic.volume = Mathf.Lerp(1f, 0f, m_fadeTimer / m_fadeTime);
         }
 
         else
         {
             gameMusic.volume = Mathf.Lerp(1f, 0f, m_fadeTimer / m_fadeTime);
-            samuraiGameMusic.volume = Mathf.Lerp(1f, 0f, m_fadeTimer / m_fadeTime);
             menuMusic.volume = Mathf.Lerp(0f, 1f, m_fadeTimer / m_fadeTime);
         }
 
