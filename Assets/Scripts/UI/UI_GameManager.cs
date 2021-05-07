@@ -133,7 +133,8 @@ public class UI_GameManager : MonoBehaviour
     }    
     public void OnMainMenuClick()
     {
+        Time.timeScale = 1f;
+        Player_Controller.currentGameState = GameState.GameOver;
         UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
-
     }
 }

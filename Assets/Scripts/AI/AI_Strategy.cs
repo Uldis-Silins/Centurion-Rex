@@ -192,7 +192,12 @@ public class AI_Strategy : MonoBehaviour
                         }
                         break;
                     case UnitCommandType.GetResourceBuilding:
-                        if (unit.HasMoveTarget || unit.HasAttackTarget) break;
+                        if (unit.HasAttackTarget)
+                        {
+                            removedUnits.Push(unit);
+                        }
+
+                        if (unit.HasMoveTarget) break;
 
                         if(m_curResourceBuilding == null)
                         {

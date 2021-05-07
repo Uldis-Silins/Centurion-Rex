@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: deaf0b8d6b1577f439c32eeb938e4fdc, type: 3}
   m_Name: PlayerShark
   m_EditorClassIdentifier: 
-  faction: 0
+  faction: 2
   type: 3
   unitPrefab: {fileID: 4095252137840500702, guid: 6ef37842782cf0b4cba23be28f18b9b7,
     type: 3}
