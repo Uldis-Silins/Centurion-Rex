@@ -16,6 +16,8 @@ public class Building_UnitSpawner : Building_Base
     private float m_buildTimer;
     private bool m_inChangeMoveTarget;
 
+    private int m_unitsBuilt;
+
     protected override void Awake()
     {
         base.Awake();
@@ -222,8 +224,9 @@ public class Building_UnitSpawner : Building_Base
             {
                 //if (m_playerController.currentResources >= units[i].price)
                 //{
+                m_unitsBuilt++;
                     var instance = Instantiate(units[i].unitPrefab, spawnPoint.position, Quaternion.identity) as GameObject;
-                    instance.name = units[i].unitPrefab.name + m_playerController.CurrentPopulation;
+                    instance.name = units[i].unitPrefab.name + m_unitsBuilt;
                     
                     return instance.GetComponent<Unit_Base>();
                 //}

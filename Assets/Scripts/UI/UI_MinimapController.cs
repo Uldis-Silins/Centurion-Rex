@@ -100,10 +100,14 @@ public class UI_MinimapController : MonoBehaviour
                         for (int i = 0; i < curSelectedUnits.Count; i++)
                         {
                             Unit_Base unit = curSelectedUnits[i] as Unit_Base;
-                            unit.SetAttackTarget(null);
 
-                            unit.SetMoveTarget(Formations.GetAdjustedPosition(formationPositions[i], unit, unit.circleCollider.radius * 1.5f));
-                            unit.SetState(Unit_Base.UnitStateType.Move);
+                            if (unit != null)
+                            {
+                                unit.SetAttackTarget(null);
+
+                                unit.SetMoveTarget(Formations.GetAdjustedPosition(formationPositions[i], unit, unit.circleCollider.radius * 1.5f));
+                                unit.SetState(Unit_Base.UnitStateType.Move);
+                            }
                         }
                     }
                 }

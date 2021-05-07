@@ -7,8 +7,8 @@ using UnityEngine.Events;
 
 public class Player_Controller : MonoBehaviour
 {
-    public UnityAction<int> onOwnedUnitAdded = delegate { };
-    public UnityAction<int> onOwnedUnitRemoved = delegate { };
+    public UnityAction<Unit_Base> onOwnedUnitAdded = delegate { };
+    public UnityAction<Unit_Base> onOwnedUnitRemoved = delegate { };
 
     public bool ownedByPlayer;
     public FactionType ownerFaction;
@@ -278,7 +278,7 @@ public class Player_Controller : MonoBehaviour
 
         m_unitsByType[unit.unitType].Add(unit);
 
-        onOwnedUnitAdded.Invoke(m_ownedUnits.Count - 1);
+        onOwnedUnitAdded.Invoke(unit);
     }
 
     public void AddResource(float amount)
@@ -355,7 +355,7 @@ public class Player_Controller : MonoBehaviour
 
                 m_unitsByType[m_ownedUnits[i].unitType].Remove(m_ownedUnits[i]);
                 
-                onOwnedUnitRemoved(i);
+                onOwnedUnitRemoved(m_ownedUnits[i]);
                 m_ownedUnits.RemoveAt(i);
                 break;
             }

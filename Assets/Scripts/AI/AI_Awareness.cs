@@ -59,15 +59,15 @@ public class AI_Awareness : MonoBehaviour
                             unit.SetState(Unit_Base.UnitStateType.Attack);
                         }
                     }
+#if UNITY_EDITOR
                     else if(Vector2.Distance(unit.transform.position, selectedEnemy.transform.position) > unit.visionDistance)
                     {
-                        Debug.LogError(unit.name + ": should not reach this; enemy " + selectedEnemy.name + " is too far");
-
                         foreach (var enemyPos in closeEnemies)
                         {
-                            Debug.DrawLine(unit.transform.position, enemyPos.position, Color.red, 1f);
+                            Debug.DrawLine(unit.transform.position, enemyPos.position, ownerController.ownerFaction == FactionType.Player ? Color.blue : Color.red, 1f);
                         }
                     }
+#endif
                 }
             }
         }

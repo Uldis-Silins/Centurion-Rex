@@ -197,6 +197,11 @@ public abstract class Unit_Base : MonoBehaviour
         return Vector3.Distance(transform.position, unit.transform.position) <= visionDistance;
     }
 
+    public override int GetHashCode()
+    {
+        return name.GetHashCode();
+    }
+
     private Vector2Int GetMoveDirection()
     {
         Vector2Int direction = Vector2Int.zero;

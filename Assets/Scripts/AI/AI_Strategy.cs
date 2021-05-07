@@ -31,7 +31,6 @@ public class AI_Strategy : MonoBehaviour
     private float m_earlyHarrasmentChance = 0.1f;
 
     private bool HasHalfOfResourceBuildings { get { return m_ownedResourceBuildings.Count > resourceBuildings.Count / 2; } }
-    private bool HasHarrasmentAttackCommenced { get { return m_unitsByCommand.ContainsKey((int)UnitCommandType.MoveToEnemyBase) && m_unitsByCommand[(int)UnitCommandType.MoveToEnemyBase].Count > 0; } }
 
     private void Awake()
     {
@@ -90,23 +89,23 @@ public class AI_Strategy : MonoBehaviour
 
             UpdateResourceBuildings();
 
-            if(m_idleUnits.Count >= 10 && (HasHalfOfResourceBuildings || Random.value < m_earlyHarrasmentChance) && !HasHarrasmentAttackCommenced)
+            if (m_baseInDanger)
+            {
+                AssignIdleUnits(UnitCommandType.MoveHome, 1f);
+            }
+            else if (m_idleUnits.Count >= enemyController.OwnedUnits.Count * 2 && (HasHalfOfResourceBuildings || Random.value < m_earlyHarrasmentChance))
             {
                 AssignIdleUnits(UnitCommandType.MoveToEnemyBase, 0.5f);
             }
-            else if (ownerController.currentResources < 150 && m_resourceBuildingQueue.Count > 0 && m_curResourceBuilding == null)
+            else if (ownerController.currentResources < 150 && m_resourceBuildingQueue.Count > 0 && m_ownedResourceBuildings.Count < 3 && m_curResourceBuilding == null)
             {
                 m_curResourceBuilding = m_resourceBuildingQueue.Dequeue();
                 AssignIdleUnits(UnitCommandType.GetResourceBuilding, 1f);
             }
-            else if(m_idleUnits.Count >= 10 && m_resourceBuildingQueue.Count > 0 && m_curResourceBuilding == null)
+            else if(m_idleUnits.Count >= 10 && m_resourceBuildingQueue.Count > 0 && (m_curResourceBuilding == null || m_curResourceBuilding.ownerFaction != FactionType.Enemy))
             {
                 m_curResourceBuilding = m_resourceBuildingQueue.Dequeue();
-                AssignIdleUnits(UnitCommandType.GetResourceBuilding, Mathf.Lerp(0.8f, 0.1f, (float)m_ownedResourceBuildings.Count / resourceBuildings.Count));
-            }
-            else if(m_baseInDanger)
-            {
-                AssignIdleUnits(UnitCommandType.MoveHome, 1f);
+                AssignIdleUnits(UnitCommandType.GetResourceBuilding, Mathf.Lerp(0.8f, 0.2f, (float)m_ownedResourceBuildings.Count / resourceBuildings.Count));
             }
 
             // Find player units near AI base and set base attacked flag if enemy unit count is larger than base defense unit count
@@ -210,10 +209,27 @@ public class AI_Strategy : MonoBehaviour
                         }
                         break;
                     case UnitCommandType.MoveHome:
-                        if (!unit.HasMoveTarget)
+                        if (Vector2.Distance(unit.transform.position, ownerController.ownedBuildings[0].gameObject.transform.position) > 30f)
                         {
-                            unit.SetMoveTarget((Vector2)ownerController.ownedBuildings[0].gameObject.transform.position + Random.insideUnitCircle * 30.0f);
-                            unit.SetState(Unit_Base.UnitStateType.Move);
+                            if (!unit.HasMoveTarget)
+                            {
+                                unit.SetMoveTarget((Vector2)ownerController.ownedBuildings[0].gameObject.transform.position + Random.insideUnitCircle * 30.0f);
+                                unit.SetState(Unit_Base.UnitStateType.Move);
+                            }
+                        }
+                        else
+                        {
+                            if(!unit.HasAttackTarget)
+                            {
+                                List<GridHashList2D.Node> closeEnemies = enemyController.UnitPositions.Find(unit.transform.position, Vector2.one * 30f);
+
+                                if (closeEnemies.Count > 0)
+                                {
+                                    Unit_Base selectedEnemy = GetClosest(unit, closeEnemies);
+                                    unit.SetAttackTarget(selectedEnemy.health);
+                                    unit.SetState(Unit_Base.UnitStateType.Attack);
+                                }
+                            }
                         }
                         break;
                     default:
@@ -230,25 +246,23 @@ public class AI_Strategy : MonoBehaviour
         }
     }
 
-    private void HandleOwnedUnitSpawned(int ownedUnitIndex)
+    private void HandleOwnedUnitSpawned(Unit_Base unit)
     {
-        m_idleUnits.Add(ownerController.OwnedUnits[ownedUnitIndex]);
+        m_idleUnits.Add(unit);
     }
 
-    private void HandleOwnedUnitKilled(int ownedUnitIndex)
+    private void HandleOwnedUnitKilled(Unit_Base unit)
     {
-        Unit_Base removedUnit = ownerController.OwnedUnits[ownedUnitIndex];
-
-        if (m_idleUnits.Contains(removedUnit))
+        if (m_idleUnits.Contains(unit))
         {
-            m_idleUnits.Remove(removedUnit);
+            m_idleUnits.Remove(unit);
         }
 
         foreach (var command in m_unitsByCommand)
         {
-            if(command.Value.Contains(removedUnit))
+            if(command.Value.Contains(unit))
             {
-                command.Value.Remove(removedUnit);
+                command.Value.Remove(unit);
             }
         }
     }
@@ -266,7 +280,7 @@ public class AI_Strategy : MonoBehaviour
             }
             else
             {
-                if (resourceBuildings[i].ownerFaction != FactionType.Enemy)
+                if (resourceBuildings[i].ownerFaction != FactionType.Enemy && !m_resourceBuildingQueue.Contains(resourceBuildings[i]))
                 {
                     m_resourceBuildingQueue.Enqueue(resourceBuildings[i]);
                 }
@@ -278,6 +292,31 @@ public class AI_Strategy : MonoBehaviour
             m_curResourceBuilding = null;
         }
     }
+
+        private Unit_Base GetClosest(Unit_Base unit, List<GridHashList2D.Node> enemies)
+        {
+            if (enemies.Count == 0) return null;
+
+            Unit_Base closest = enemyController.UnitsByPosition[enemies[0]];
+            if (enemies.Count == 1) return closest;
+
+            Vector2 pos = unit.transform.position;
+            float closestDist = (enemies[0].position - pos).sqrMagnitude;
+
+            for (int i = 0; i < enemies.Count; i++)
+            {
+                float dist = (enemies[i].position - pos).sqrMagnitude;
+
+                if (dist < closestDist)
+                {
+                    closest = enemyController.UnitsByPosition[enemies[i]];
+                    closestDist = dist;
+
+                }
+            }
+
+            return closest;
+        }
 
     private class ResourceBuildingDistanceComparer : IComparer<Building_Resource>
     {
