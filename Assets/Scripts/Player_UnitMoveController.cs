@@ -22,15 +22,6 @@ public class Player_UnitMoveController : MonoBehaviour
         m_groundPlane = new Plane(-Vector3.forward, m_mapRenderer.transform.position);
     }
 
-    private void OnDrawGizmos()
-    {
-        Color prevColor = Gizmos.color;
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube(m_mapRenderer.transform.position, m_mapRenderer.transform.position + (Vector3.right + Vector3.up) * 100.0f);
-        Gizmos.DrawLine(m_mapRenderer.transform.position, m_mapRenderer.transform.position - Vector3.forward * 200.0f);
-        Gizmos.color = prevColor;
-    }
-
     private void Update()
     {
         if(Player_Controller.currentGameState != GameState.Playing)
