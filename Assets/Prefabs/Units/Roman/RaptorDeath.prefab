@@ -73,6 +73,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1927671764800806956}
   - component: {fileID: 1927671764800806957}
+  - component: {fileID: 9164498125929526960}
   m_Layer: 0
   m_Name: SoldierSprite
   m_TagString: Untagged
@@ -145,6 +146,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &9164498125929526960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927671764800806955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab5534db9959ee341b0e1d1766065942, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_defaultSortingOrder: 5000
+  scaling: 10
+  offset: 0
+  m_tickRate: 0.2
+  updateSorting: 1
 --- !u!1 &7478690590589297310
 GameObject:
   m_ObjectHideFlags: 0
