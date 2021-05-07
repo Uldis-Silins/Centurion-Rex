@@ -110,7 +110,7 @@ public class AI_Strategy : MonoBehaviour
             }
 
             // Find player units near AI base and set base attacked flag if enemy unit count is larger than base defense unit count
-            var positions = enemyController.UnitPositions.Find(ownerController.ownedBuildings[0].gameObject.transform.position, Vector2.one * 50.0f);
+            var positions = enemyController.UnitPositions.Find(ownerController.ownedBuildings[0].gameObject.transform.position, Vector2.one * 30.0f);
             m_baseInDanger = positions.Count > 0;
 
             if(m_baseInDanger && m_idleUnits.Count > 0)
@@ -212,7 +212,7 @@ public class AI_Strategy : MonoBehaviour
                     case UnitCommandType.MoveHome:
                         if (!unit.HasMoveTarget)
                         {
-                            unit.SetMoveTarget((Vector2)ownerController.ownedBuildings[0].gameObject.transform.position + Random.insideUnitCircle * 20.0f);
+                            unit.SetMoveTarget((Vector2)ownerController.ownedBuildings[0].gameObject.transform.position + Random.insideUnitCircle * 30.0f);
                             unit.SetState(Unit_Base.UnitStateType.Move);
                         }
                         break;

@@ -41,33 +41,37 @@ public class AI_Awareness : MonoBehaviour
 
                 if (closeEnemies.Count > 0)
                 {
-                    Unit_Base selectedEnemy = GetClosest(closeEnemies);
-                    Debug.Log(name + ": " + unit.name + " is attacking " + selectedEnemy.name);
+                    Unit_Base selectedEnemy = GetClosest(unit, closeEnemies);
 
-                    //if ((unit.unitType == UnitData.UnitType.Soldier && selectedEnemy.unitType == UnitData.UnitType.Ranged && Vector2.Distance(selectedEnemy.transform.position, unit.transform.position) > unit.visionDistance / 2f) ||
-                    //    (unit.unitType == UnitData.UnitType.Ranged && selectedEnemy.unitType == UnitData.UnitType.Soldier && Vector2.Distance(selectedEnemy.transform.position, unit.transform.position) < unit.visionDistance / 2f))
-                    //{
-                    //    unit.SetMoveTarget(unit.transform.position + (selectedEnemy.transform.position - unit.transform.position).normalized * unit.visionDistance);
-                    //    unit.SetState(Unit_Base.UnitStateType.Move);
-                    //}
-                    //else
+                    if (selectedEnemy != null)
                     {
-                        unit.SetAttackTarget(selectedEnemy.health);
-                        unit.SetState(Unit_Base.UnitStateType.Attack);
+                        Debug.Log(name + ": " + unit.name + " is attacking " + selectedEnemy.name);
+
+                        //if ((unit.unitType == UnitData.UnitType.Soldier && selectedEnemy.unitType == UnitData.UnitType.Ranged && Vector2.Distance(selectedEnemy.transform.position, unit.transform.position) > unit.visionDistance / 2f) ||
+                        //    (unit.unitType == UnitData.UnitType.Ranged && selectedEnemy.unitType == UnitData.UnitType.Soldier && Vector2.Distance(selectedEnemy.transform.position, unit.transform.position) < unit.visionDistance / 2f))
+                        //{
+                        //    unit.SetMoveTarget(unit.transform.position + (selectedEnemy.transform.position - unit.transform.position).normalized * unit.visionDistance);
+                        //    unit.SetState(Unit_Base.UnitStateType.Move);
+                        //}
+                        //else
+                        {
+                            unit.SetAttackTarget(selectedEnemy.health);
+                            unit.SetState(Unit_Base.UnitStateType.Attack);
+                        }
                     }
                 }
             }
         }
     }
 
-    private Unit_Base GetClosest(List<GridHashList2D.Node> enemies)
+    private Unit_Base GetClosest(Unit_Base unit, List<GridHashList2D.Node> enemies)
     {
         if (enemies.Count == 0) return null;
 
         Unit_Base closest = enemyController.UnitsByPosition[enemies[0]];
         if (enemies.Count == 1) return closest;
 
-        Vector2 pos = transform.position;
+        Vector2 pos = unit.transform.position;
         float closestDist = (enemies[0].position - pos).sqrMagnitude;
 
         for (int i = 0; i < enemies.Count; i++)

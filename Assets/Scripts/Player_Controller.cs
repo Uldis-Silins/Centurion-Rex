@@ -222,6 +222,31 @@ public class Player_Controller : MonoBehaviour
             }
         }
 
+        Gizmos.color = Color.gray;
+        Rect visiRect = new Rect(min.x, min.y, max.x - min.x, max.y - min.y);
+        Vector2Int visiSize = new Vector2Int(walkableTilemap.cellBounds.size.x, walkableTilemap.cellBounds.size.y);
+        Vector2 cellSize = new Vector2(visiRect.size.x / visiSize.x, visiRect.size.y / visiSize.y);
+
+        bool showGrid = true;
+
+        if (showGrid)
+        {
+            for (int x = 0; x < visiSize.x; x++)
+            {
+                for (int y = 0; y < visiSize.y; y++)
+                {
+                    Vector2 minPos = new Vector2(visiRect.x - cellSize.x * 0.5f + x * cellSize.x, visiRect.y - cellSize.y * 0.5f + y * cellSize.y);
+                    Vector2 maxPos = new Vector2(visiRect.x + cellSize.x * 0.5f + x * cellSize.x, visiRect.y + cellSize.y * 0.5f + y * cellSize.y);
+
+                    Gizmos.DrawLine(minPos, new Vector3(minPos.x, maxPos.y, 0f));
+                    Gizmos.DrawLine(minPos, new Vector3(maxPos.x, minPos.y, 0f));
+                    Gizmos.DrawLine(new Vector3(minPos.x, maxPos.y, 0f), maxPos);
+                    Gizmos.DrawLine(maxPos, new Vector3(maxPos.x, minPos.y, 0f));
+                }
+            }
+        }
+
+
         Gizmos.color = prevColor;
     }
 
