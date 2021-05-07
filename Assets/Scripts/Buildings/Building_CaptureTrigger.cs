@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(CircleCollider2D))]
 public class Building_CaptureTrigger : MonoBehaviour
 {
     public Building_Resource building;
@@ -11,28 +10,44 @@ public class Building_CaptureTrigger : MonoBehaviour
 
     private void Awake()
     {
-        m_unitLayer = LayerMask.NameToLayer("Unit");
-        var col = GetComponent<CircleCollider2D>();
-        col.isTrigger = true;
-        col.radius = building.captureRadius;
+        m_unitLayer = LayerMask.GetMask("Unit"/*, "Selectable"*/);
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void Update()
     {
-        Debug.Log("Building capture trigger enter other layer: " + LayerMask.LayerToName(other.gameObject.layer));
-        if(other.gameObject.layer == m_unitLayer)
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, building.captureRadius, m_unitLayer);
+
+        int playerUnitsInRange = 0;
+        int enemyUnitsInRange = 0;
+
+        for (int i = 0; i < hits.Length; i++)
         {
+            Collider2D other = hits[i];
+            Debug.Log("Building capture trigger enter other layer: " + LayerMask.LayerToName(other.gameObject.layer));
+
             var unitHealth = other.gameObject.GetComponent<Unit_Health>();
 
-            if(unitHealth != null)
+            if (unitHealth != null)
             {
-                building.SetOwner(unitHealth.Faction);
-
                 if(unitHealth.Faction == FactionType.Player)
                 {
-                    audioSource.Play();
+                    playerUnitsInRange++;
+                }
+                else if(unitHealth.Faction == FactionType.Enemy)
+                {
+                    enemyUnitsInRange++;
                 }
             }
+        }
+
+        if (playerUnitsInRange > 0 && playerUnitsInRange > enemyUnitsInRange && building.ownerFaction != FactionType.Player)
+        {
+            building.SetOwner(FactionType.Player);
+            audioSource.Play();
+        }
+        else if(enemyUnitsInRange > 0 && enemyUnitsInRange > playerUnitsInRange && building.ownerFaction != FactionType.Enemy)
+        {
+            building.SetOwner(FactionType.Enemy);
         }
     }
 }

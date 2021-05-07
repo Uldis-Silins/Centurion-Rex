@@ -20,7 +20,7 @@ public class AI_Awareness : MonoBehaviour
 
             if ((unit as ISelecteble).IsSelected) continue;
 
-            if ((canCancelMove || !unit.HasMoveTarget) && !unit.HasAttackTarget)
+            if ((canCancelMove || !unit.HasMoveTarget) /*&& !unit.HasAttackTarget*/)
             {
                 for (int j = 0; j < enemyController.ownedBuildings.Count; j++)
                 {
@@ -28,7 +28,7 @@ public class AI_Awareness : MonoBehaviour
                     {
                         Building_Base building = enemyController.ownedBuildings[j].selectable as Building_Base;
 
-                        if (building.health != null)
+                        if (building.health != null && building.health.enabled && (!unit.HasAttackTarget || unit.AttackTarget.DamageableGameObject != building.health.DamageableGameObject))
                         {
                             unit.SetAttackTarget(building.health);
                             unit.SetState(Unit_Base.UnitStateType.Attack);
@@ -43,7 +43,7 @@ public class AI_Awareness : MonoBehaviour
                 {
                     Unit_Base selectedEnemy = GetClosest(unit, closeEnemies);
 
-                    if (selectedEnemy != null  && Vector2.Distance(unit.transform.position, selectedEnemy.transform.position) <= unit.visionDistance)
+                    if (selectedEnemy != null && (!unit.HasAttackTarget || unit.AttackTarget.DamageableGameObject != selectedEnemy.health.DamageableGameObject) && Vector2.Distance(unit.transform.position, selectedEnemy.transform.position) <= unit.visionDistance)
                     {
                         Debug.Log(name + ": " + unit.name + " is attacking " + selectedEnemy.name);
 
@@ -62,6 +62,11 @@ public class AI_Awareness : MonoBehaviour
                     else if(Vector2.Distance(unit.transform.position, selectedEnemy.transform.position) > unit.visionDistance)
                     {
                         Debug.LogError(unit.name + ": should not reach this; enemy " + selectedEnemy.name + " is too far");
+
+                        foreach (var enemyPos in closeEnemies)
+                        {
+                            Debug.DrawLine(unit.transform.position, enemyPos.position, Color.red, 1f);
+                        }
                     }
                 }
             }
