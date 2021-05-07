@@ -29,6 +29,9 @@ public class GridHashList2D
 
     private int m_queryIDs = 0;
 
+    public Rect Bounds { get { return m_bounds; } }
+    public Vector2Int Dimensions { get { return m_dimensions; } }
+
     public GridHashList2D(Rect bounds, Vector2Int dimensions)
     {
         m_bounds = bounds;
@@ -53,10 +56,12 @@ public class GridHashList2D
         float w = bounds.x;
         float h = bounds.y;
 
+#if UNITY_EDITOR
         Debug.DrawLine(new Vector3(posX - w / 2, posY - h / 2), new Vector3(posX - w / 2, posY + h / 2), Color.green);
         Debug.DrawLine(new Vector3(posX - w / 2, posY - h / 2), new Vector3(posX + w / 2, posY - h / 2), Color.green);
         Debug.DrawLine(new Vector3(posX + w / 2, posY + h / 2), new Vector3(posX - w / 2, posY + h / 2), Color.green);
         Debug.DrawLine(new Vector3(posX + w / 2, posY + h / 2), new Vector3(posX + w / 2, posY - h / 2), Color.green);
+#endif
 
         Vector2Int minIndex = GetCellIndex(posX - w / 2, posY - h / 2);
         Vector2Int maxIndex = GetCellIndex(posX + w / 2, posY + h / 2);

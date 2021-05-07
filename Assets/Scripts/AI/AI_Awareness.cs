@@ -43,7 +43,7 @@ public class AI_Awareness : MonoBehaviour
                 {
                     Unit_Base selectedEnemy = GetClosest(unit, closeEnemies);
 
-                    if (selectedEnemy != null)
+                    if (selectedEnemy != null  && Vector2.Distance(unit.transform.position, selectedEnemy.transform.position) <= unit.visionDistance)
                     {
                         Debug.Log(name + ": " + unit.name + " is attacking " + selectedEnemy.name);
 
@@ -58,6 +58,10 @@ public class AI_Awareness : MonoBehaviour
                             unit.SetAttackTarget(selectedEnemy.health);
                             unit.SetState(Unit_Base.UnitStateType.Attack);
                         }
+                    }
+                    else if(Vector2.Distance(unit.transform.position, selectedEnemy.transform.position) > unit.visionDistance)
+                    {
+                        Debug.LogError(unit.name + ": should not reach this; enemy " + selectedEnemy.name + " is too far");
                     }
                 }
             }
