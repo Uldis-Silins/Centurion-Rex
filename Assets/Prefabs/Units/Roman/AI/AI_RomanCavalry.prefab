@@ -73,9 +73,9 @@ MonoBehaviour:
   m_obstacleAvoider: {fileID: 6846421801156533200}
   m_pursuer: {fileID: 2550907137768932704}
   m_separator: {fileID: 8956729652423473996}
-  attackDistance: 2
+  attackDistance: 5
   attackDamage: 15
-  attacksDelay: 0.6
+  attacksDelay: 0.5
   fireParticleParent: {fileID: 7921519605564792261}
   fireParticles:
   - {fileID: 483802286229102180}
@@ -95,7 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c40d5d16be0323e43bbde5c082548c98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 30
+  maxHealth: 70
   owningFaction: 2
   ragdoll: {fileID: 8903666255083401664, guid: a2157118252d8574e82356926eb5c7b5, type: 3}
   m_sprite: {fileID: 4095252138988724114}

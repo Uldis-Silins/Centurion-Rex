@@ -201,7 +201,7 @@ MonoBehaviour:
   m_pursuer: {fileID: -6935352028890680209}
   m_separator: {fileID: 2898546333530889532}
   attackDistance: 1
-  attackDamage: 9
+  attackDamage: 14
   attacksDelay: 0.5
   m_selectableObject: {fileID: 8897255321994208}
 --- !u!114 &7820143654597645030

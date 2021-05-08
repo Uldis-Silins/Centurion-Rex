@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 8432720919428396585}
   - component: {fileID: 3143130226508708588}
   m_Layer: 10
-  m_Name: EnemyCavalry
+  m_Name: AI_SharkCavalry
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -74,7 +74,7 @@ MonoBehaviour:
   m_pursuer: {fileID: 2550907137768932704}
   m_separator: {fileID: 8956729652423473996}
   attackDistance: 2
-  attackDamage: 15
+  attackDamage: 20
   attacksDelay: 1
   laser: {fileID: 2899408915750665451}
   laserRenderer: {fileID: 404178860090055723}
@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c40d5d16be0323e43bbde5c082548c98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 30
+  maxHealth: 55
   owningFaction: 2
   ragdoll: {fileID: 8903666255083401664, guid: a7cc3005631f579419ff0eb8e8f5d91e, type: 3}
   m_sprite: {fileID: 4095252138988724114}
