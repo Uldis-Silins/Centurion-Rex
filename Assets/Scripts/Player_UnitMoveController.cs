@@ -162,7 +162,7 @@ public class Player_UnitMoveController : MonoBehaviour
                         Vector2 enemyPos = hitDamageables[i % hitDamageables.Count].DamageableGameObject.transform.position;
                         List<Vector2> formationPositions = Formations.GetPositionListCircle(enemyPos, new float[] { 1f, 2f, 3f, 4f, 5f }, new int[] { 5, 10, 20, 40, 60 });
                         Unit_Base unit = curSelectedUnits[i] as Unit_Base;
-                        unit.SetAttackTarget(hitDamageables[i % hits.Count]);
+                        unit.SetAttackTarget(hitDamageables[i % hitDamageables.Count]);
                         unit.SetMoveTarget(Formations.GetAdjustedPosition(formationPositions[i], unit, unit.circleCollider.radius * 1.5f));
                         unit.SetState(Unit_Base.UnitStateType.Move);
                     }
