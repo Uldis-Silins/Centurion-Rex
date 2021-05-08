@@ -248,14 +248,25 @@ public class AI_Strategy : MonoBehaviour
 
     private void HandleOwnedUnitSpawned(Unit_Base unit)
     {
+        Debug.Assert(unit.gameObject != null, "Passed null unit");
         m_idleUnits.Add(unit);
     }
 
     private void HandleOwnedUnitKilled(Unit_Base unit)
     {
-        if (m_idleUnits.Contains(unit))
+        Debug.Assert(unit.gameObject != null, "Passed null unit");
+
+        //if (m_idleUnits.Contains(unit))
+        //{
+        //    m_idleUnits.Remove(unit);
+        //}
+
+        for (int i = m_idleUnits.Count - 1; i >= 0; i--)
         {
-            m_idleUnits.Remove(unit);
+            if (m_idleUnits[i] == unit || m_idleUnits[i] == null)
+            {
+                m_idleUnits.RemoveAt(i);
+            }
         }
 
         foreach (var command in m_unitsByCommand)

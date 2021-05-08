@@ -154,9 +154,6 @@ public class GridHashList2D
         }
     }
 
-    /// <summary>
-    /// Index of cell from world position.
-    /// </summary>
     private Vector2Int GetCellIndex(float posX, float posY)
     {
         float x = ((posX - m_bounds.x) / m_bounds.width);
@@ -168,15 +165,20 @@ public class GridHashList2D
         return new Vector2Int(xIndex, yIndex);
     }
 
-    /// <summary>
-    /// Create hash of cell.
-    /// </summary>
-    /// <param name="x">Cell x position</param>
-    /// <param name="y">Cell y position</param>
-    /// <returns>Hash of cell x and y positions.</returns>
+    public string PrintNodeCellIndex(Node node)
+    {
+        return GetCellIndex(node.position.x, node.position.y).ToString();
+    }
+
+    public string PrintKey(Node node)
+    {
+        Vector2Int cell = GetCellIndex(node.position.x, node.position.y);
+        return CreateKey(cell.x, cell.y).ToString();
+    }
+
     private int CreateKey(int x, int y)
     {
-        int hash = 17 * 23 + x;
-        return hash * 23 + y;
+        int hash = 17 * 23 * x;
+        return hash * (m_dimensions.x * m_dimensions.y) + y;
     }
 }

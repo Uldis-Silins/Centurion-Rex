@@ -226,7 +226,7 @@ public class Building_UnitSpawner : Building_Base
                 //{
                 m_unitsBuilt++;
                     var instance = Instantiate(units[i].unitPrefab, spawnPoint.position, Quaternion.identity) as GameObject;
-                    instance.name = units[i].unitPrefab.name + m_unitsBuilt;
+                    instance.name = health.Faction.ToString() + units[i].unitPrefab.name + m_unitsBuilt;
                     
                     return instance.GetComponent<Unit_Base>();
                 //}

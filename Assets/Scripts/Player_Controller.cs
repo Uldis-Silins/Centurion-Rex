@@ -19,6 +19,8 @@ public class Player_Controller : MonoBehaviour
     public List<Building> ownedBuildings;
 
     public Tilemap walkableTilemap;
+    public Renderer levelPlaneRenderer;
+    public NavigationController navigation;
 
     public LayerMask buildingLayer;
     public LayerMask selectableLayer;
@@ -71,9 +73,10 @@ public class Player_Controller : MonoBehaviour
         m_waitingForKill = new Stack<IDamageable>();
         m_mainCam = Camera.main;
 
-        Vector3 min = walkableTilemap.CellToWorld(walkableTilemap.cellBounds.min);
-        Vector3 max = walkableTilemap.CellToWorld(walkableTilemap.cellBounds.max);
-        m_unitPositionList = new GridHashList2D(new Rect(min.x, min.y, max.x - min.x, max.y - min.y), new Vector2Int(walkableTilemap.cellBounds.size.x, walkableTilemap.cellBounds.size.y));
+        //Vector3 min = walkableTilemap.CellToWorld(walkableTilemap.cellBounds.min);
+        //Vector3 max = walkableTilemap.CellToWorld(walkableTilemap.cellBounds.max);
+        //m_unitPositionList = new GridHashList2D(new Rect(min.x, min.y, max.x - min.x, max.y - min.y), new Vector2Int(walkableTilemap.cellBounds.size.x, walkableTilemap.cellBounds.size.y));
+        m_unitPositionList = new GridHashList2D(new Rect(levelPlaneRenderer.bounds.min.x, levelPlaneRenderer.bounds.min.y, levelPlaneRenderer.bounds.size.x, levelPlaneRenderer.bounds.size.y), navigation.manualGridSize);
         m_unitsByPosition = new Dictionary<GridHashList2D.Node, Unit_Base>();
         m_unitsByType = new Dictionary<UnitData.UnitType, List<Unit_Base>>();
     }
@@ -246,6 +249,24 @@ public class Player_Controller : MonoBehaviour
                         Gizmos.DrawLine(maxPos, new Vector3(maxPos.x, minPos.y, 0f));
                     }
                 }
+            }
+        }
+
+        Gizmos.color = prevColor;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Color prevColor = Gizmos.color;
+
+        Gizmos.color = Color.green;
+
+        if (m_unitsByPosition != null)
+        {
+            foreach (var item in m_unitsByPosition)
+            {
+                UnityEditor.Handles.Label((Vector2)item.Value.transform.position + Vector2.up * 3f, m_unitPositionList.PrintKey(item.Key));
+                UnityEditor.Handles.Label((Vector2)item.Value.transform.position + Vector2.up * 5f, item.Key.queryID.ToString());
             }
         }
 

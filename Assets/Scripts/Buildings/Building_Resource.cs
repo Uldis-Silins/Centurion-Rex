@@ -52,6 +52,8 @@ public class Building_Resource : Building_Base
 
     private void Update()
     {
+        if (Player_Controller.currentGameState != GameState.Playing) return;
+
         if(m_currentPlayerController != null && m_resourceTimer <= 0f)
         {
             m_currentPlayerController.AddResource(productionPerSecond);
