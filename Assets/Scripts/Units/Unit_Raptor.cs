@@ -305,7 +305,7 @@ public class Unit_Raptor : Unit_Base, ISelecteble
             if (attacker.unitType == UnitData.UnitType.Soldier)
             {
                 SetMoveTarget(transform.position + (transform.position - attacker.transform.position).normalized * attackDistance);
-                ExitState_Idle(UnitStateType.Move);
+                ExitState_Attack(UnitStateType.Move);
                 return;
             }
         }

@@ -156,7 +156,8 @@ MonoBehaviour:
   m_separator: {fileID: 6167922371642365845}
   attackDistance: 5
   attackDamage: 15
-  attacksDelay: 0.5
+  attacksDelay: 0.3
+  attackTime: 2.6
   fireParticleParent: {fileID: 9014825920316561126}
   fireParticles:
   - {fileID: 596176700513622113}
@@ -495,7 +496,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_spriteRenderer: {fileID: 4095252138988724114}
   m_animationData: {fileID: 11400000, guid: c3497e6330883a942bb13f18b06b1348, type: 2}
-  m_currentAnimationType: 1
+  m_currentAnimationType: 11
 --- !u!50 &5262305600461489775
 Rigidbody2D:
   serializedVersion: 4
@@ -604,7 +605,7 @@ SpriteRenderer:
   m_SortingLayerID: -1997730693
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 2430121835600970751, guid: 5532ab4628f728141883e95b59c64de0,
+  m_Sprite: {fileID: 1843551377554676319, guid: d3207a92642aa8d429c8423cbeeca148,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

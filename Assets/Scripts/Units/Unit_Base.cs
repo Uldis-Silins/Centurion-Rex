@@ -194,7 +194,7 @@ public abstract class Unit_Base : MonoBehaviour
 
     public bool CanSeeUnit(Unit_Base unit)
     {
-        return Vector3.Distance(transform.position, unit.transform.position) <= visionDistance;
+        return Vector3.SqrMagnitude(transform.position - unit.transform.position) < visionDistance * visionDistance;
     }
 
     public override int GetHashCode()

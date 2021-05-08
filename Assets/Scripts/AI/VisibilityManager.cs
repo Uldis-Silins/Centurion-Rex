@@ -46,14 +46,27 @@ public class VisibilityManager : MonoBehaviour
 
         for (int i = 0; i < playerController.OwnedUnits.Count; i++)
         {
-            for (int j = 0; j < enemyController.OwnedUnits.Count; j++)
+            Unit_Base unit = playerController.OwnedUnits[i];
+            List<GridHashList2D.Node> enemiesInRange = enemyController.UnitPositions.Find(unit.transform.position, Vector2.one * unit.visionDistance);
+
+            for (int j = 0; j < enemiesInRange.Count; j++)
             {
-                if (playerController.OwnedUnits[i].CanSeeUnit(enemyController.OwnedUnits[j]))
+                Unit_Base enemy = enemyController.UnitsByPosition[enemiesInRange[j]];
+
+                if (unit.CanSeeUnit(enemy))
                 {
-                    enemyController.OwnedUnits[j].soldierRenderer.enabled = true;
-                    VisibleUnits.Add(enemyController.OwnedUnits[j]);
+                    enemy.soldierRenderer.enabled = true;
+                    VisibleUnits.Add(enemyController.UnitsByPosition[enemiesInRange[j]]);
                 }
             }
+            //for (int j = 0; j < enemyController.OwnedUnits.Count; j++)
+            //{
+            //    if (playerController.OwnedUnits[i].CanSeeUnit(enemyController.OwnedUnits[j]))
+            //    {
+            //        enemyController.OwnedUnits[j].soldierRenderer.enabled = true;
+            //        VisibleUnits.Add(enemyController.OwnedUnits[j]);
+            //    }
+            //}
 
             for (int j = 0; j < enemyController.ownedBuildings.Count; j++)
             {
@@ -65,18 +78,38 @@ public class VisibilityManager : MonoBehaviour
             }
         }
 
+        m_fovElements.Clear();
+
+        for (int i = 0; i < playerController.ownedBuildings.Count; i++)
+        {
+            m_fovElements.Add(playerController.ownedBuildings[i].gameObject.GetComponentInChildren<FOVElement>());
+        }
+
         for (int i = 0; i < m_fovElements.Count; i++)
         {
-            if (!m_fovElements[i].gameObject.activeInHierarchy) continue;
+            if (!m_fovElements[i].gameObject.activeSelf) continue;
 
-            for (int j = 0; j < enemyController.OwnedUnits.Count; j++)
+            List<GridHashList2D.Node> enemiesInRange = enemyController.UnitPositions.Find(m_fovElements[i].transform.position, Vector2.one * m_fovElements[i].visionDistance);
+
+            for (int j = 0; j < enemiesInRange.Count; j++)
             {
-                if (m_fovElements[i].CanSeeUnit(enemyController.OwnedUnits[j]))
+                Unit_Base enemy = enemyController.UnitsByPosition[enemiesInRange[j]];
+
+                if (m_fovElements[i].CanSeeUnit(enemy))
                 {
-                    enemyController.OwnedUnits[j].soldierRenderer.enabled = true;
-                    VisibleUnits.Add(enemyController.OwnedUnits[j]);
+                    enemy.soldierRenderer.enabled = true;
+                    VisibleUnits.Add(enemy);
                 }
             }
+
+            //for (int j = 0; j < enemyController.OwnedUnits.Count; j++)
+            //{
+            //    if (m_fovElements[i].CanSeeUnit(enemyController.OwnedUnits[j]))
+            //    {
+            //        enemyController.OwnedUnits[j].soldierRenderer.enabled = true;
+            //        VisibleUnits.Add(enemyController.OwnedUnits[j]);
+            //    }
+            //}
         }
     }
 }

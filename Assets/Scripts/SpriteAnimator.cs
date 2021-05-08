@@ -18,6 +18,7 @@ public class SpriteAnimator : MonoBehaviour
     public bool IsPlaying { get { return m_isPlaying; } }
     public int CurrentFrame { get { return m_curFrameIndex; } }
     public SpriteAnimatorData.AnimationType CurrentAnimationType { get { return m_currentAnimationType; } }
+    public float CurrentAnimationTotalTime { get { return m_currentFrames == null ? 0f : m_currentFrames.frameCount * m_currentFrames.frameTime; } }
 
     private void Start()
     {

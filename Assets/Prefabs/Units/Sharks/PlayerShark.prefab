@@ -155,8 +155,9 @@ MonoBehaviour:
   m_pursuer: {fileID: 4023205520626217074}
   m_separator: {fileID: 6167922371642365845}
   attackDistance: 2
-  attackDamage: 20
-  attacksDelay: 0.6
+  attackDamage: 25
+  attacksDelay: 0.3
+  attackTime: 1.6
   laser: {fileID: 6781903871005864815}
   laserRenderer: {fileID: 8338698552799548335}
   m_selectableObject: {fileID: 4710673273772683957}

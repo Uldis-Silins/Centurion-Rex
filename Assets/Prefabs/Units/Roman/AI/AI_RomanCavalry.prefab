@@ -75,7 +75,8 @@ MonoBehaviour:
   m_separator: {fileID: 8956729652423473996}
   attackDistance: 5
   attackDamage: 15
-  attacksDelay: 0.5
+  attacksDelay: 0.3
+  attackTime: 2.6
   fireParticleParent: {fileID: 7921519605564792261}
   fireParticles:
   - {fileID: 483802286229102180}

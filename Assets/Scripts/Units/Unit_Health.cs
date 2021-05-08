@@ -13,6 +13,7 @@ public class Unit_Health : MonoBehaviour, IDamageable
 
     [SerializeField] private SpriteRenderer m_sprite;
     private float m_damageTimer;
+    private readonly float m_damageFlashTime = 0.25f;
 
     [SerializeField] private float m_damageableRadius;
 
@@ -45,7 +46,7 @@ public class Unit_Health : MonoBehaviour, IDamageable
     {
         if (m_damageTimer > 0f)
         {
-            m_sprite.color = Color.Lerp(Color.white, Color.red, m_damageTimer / 0.5f);
+            m_sprite.color = Color.Lerp(Color.white, Color.red, m_damageTimer / m_damageFlashTime);
             m_damageTimer -= Time.deltaTime;
         }
     }
@@ -62,7 +63,7 @@ public class Unit_Health : MonoBehaviour, IDamageable
     {
         CurrentHealth -= damage;
 
-        m_damageTimer = 0.5f;
+        m_damageTimer = m_damageFlashTime;
         m_sprite.color = Color.red;
 
         m_lastAttacker = attacker;

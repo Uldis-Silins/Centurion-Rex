@@ -6,6 +6,7 @@ public class Unit_Trex : Unit_Base, ISelecteble
     public float attackDistance = 2f;
     public float attackDamage = 5f;
     public float attacksDelay = 0.5f;
+    public float attackTime = 2.6f;
 
     public Transform fireParticleParent;
     public ParticleSystem[] fireParticles;
@@ -18,6 +19,10 @@ public class Unit_Trex : Unit_Base, ISelecteble
 
     private float m_attackTimer;
     private bool m_isDamageApplied;
+    private bool m_inAttackDelay;
+    private float m_damageTimer;
+    private readonly float m_damageRate = 0.1f;
+    private float m_damagePerTick;
 
     private Dictionary<UnitStateType, StateHandler> m_states;
     private UnitStateType m_currentStateType;
@@ -44,64 +49,15 @@ public class Unit_Trex : Unit_Base, ISelecteble
         m_states.Add(UnitStateType.Move, EnterState_Move);
         m_states.Add(UnitStateType.Attack, EnterState_Attack);
         m_states.Add(UnitStateType.Die, EnterState_Die);
+
+        float ticks = (attackTime / 2.5f) / m_damageRate;
+        m_damagePerTick = attackDamage / ticks;
+        Debug.Log("TRex T: " + ticks + "; DPT: " + m_damagePerTick);
     }
 
     protected override void Update()
     {
         base.Update();
-
-        //if (m_attackTarget.Key != null && m_attackTarget.Value != null)
-        //{
-        //    Vector3 targetPos = m_attackTarget.Key.transform.position;
-        //    targetPos.y = transform.position.y;
-
-        //    if (Vector3.Distance(targetPos, transform.position) > attackDistance)
-        //    {
-        //        anim.SetBool("attack", false);
-        //        Vector3 dir = (targetPos - transform.position).normalized;
-        //        m_seeker.SetDestination(targetPos + dir * attackDistance * 0.5f);
-        //    }
-        //    else
-        //    {
-        //        m_seeker.Stop();
-
-        //        if (Vector3.Dot(Vector3.right, transform.position - targetPos) > 0)
-        //        {
-        //            soldierRenderer.transform.localScale = new Vector3(-m_startScale.x, m_startScale.y, m_startScale.z);
-        //        }
-        //        else
-        //        {
-        //            soldierRenderer.transform.localScale = new Vector3(m_startScale.x, m_startScale.y, m_startScale.z);
-        //        }
-
-        //        if (!anim.GetBool("attack") && m_attackTimer < attacksDelay / 2f)
-        //        {
-        //            anim.SetBool("attack", true);
-
-        //            if (!soundSource.isPlaying)
-        //            {
-        //                soundSource.clip = attackClip;
-        //                soundSource.loop = false;
-        //                soundSource.Play();
-        //            }
-        //        }
-
-        //        if (m_attackTimer < 0f)
-        //        {
-        //            m_attackTarget.Value.SetDamage(attackDamage, gameObject);
-        //            m_attackTimer = attacksDelay;
-        //            fireParticles.transform.position = m_attackTarget.Key.transform.position;
-        //            fireParticles.Play();
-        //            anim.SetBool("attack", false);
-        //        }
-
-        //        m_attackTimer -= Time.deltaTime;
-        //    }
-        //}
-        //else
-        //{
-        //    anim.SetBool("attack", false);
-        //}
     }
 
     protected override void LateUpdate()
@@ -252,7 +208,7 @@ public class Unit_Trex : Unit_Base, ISelecteble
     protected void EnterState_Attack()
     {
         anim.PlayAnimation(GetAttackAnimation(m_attackTarget.DamageableGameObject.transform.position));
-        m_attackTimer = attacksDelay;
+        m_attackTimer = m_inAttackDelay ? m_attackTimer : attackTime;
         m_isDamageApplied = false;
 
         m_seeker.enabled = false;
@@ -280,6 +236,8 @@ public class Unit_Trex : Unit_Base, ISelecteble
 
         if (Vector2.Distance(transform.position, m_attackTarget.DamageableGameObject.transform.position) > attackDistance)
         {
+            m_attackTimer = attackTime;
+            m_inAttackDelay = false;
             m_pursuer.SetDestination(m_attackTarget.DamageableGameObject.transform.position);
             return;
         }
@@ -295,42 +253,69 @@ public class Unit_Trex : Unit_Base, ISelecteble
             if (attacker.unitType == UnitData.UnitType.Soldier)
             {
                 SetMoveTarget(transform.position + (transform.position - attacker.transform.position).normalized * attackDistance);
-                ExitState_Idle(UnitStateType.Move);
+                ExitState_Attack(UnitStateType.Move);
                 return;
             }
         }
 
-        SpriteAnimatorData.AnimationType animType = GetAttackAnimation(m_attackTarget.DamageableGameObject.transform.position);
-
-        if (anim.CurrentAnimationType != animType)
+        if (m_inAttackDelay)
         {
-            anim.PlayAnimation(animType, false, false);
-        }
+            anim.PlayAnimation(GetIdleAnimation());
 
-        if (!m_isDamageApplied && m_attackTimer < attacksDelay / 2f)
-        {
-            if (!soundSource.isPlaying)
+            if(m_attackTimer <= 0f)
             {
-                soundSource.clip = attackClip;
-                soundSource.loop = false;
-                soundSource.Play();
+                m_inAttackDelay = false;
             }
         }
-
-        if (m_attackTimer <= 0f)
+        else
         {
-            anim.PlayAnimation(animType, false, false);
+            SpriteAnimatorData.AnimationType animType = GetAttackAnimation(m_attackTarget.DamageableGameObject.transform.position);
 
-            fireParticleParent.position = m_attackTarget.DamageableGameObject.transform.position;
-            fireParticleParent.eulerAngles = new Vector3(0f, 0f, Random.value * 360f);
-
-            for (int i = 0; i < fireParticles.Length; i++)
+            if (anim.CurrentAnimationType != animType)
             {
-                fireParticles[i].Play();
+                anim.PlayAnimation(animType, false, false);
+                Debug.Log("animTime: " + anim.CurrentAnimationTotalTime + "; attackTime: " + attackTime);
             }
 
-            m_attackTarget.SetDamage(attackDamage, this);
-            m_attackTimer = attacksDelay;
+            if (m_attackTimer < attackTime / 2.5f)
+            {
+                if(m_damageTimer <= 0f)
+                {
+                    m_attackTarget.SetDamage(m_damagePerTick, this);
+                    m_damageTimer = m_damageRate;
+                }
+
+                m_damageTimer -= Time.deltaTime;
+
+                if (!m_isDamageApplied)
+                {
+                    if (!soundSource.isPlaying)
+                    {
+                        soundSource.clip = attackClip;
+                        soundSource.loop = false;
+                        soundSource.Play();
+                    }
+
+                    fireParticleParent.position = m_attackTarget.DamageableGameObject.transform.position;
+                    fireParticleParent.eulerAngles = new Vector3(0f, 0f, Random.value * 360f);
+
+                    for (int i = 0; i < fireParticles.Length; i++)
+                    {
+                        fireParticles[i].Play();
+                    }
+
+                    m_isDamageApplied = true;
+                }
+            }
+
+            if (m_attackTimer <= 0f)
+            {
+                anim.PlayAnimation(animType, false, false);
+
+                m_isDamageApplied = false;
+                m_attackTimer = attacksDelay;
+                m_inAttackDelay = true;
+            }
         }
 
         m_attackTimer -= Time.deltaTime;
