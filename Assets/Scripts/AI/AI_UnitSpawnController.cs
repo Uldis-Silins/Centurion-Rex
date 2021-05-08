@@ -14,6 +14,7 @@ public class AI_UnitSpawnController : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log("pop" + playerController.CurrentPopulation);
         if (playerController.CurrentPopulation < maxPopulation)
         {
             if (m_spawnTimer < 0f)

@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 7651970116640661779}
   - component: {fileID: 5297835380276921224}
   m_Layer: 10
-  m_Name: EnemySoldier
+  m_Name: AI_SharkSoldier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -73,7 +73,7 @@ MonoBehaviour:
   m_pursuer: {fileID: 2076514725828392594}
   m_separator: {fileID: 3736249086818000876}
   attackDistance: 1
-  attackDamage: 9
+  attackDamage: 15
   attacksDelay: 0.5
   m_selectableObject: {fileID: 0}
 --- !u!114 &3391315334237148504
@@ -88,7 +88,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c40d5d16be0323e43bbde5c082548c98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 30
+  maxHealth: 18
   owningFaction: 2
   ragdoll: {fileID: 4220708611386460244, guid: 3680bb87c3378a24d8dd788ba9108f53, type: 3}
   m_sprite: {fileID: 4220708612654221336}
@@ -107,7 +107,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 2
   trueMaxSpeed: 0
-  maxAccel: 30
+  maxAccel: 31
   orientation: 0
   rotation: 0
   velocity: {x: 0, y: 0}

@@ -72,8 +72,8 @@ MonoBehaviour:
   m_obstacleAvoider: {fileID: -5915530817883424669}
   m_pursuer: {fileID: 6674461994962403893}
   m_separator: {fileID: 6705335451280510577}
-  attackDistance: 6
-  attackDamage: 10
+  attackDistance: 10
+  attackDamage: 6
   attacksDelay: 0.5
   accuracy: 1
   projectilePrefab: {fileID: 8186089749701993020, guid: 1e911ae0bc9ec7649b205ef14896f0e0,
