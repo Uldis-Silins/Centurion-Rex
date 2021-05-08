@@ -36,12 +36,12 @@ public class Balance : MonoBehaviour
         Unit playerLegionnaire = new Unit(
             unitCost: 20,
             unitHp: 20,
-            unitAttack: 15,
+            unitAttack: 14,
             trainingTime: 2.5f);
           Unit aiLegionnaire = new Unit(
             unitCost: 20,
-            unitHp: 20,
-            unitAttack: 15,
+            unitHp: 21,
+            unitAttack: 14,
             trainingTime: 2.5f);
 
         /* Archer
@@ -57,7 +57,7 @@ public class Balance : MonoBehaviour
             trainingTime: 4);
         Unit aiRaptor = new Unit(
             unitCost: 50,
-            unitHp: 15,
+            unitHp: 20,
             unitAttack: 6,
             trainingTime: 4);
 
@@ -87,13 +87,14 @@ public class Balance : MonoBehaviour
         Unit playerSamurai = new Unit(
             unitCost: 21,
             unitHp: 18,
-            unitAttack: 17,
+            unitAttack: 15,
             trainingTime: 2.5f);
           Unit aiSamurai = new Unit(
             unitCost: 21,
             unitHp: 18,
-            unitAttack: 17,
+            unitAttack: 15,
             trainingTime: 2.5f);
+        // maxAccel 31
 
         /* Archer
          * - expensive
