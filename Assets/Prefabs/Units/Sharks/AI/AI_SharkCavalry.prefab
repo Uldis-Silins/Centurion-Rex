@@ -625,6 +625,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: WanizameLaser
       objectReference: {fileID: 0}
+    - target: {fileID: 4864689324588739951, guid: 66a93365f22923345a36090e022dcbe4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 66a93365f22923345a36090e022dcbe4, type: 3}
 --- !u!1 &2899408915750665451 stripped

@@ -44,7 +44,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 74f6c462b5b08d1499080bd446b5440d, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.76
+  m_Volume: 0.528
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -153,7 +153,7 @@ GameObject:
   - component: {fileID: 833841490882192856}
   - component: {fileID: 2925271508550173773}
   m_Layer: 10
-  m_Name: EnemySoldierRagdoll
+  m_Name: AI_SharkSoldierRagdoll
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
