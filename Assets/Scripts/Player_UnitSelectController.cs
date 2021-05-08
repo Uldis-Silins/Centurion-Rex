@@ -29,8 +29,10 @@ public class Player_UnitSelectController : MonoBehaviour
             return;
         }
 
-        if(ownerController.BlockBuildingInteraction)
+        if (ownerController.BlockBuildingInteraction)
         {
+            m_startDragPosition = Input.mousePosition;
+            m_inDrag = false;
             return;
         }
 
