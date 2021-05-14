@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.sacristan.ahhnold.console": "https://github.com/Sacristan/AhhnoldConsole.git",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.2d.tilemap": "1.0.0",
     "com.unity.collab-proxy": "1.2.16",
