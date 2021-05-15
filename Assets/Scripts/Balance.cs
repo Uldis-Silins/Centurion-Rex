@@ -7,7 +7,7 @@ using UnityEngine;
 /// Would be cool if could change values here and they are updated elswhere in the game
 /// </summary>
 /// 
-
+[System.Obsolete]
 public class Unit 
 {
     float cost;
@@ -22,6 +22,7 @@ public class Unit
         this.trainingTime = trainingTime;
     }
 }
+[System.Obsolete]
 public class Balance : MonoBehaviour
 {
     

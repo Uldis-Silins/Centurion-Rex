@@ -258,7 +258,7 @@ public class Player_Controller : MonoBehaviour
     private void OnDrawGizmos()
     {
         Color prevColor = Gizmos.color;
-
+#if UNITY_EDITOR
         Gizmos.color = Color.green;
 
         if (m_unitsByPosition != null)
@@ -269,7 +269,7 @@ public class Player_Controller : MonoBehaviour
                 UnityEditor.Handles.Label((Vector2)item.Value.transform.position + Vector2.up * 5f, item.Key.queryID.ToString());
             }
         }
-
+#endif
         Gizmos.color = prevColor;
     }
 
