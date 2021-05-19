@@ -37,6 +37,10 @@ public class Unit_Health : MonoBehaviour, IDamageable
         }
     }
 
+#if ENABLE_CONSOLE
+    public bool Immortal { get; set; } = false;
+#endif
+
     private void Start()
     {
         CurrentHealth = maxHealth;
@@ -61,6 +65,11 @@ public class Unit_Health : MonoBehaviour, IDamageable
 
     public void SetDamage(float damage, Unit_Base attacker)
     {
+#if ENABLE_CONSOLE
+        if(Immortal) return;
+#endif
+        Debug.Log($"damage received {this.gameObject.name} from {attacker.gameObject.name}");
+
         CurrentHealth -= damage;
 
         m_damageTimer = m_damageFlashTime;

@@ -1,12 +1,16 @@
-﻿using UnityEngine;
+﻿#if ENABLE_CONSOLE
+
+using UnityEngine;
 using Sacristan.Ahhnold.Core;
+using System.Collections.Generic;
 
 public class Console : Sacristan.Ahhnold.Runtime.Console
 {
     public override CommandRegistration[] RegistrableCommands => new CommandRegistration[] {
         new CommandRegistration("version", VersionAction, "Outputs game version"),
         new CommandRegistration("quit", QuitAction, "Quit Game"),
-        new CommandRegistration("fow", FowAction, "Fog of War on/off")
+        new CommandRegistration("fow", FowAction, "Fog of War on/off"),
+        new CommandRegistration("immortal", ImmortalUnitsAction, "Immortal player units"),
     };
 
     #region Command handlers
@@ -24,6 +28,19 @@ public class Console : Sacristan.Ahhnold.Runtime.Console
     static void VersionAction(string[] args)
     {
         ConsoleController.Log(string.Format("version: {0}", Application.version));
+    }
+
+    static void ImmortalUnitsAction(string[] args)
+    {
+        List<Unit_Health> units = new List<Unit_Health>(FindObjectsOfType<Unit_Health>());
+        units = units.FindAll(x => x.owningFaction == FactionType.Player);
+
+        for (int i = 0; i < units.Count; i++)
+        {
+            units[i].Immortal = true;
+        }
+
+        ConsoleController.Log($"Marked {units.Count} player units immortal!");
     }
 
     static void FowAction(string[] args)
@@ -60,3 +77,5 @@ public class Console : Sacristan.Ahhnold.Runtime.Console
 
     #endregion
 }
+
+#endif
