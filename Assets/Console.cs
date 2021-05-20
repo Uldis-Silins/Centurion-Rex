@@ -11,9 +11,11 @@ public class Console : Sacristan.Ahhnold.Runtime.Console
         new CommandRegistration("quit", QuitAction, "Quit Game"),
         new CommandRegistration("fow", FowAction, "Fog of War on/off"),
         new CommandRegistration("immortal", ImmortalUnitsAction, "Immortal player units"),
+        new CommandRegistration("fast", FasterUnitsAction, "Faster player units"),
+        new CommandRegistration("fastunits", FasterUnitsAction, "Faster player units"),
     };
 
-    #region Command handlers
+#region Command handlers
     static void QuitAction(string[] args)
     {
 #if UNITY_EDITOR
@@ -41,6 +43,21 @@ public class Console : Sacristan.Ahhnold.Runtime.Console
         }
 
         ConsoleController.Log($"Marked {units.Count} player units immortal!");
+    }
+
+    static void FasterUnitsAction(string[] args)
+    {
+        List<Unit_Health> units = new List<Unit_Health>(FindObjectsOfType<Unit_Health>());
+        units = units.FindAll(x => x.owningFaction == FactionType.Player);
+
+        for (int i = 0; i < units.Count; i++)
+        {
+            Agent agent = units[i].GetComponent<Agent>();
+            agent.maxSpeed = 10;
+            agent.trueMaxSpeed = 10;
+        }
+
+        ConsoleController.Log($"Marked {units.Count} player units faster!");
     }
 
     static void FowAction(string[] args)
@@ -75,7 +92,7 @@ public class Console : Sacristan.Ahhnold.Runtime.Console
         }
     }
 
-    #endregion
+#endregion
 }
 
 #endif
