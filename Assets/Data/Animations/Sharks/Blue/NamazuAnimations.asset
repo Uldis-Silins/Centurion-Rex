@@ -15,7 +15,9 @@ MonoBehaviour:
   animations:
   - type: 1
     frames:
-    - frameSprites:
+    - animTexture: {fileID: 2800000, guid: 2998c3dc2b6b05f438402e2053982c19, type: 3}
+      totalTime: 0.8
+      frameSprites:
       - {fileID: 168756190566447370, guid: 2998c3dc2b6b05f438402e2053982c19, type: 3}
       - {fileID: -7779520204362520898, guid: 2998c3dc2b6b05f438402e2053982c19, type: 3}
       - {fileID: -2356010369459799831, guid: 2998c3dc2b6b05f438402e2053982c19, type: 3}
@@ -24,10 +26,11 @@ MonoBehaviour:
       flipX: 1
       flipY: 0
       frameCount: 4
-    playbackSpeedModifier: 1
   - type: 2
     frames:
-    - frameSprites:
+    - animTexture: {fileID: 2800000, guid: 2998c3dc2b6b05f438402e2053982c19, type: 3}
+      totalTime: 0.8
+      frameSprites:
       - {fileID: 168756190566447370, guid: 2998c3dc2b6b05f438402e2053982c19, type: 3}
       - {fileID: -7779520204362520898, guid: 2998c3dc2b6b05f438402e2053982c19, type: 3}
       - {fileID: -2356010369459799831, guid: 2998c3dc2b6b05f438402e2053982c19, type: 3}
@@ -36,10 +39,11 @@ MonoBehaviour:
       flipX: 1
       flipY: 0
       frameCount: 4
-    playbackSpeedModifier: 1
   - type: 3
     frames:
-    - frameSprites:
+    - animTexture: {fileID: 2800000, guid: 9086567dfbf00b347ac925c507ae13e9, type: 3}
+      totalTime: 1.2
+      frameSprites:
       - {fileID: -866107170734811644, guid: 9086567dfbf00b347ac925c507ae13e9, type: 3}
       - {fileID: 17110244145037190, guid: 9086567dfbf00b347ac925c507ae13e9, type: 3}
       - {fileID: 3981231593207982726, guid: 9086567dfbf00b347ac925c507ae13e9, type: 3}
@@ -50,10 +54,11 @@ MonoBehaviour:
       flipX: 0
       flipY: 0
       frameCount: 6
-    playbackSpeedModifier: 1
   - type: 4
     frames:
-    - frameSprites:
+    - animTexture: {fileID: 2800000, guid: ddff4d2874ca6ec4faa90af1fce46e04, type: 3}
+      totalTime: 1.2
+      frameSprites:
       - {fileID: 2213574071436056567, guid: ddff4d2874ca6ec4faa90af1fce46e04, type: 3}
       - {fileID: -8551744948474610854, guid: ddff4d2874ca6ec4faa90af1fce46e04, type: 3}
       - {fileID: 3422631513779814838, guid: ddff4d2874ca6ec4faa90af1fce46e04, type: 3}
@@ -64,10 +69,11 @@ MonoBehaviour:
       flipX: 0
       flipY: 0
       frameCount: 6
-    playbackSpeedModifier: 1
   - type: 5
     frames:
-    - frameSprites:
+    - animTexture: {fileID: 2800000, guid: ca646915e1de8814db99c7d83df147f0, type: 3}
+      totalTime: 1.2
+      frameSprites:
       - {fileID: -4687679365877507580, guid: ca646915e1de8814db99c7d83df147f0, type: 3}
       - {fileID: -5721661100428792620, guid: ca646915e1de8814db99c7d83df147f0, type: 3}
       - {fileID: -8015619897802955000, guid: ca646915e1de8814db99c7d83df147f0, type: 3}
@@ -78,10 +84,11 @@ MonoBehaviour:
       flipX: 1
       flipY: 0
       frameCount: 6
-    playbackSpeedModifier: 1
   - type: 6
     frames:
-    - frameSprites:
+    - animTexture: {fileID: 2800000, guid: ca646915e1de8814db99c7d83df147f0, type: 3}
+      totalTime: 1.2
+      frameSprites:
       - {fileID: -4687679365877507580, guid: ca646915e1de8814db99c7d83df147f0, type: 3}
       - {fileID: -5721661100428792620, guid: ca646915e1de8814db99c7d83df147f0, type: 3}
       - {fileID: -8015619897802955000, guid: ca646915e1de8814db99c7d83df147f0, type: 3}
@@ -92,10 +99,11 @@ MonoBehaviour:
       flipX: 0
       flipY: 0
       frameCount: 6
-    playbackSpeedModifier: 1
   - type: 7
     frames:
-    - frameSprites:
+    - animTexture: {fileID: 2800000, guid: 9086567dfbf00b347ac925c507ae13e9, type: 3}
+      totalTime: 1.2
+      frameSprites:
       - {fileID: -866107170734811644, guid: 9086567dfbf00b347ac925c507ae13e9, type: 3}
       - {fileID: 17110244145037190, guid: 9086567dfbf00b347ac925c507ae13e9, type: 3}
       - {fileID: 3981231593207982726, guid: 9086567dfbf00b347ac925c507ae13e9, type: 3}
@@ -106,10 +114,11 @@ MonoBehaviour:
       flipX: 1
       flipY: 0
       frameCount: 6
-    playbackSpeedModifier: 1
   - type: 8
     frames:
-    - frameSprites:
+    - animTexture: {fileID: 2800000, guid: ddff4d2874ca6ec4faa90af1fce46e04, type: 3}
+      totalTime: 1.2
+      frameSprites:
       - {fileID: 2213574071436056567, guid: ddff4d2874ca6ec4faa90af1fce46e04, type: 3}
       - {fileID: -8551744948474610854, guid: ddff4d2874ca6ec4faa90af1fce46e04, type: 3}
       - {fileID: 3422631513779814838, guid: ddff4d2874ca6ec4faa90af1fce46e04, type: 3}
@@ -120,10 +129,11 @@ MonoBehaviour:
       flipX: 1
       flipY: 0
       frameCount: 6
-    playbackSpeedModifier: 1
   - type: 9
     frames:
-    - frameSprites:
+    - animTexture: {fileID: 2800000, guid: 9086567dfbf00b347ac925c507ae13e9, type: 3}
+      totalTime: 1.2
+      frameSprites:
       - {fileID: -866107170734811644, guid: 9086567dfbf00b347ac925c507ae13e9, type: 3}
       - {fileID: 17110244145037190, guid: 9086567dfbf00b347ac925c507ae13e9, type: 3}
       - {fileID: 3981231593207982726, guid: 9086567dfbf00b347ac925c507ae13e9, type: 3}
@@ -134,10 +144,11 @@ MonoBehaviour:
       flipX: 0
       flipY: 0
       frameCount: 6
-    playbackSpeedModifier: 1
   - type: 10
     frames:
-    - frameSprites:
+    - animTexture: {fileID: 2800000, guid: ddff4d2874ca6ec4faa90af1fce46e04, type: 3}
+      totalTime: 1.2
+      frameSprites:
       - {fileID: 2213574071436056567, guid: ddff4d2874ca6ec4faa90af1fce46e04, type: 3}
       - {fileID: -8551744948474610854, guid: ddff4d2874ca6ec4faa90af1fce46e04, type: 3}
       - {fileID: 3422631513779814838, guid: ddff4d2874ca6ec4faa90af1fce46e04, type: 3}
@@ -148,10 +159,11 @@ MonoBehaviour:
       flipX: 0
       flipY: 0
       frameCount: 6
-    playbackSpeedModifier: 1
   - type: 11
     frames:
-    - frameSprites:
+    - animTexture: {fileID: 2800000, guid: 6ec826f695941134b9561fd1742a2ff4, type: 3}
+      totalTime: 1.8000001
+      frameSprites:
       - {fileID: 1444968370087137514, guid: 6ec826f695941134b9561fd1742a2ff4, type: 3}
       - {fileID: 5364697341439926459, guid: 6ec826f695941134b9561fd1742a2ff4, type: 3}
       - {fileID: -4982790708437045827, guid: 6ec826f695941134b9561fd1742a2ff4, type: 3}
@@ -165,10 +177,11 @@ MonoBehaviour:
       flipX: 1
       flipY: 0
       frameCount: 9
-    playbackSpeedModifier: 1
   - type: 12
     frames:
-    - frameSprites:
+    - animTexture: {fileID: 2800000, guid: 6ec826f695941134b9561fd1742a2ff4, type: 3}
+      totalTime: 1.8000001
+      frameSprites:
       - {fileID: 1444968370087137514, guid: 6ec826f695941134b9561fd1742a2ff4, type: 3}
       - {fileID: 5364697341439926459, guid: 6ec826f695941134b9561fd1742a2ff4, type: 3}
       - {fileID: -4982790708437045827, guid: 6ec826f695941134b9561fd1742a2ff4, type: 3}
@@ -182,10 +195,11 @@ MonoBehaviour:
       flipX: 0
       flipY: 0
       frameCount: 9
-    playbackSpeedModifier: 1
   - type: 13
     frames:
-    - frameSprites:
+    - animTexture: {fileID: 2800000, guid: 763cb2c9a05ced24a8637b276c3609a6, type: 3}
+      totalTime: 1.2
+      frameSprites:
       - {fileID: -3592766071164158414, guid: 763cb2c9a05ced24a8637b276c3609a6, type: 3}
       - {fileID: 606122098376994821, guid: 763cb2c9a05ced24a8637b276c3609a6, type: 3}
       - {fileID: -5547056638335124748, guid: 763cb2c9a05ced24a8637b276c3609a6, type: 3}
@@ -196,4 +210,3 @@ MonoBehaviour:
       flipX: 0
       flipY: 0
       frameCount: 6
-    playbackSpeedModifier: 1

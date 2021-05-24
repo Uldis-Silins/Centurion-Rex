@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a6a793289a12474ab9ad628578b351b, type: 3}
   m_Name: TRexData
   m_EditorClassIdentifier: 
-  price: 0
-  buildTime: 0
   maxHealth: 70
   baseDamage: 5
   visionDistance: 15
   attackDistance: 15
+  attackTime: 2.6
+  attackDelay: 0.4
   moveSpeed: 3

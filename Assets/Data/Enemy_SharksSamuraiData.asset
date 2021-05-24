@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a6a793289a12474ab9ad628578b351b, type: 3}
   m_Name: Enemy_SharksSamuraiData
   m_EditorClassIdentifier: 
-  price: 0
-  buildTime: 0
   maxHealth: 18
   baseDamage: 15
   visionDistance: 6
   attackDistance: 1
-  moveSpeed: 0
+  attackTime: 0.5
+  attackDelay: 0
+  moveSpeed: 2

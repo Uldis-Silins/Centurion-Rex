@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a6a793289a12474ab9ad628578b351b, type: 3}
   m_Name: Enemy_SharksWanizameData
   m_EditorClassIdentifier: 
-  price: 0
-  buildTime: 0
   maxHealth: 55
   baseDamage: 20
   visionDistance: 15
   attackDistance: 2
+  attackTime: 1.6
+  attackDelay: 0.6
   moveSpeed: 3
