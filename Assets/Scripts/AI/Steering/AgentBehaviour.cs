@@ -28,8 +28,6 @@ public class AgentBehaviour : MonoBehaviour
     {
         m_position = transform.position;
 
-        if (float.IsNaN(GetSteering().linear.magnitude)) Debug.LogError("x; t: " + Time.time);
-
         agent.SetSteering(GetSteering(), weight);
 
         //if (Vector3.Distance(transform.position, m_moveTarget) < arriveDistance)

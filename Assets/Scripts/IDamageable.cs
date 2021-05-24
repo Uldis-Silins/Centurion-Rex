@@ -11,6 +11,6 @@ public interface IDamageable
 
     float CurrentHealth { get; }
     GameObject DamageableGameObject { get; }
-    FactionType Faction { get; }
+    OwnerType Faction { get; }
     float DamageableRadius { get; }
 }

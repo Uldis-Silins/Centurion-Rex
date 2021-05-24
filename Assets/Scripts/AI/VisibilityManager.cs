@@ -47,7 +47,7 @@ public class VisibilityManager : MonoBehaviour
         for (int i = 0; i < playerController.OwnedUnits.Count; i++)
         {
             Unit_Base unit = playerController.OwnedUnits[i];
-            List<GridHashList2D.Node> enemiesInRange = enemyController.UnitPositions.Find(unit.transform.position, Vector2.one * unit.visionDistance);
+            List<GridHashList2D.Node> enemiesInRange = enemyController.UnitPositions.Find(unit.transform.position, Vector2.one * unit.stats.visionDistance);
 
             for (int j = 0; j < enemiesInRange.Count; j++)
             {
@@ -70,7 +70,7 @@ public class VisibilityManager : MonoBehaviour
 
             for (int j = 0; j < enemyController.ownedBuildings.Count; j++)
             {
-                if(Vector2.Distance(playerController.OwnedUnits[i].transform.position, enemyController.ownedBuildings[j].gameObject.transform.position) <= playerController.OwnedUnits[i].visionDistance)
+                if(Vector2.Distance(playerController.OwnedUnits[i].transform.position, enemyController.ownedBuildings[j].gameObject.transform.position) <= playerController.OwnedUnits[i].stats.visionDistance)
                 {
                     (enemyController.ownedBuildings[j].selectable as Building_Base).spriteRenderer.enabled = true;
                     VisibleBuildings.Add(enemyController.ownedBuildings[j]);

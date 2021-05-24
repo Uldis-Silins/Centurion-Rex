@@ -140,7 +140,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 2555307118925316403}
   health: {fileID: 8626580362713308837}
-  unitType: 3
+  unitData: {fileID: 0}
   soldierRenderer: {fileID: 4095252138988724114}
   circleCollider: {fileID: 6243670798216409578}
   soundSource: {fileID: -4826342710931229513}
@@ -173,8 +173,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c40d5d16be0323e43bbde5c082548c98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 55
-  owningFaction: 1
+  m_unitData: {fileID: 11400000, guid: 480de5ea751173a45a72d7e3bcc08c2a, type: 2}
+  m_ownerType: 1
   ragdoll: {fileID: 567564127379134060, guid: a0c120f1176409744952d0eae15b009f, type: 3}
   m_sprite: {fileID: 4095252138988724114}
   m_damageableRadius: 0

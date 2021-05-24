@@ -11,8 +11,8 @@ public class Player_Controller : MonoBehaviour
     public UnityAction<Unit_Base> onOwnedUnitRemoved = delegate { };
 
     public bool ownedByPlayer;
-    public FactionType ownerFaction;
-    public FactionType enemyFaction;
+    public OwnerType ownerFaction;
+    public OwnerType enemyFaction;
 
     public UI_GameManager uiManager;
     public UI_HudManager hudManager;
@@ -341,7 +341,7 @@ public class Player_Controller : MonoBehaviour
         {
             if (m_ownedUnits[i].gameObject == killedObj)
             {
-                if (ownerFaction == FactionType.Player)
+                if (ownerFaction == OwnerType.Player)
                 {
                     Debug.Assert(selectableManager != null, "SelectableManager is null");
                     ISelecteble selectable = selectableManager.GetSelectable(killedObj);
@@ -387,12 +387,12 @@ public class Player_Controller : MonoBehaviour
     {
         if(ownedByPlayer && currentGameState == GameState.Playing && health.buildingType == BuildingType.Base)
         {
-            if(health.owningFaction == FactionType.Enemy)
+            if(health.owningFaction == OwnerType.Enemy)
             {
                 uiManager.ShowWinMenu();
                 currentGameState = GameState.Win;
             }
-            else if(health.owningFaction == FactionType.Player)
+            else if(health.owningFaction == OwnerType.Player)
             {
                 uiManager.ShowGameOverMenu();
                 currentGameState = GameState.GameOver;
@@ -419,6 +419,6 @@ public class Player_Controller : MonoBehaviour
     }
 }
 
-public enum FactionType { None, Player, Enemy }
+public enum OwnerType { None, Player, Enemy }
 public enum BuildingType { None, Base, UnitSpawn, ResourceProduction }
 public enum GameState { None, Playing, Pause, Win, GameOver }

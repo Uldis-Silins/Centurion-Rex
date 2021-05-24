@@ -6,8 +6,9 @@ public class Unit_Health : MonoBehaviour, IDamageable
 {
     public event Action<IDamageable> onKilled = delegate { };
 
-    [Range(1f, 100f)] public float maxHealth;
-    public FactionType owningFaction;
+    public float maxHealth;
+
+    [SerializeField] private OwnerType m_ownerType;
 
     public GameObject ragdoll;
 
@@ -21,7 +22,7 @@ public class Unit_Health : MonoBehaviour, IDamageable
 
     public float CurrentHealth { get; protected set; }
     public GameObject DamageableGameObject { get { return this.gameObject; } }
-    public FactionType Faction { get { return owningFaction; } }
+    public OwnerType Faction { get { return m_ownerType; } }
     public float DamageableRadius { get { return m_damageableRadius; } }
 
     /// <summary>
@@ -68,7 +69,7 @@ public class Unit_Health : MonoBehaviour, IDamageable
 #if ENABLE_CONSOLE
         if(Immortal) return;
 #endif
-        Debug.Log($"damage received {this.gameObject.name} from {attacker.gameObject.name}");
+        Debug.Log($"damage received {this.gameObject.name} from {(attacker == null ? "null" :  attacker.gameObject.name)}");
 
         CurrentHealth -= damage;
 

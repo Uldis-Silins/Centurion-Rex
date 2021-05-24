@@ -24,7 +24,7 @@ public class AI_Awareness : MonoBehaviour
             {
                 for (int j = 0; j < enemyController.ownedBuildings.Count; j++)
                 {
-                    if (Vector2.Distance(enemyController.ownedBuildings[j].gameObject.transform.position, unit.transform.position) <= unit.visionDistance)
+                    if (Vector2.Distance(enemyController.ownedBuildings[j].gameObject.transform.position, unit.transform.position) <= unit.stats.visionDistance)
                     {
                         Building_Base building = enemyController.ownedBuildings[j].selectable as Building_Base;
 
@@ -37,13 +37,13 @@ public class AI_Awareness : MonoBehaviour
                     }
                 }
 
-                List<GridHashList2D.Node> closeEnemies = enemyController.UnitPositions.Find(unit.transform.position, Vector2.one * unit.visionDistance);
+                List<GridHashList2D.Node> closeEnemies = enemyController.UnitPositions.Find(unit.transform.position, Vector2.one * unit.stats.visionDistance);
 
                 if (closeEnemies.Count > 0)
                 {
                     Unit_Base selectedEnemy = GetClosest(unit, closeEnemies);
 
-                    if (selectedEnemy != null && (!unit.HasAttackTarget || unit.AttackTarget.DamageableGameObject != selectedEnemy.health.DamageableGameObject) && Vector2.Distance(unit.transform.position, selectedEnemy.transform.position) <= unit.visionDistance)
+                    if (selectedEnemy != null && (!unit.HasAttackTarget || unit.AttackTarget.DamageableGameObject != selectedEnemy.health.DamageableGameObject) && Vector2.Distance(unit.transform.position, selectedEnemy.transform.position) <= unit.stats.visionDistance)
                     {
                         Debug.Log(name + ": " + unit.name + " is attacking " + selectedEnemy.name);
 
@@ -60,11 +60,11 @@ public class AI_Awareness : MonoBehaviour
                         }
                     }
 #if UNITY_EDITOR
-                    else if(Vector2.Distance(unit.transform.position, selectedEnemy.transform.position) > unit.visionDistance)
+                    else if(Vector2.Distance(unit.transform.position, selectedEnemy.transform.position) > unit.stats.visionDistance)
                     {
                         foreach (var enemyPos in closeEnemies)
                         {
-                            Debug.DrawLine(unit.transform.position, enemyPos.position, ownerController.ownerFaction == FactionType.Player ? Color.blue : Color.red, 1f);
+                            Debug.DrawLine(unit.transform.position, enemyPos.position, ownerController.ownerFaction == OwnerType.Player ? Color.blue : Color.red, 1f);
                         }
                     }
 #endif

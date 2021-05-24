@@ -85,7 +85,7 @@ public class Player_UnitMoveController : MonoBehaviour
                     {
                         Building_Resource resourceBuilding = hit.collider.gameObject.GetComponent<Building_Resource>();
 
-                        if (resourceBuilding != null && resourceBuilding.ownerFaction != FactionType.Player)
+                        if (resourceBuilding != null && resourceBuilding.ownerFaction != OwnerType.Player)
                         {
                             hudManager.ChangeCursor(UI_HudManager.CursorType.Capture);
 
@@ -123,7 +123,7 @@ public class Player_UnitMoveController : MonoBehaviour
             for (int i = curSelectedUnits.Count - 1; i >= 0; i--)
             {
                 Unit_Base unit;
-                if((unit = curSelectedUnits[i] as Unit_Base) == null || unit.health.Faction != FactionType.Player)
+                if((unit = curSelectedUnits[i] as Unit_Base) == null || unit.health.Faction != OwnerType.Player)
                 {
                     curSelectedUnits.Remove(curSelectedUnits[i]);
                 }

@@ -10,6 +10,8 @@ public class Building_UnitSpawner : Building_Base
     public Transform moveTarget;
     public SpriteRenderer moveTargetSprite;
 
+    public NavigationController navigationController;
+
     public AudioSource audioSource;
 
     private List<int> m_buildQueue;
@@ -204,6 +206,8 @@ public class Building_UnitSpawner : Building_Base
         if (spawned != null)
         {
             spawned.unitType = units[unitIndex].type;
+            spawned.Initialize(units[unitIndex].statsData, navigationController);
+
             m_playerController.AddToOwnedUnits(spawned);
             Vector2 adjustedPosition = Formations.GetAdjustedPosition(moveTarget.position, spawned, spawned.circleCollider.radius);
             spawned.SetMoveTarget(adjustedPosition);
@@ -220,19 +224,16 @@ public class Building_UnitSpawner : Building_Base
     {
         for (int i = 0; i < units.Length; i++)
         {
-            if(units[i].type == type)
+            if (units[i].type == type)
             {
-                //if (m_playerController.currentResources >= units[i].price)
-                //{
                 m_unitsBuilt++;
-                    var instance = Instantiate(units[i].unitPrefab, spawnPoint.position, Quaternion.identity) as GameObject;
-                    instance.name = health.Faction.ToString() + units[i].unitPrefab.name + m_unitsBuilt;
-                    
-                    return instance.GetComponent<Unit_Base>();
-                //}
+                var instance = Instantiate(units[i].unitPrefab, spawnPoint.position, Quaternion.identity);
+                instance.name = health.Faction.ToString() + units[i].unitPrefab.name + m_unitsBuilt;
+
+                return instance;
             }
         }
 
-        return null;
+        throw new System.NullReferenceException(name + ": " + type.ToString() + " not found in spawnable units");
     }
 }

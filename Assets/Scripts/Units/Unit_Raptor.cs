@@ -3,9 +3,6 @@ using UnityEngine;
 
 public class Unit_Raptor : Unit_Base, ISelecteble
 {
-    public float attackDistance = 15f;
-    public float attackDamage = 5f;
-    public float attacksDelay = 0.5f;
     public float accuracy = 1f;
 
     public Projectile projectilePrefab;
@@ -18,6 +15,7 @@ public class Unit_Raptor : Unit_Base, ISelecteble
 
     private float m_attackTimer;
     private bool m_isDamageApplied;
+    private bool m_inAttackDelay;
 
     private Dictionary<UnitStateType, StateHandler> m_states;
     private UnitStateType m_currentStateType;
@@ -25,11 +23,11 @@ public class Unit_Raptor : Unit_Base, ISelecteble
     public bool IsSelected { get; private set; }
     public GameObject SelectableGameObject { get { return m_selectableObject; } }
     public Bounds SelectableBounds { get { return m_selectableBounds; } }
-    public override float AttackDistance { get { return attackDistance; } }
+    public override float AttackDistance { get { return stats.attackDistance; } }
 
-    protected override void Awake()
+    public override void Initialize(UnitStatsData statsData, NavigationController navigationController)
     {
-        base.Awake();
+        base.Initialize(statsData, navigationController);
 
         m_startColor = soldierRenderer.material.GetColor(m_colorPropID);
 
@@ -49,61 +47,6 @@ public class Unit_Raptor : Unit_Base, ISelecteble
     protected override void Update()
     {
         base.Update();
-
-        //if (m_attackTarget.Key != null && m_attackTarget.Value != null)
-        //{
-        //    Vector3 targetPos = m_attackTarget.Key.transform.position;
-        //    targetPos.y = transform.position.y;
-
-        //    if (Vector3.Distance(targetPos, transform.position) > attackDistance)
-        //    {
-        //        anim.SetBool("attack", false);
-        //        Vector3 dir = (targetPos - transform.position).normalized;
-        //        m_seeker.SetDestination(targetPos + dir * attackDistance * 0.75f);
-        //    }
-        //    else
-        //    {
-        //        m_seeker.Stop();
-
-        //        if (Vector3.Dot(Vector3.right, transform.position - targetPos) > 0)
-        //        {
-        //            soldierRenderer.transform.localScale = new Vector3(-m_startScale.x, m_startScale.y, m_startScale.z);
-        //        }
-        //        else
-        //        {
-        //            soldierRenderer.transform.localScale = new Vector3(m_startScale.x, m_startScale.y, m_startScale.z);
-        //        }
-
-        //        if (!anim.GetBool("attack") && m_attackTimer < 0.15f)
-        //        {
-        //            anim.SetBool("attack", true);
-
-        //            if (!soundSource.isPlaying)
-        //            {
-        //                soundSource.clip = attackClip;
-        //                soundSource.loop = false;
-        //                soundSource.Play();
-        //            }
-        //        }
-
-        //        if (m_attackTimer < 0f)
-        //        {
-        //            Quaternion lookRot = Quaternion.LookRotation(m_attackTarget.Key.transform.position - transform.position);
-        //            Projectile instance = Instantiate(projectilePrefab, transform.position, lookRot);
-        //            instance.Spawn(transform.position, m_attackTarget.Key.transform.position + new Vector3(Random.insideUnitCircle.x * accuracy, 0f, Random.insideUnitCircle.y * accuracy), attackDamage, m_attackTarget.Value, gameObject);
-
-        //            //m_currentTarget.Value.SetDamage(attackDamage);
-        //            m_attackTimer = attacksDelay;
-        //            anim.SetBool("attack", false);
-        //        }
-
-        //        m_attackTimer -= Time.deltaTime;
-        //    }
-        //}
-        //else
-        //{
-        //    anim.SetBool("attack", false);
-        //}
     }
 
     protected override void LateUpdate()
@@ -131,20 +74,18 @@ public class Unit_Raptor : Unit_Base, ISelecteble
     public void Select()
     {
         IsSelected = true;
-        //m_soldierRenderer.material.SetColor(m_colorPropID, Color.green);
     }
 
     public void Deselect()
     {
         IsSelected = false;
-        //m_soldierRenderer.material.SetColor(m_colorPropID, m_startColor);
     }
 
     public override void SetAttackTarget(IDamageable target)
     {
         base.SetAttackTarget(target);
 
-        m_attackTimer = attacksDelay;
+        m_attackTimer = stats.attackDelay;
     }
 
     #region State Handlers
@@ -176,7 +117,7 @@ public class Unit_Raptor : Unit_Base, ISelecteble
             }
             else
             {
-                SetMoveTarget(transform.position + (transform.position - attacker.transform.position).normalized * attackDistance);
+                SetMoveTarget(transform.position + (transform.position - attacker.transform.position).normalized * stats.attackDistance);
                 ExitState_Idle(UnitStateType.Move);
                 return;
             }
@@ -213,7 +154,7 @@ public class Unit_Raptor : Unit_Base, ISelecteble
 
         if (HasAttackTarget)
         {
-            if (Vector2.Distance(transform.position, m_attackTarget.DamageableGameObject.transform.position) <= attackDistance)
+            if (Vector2.Distance(transform.position, m_attackTarget.DamageableGameObject.transform.position) <= stats.attackDistance)
             {
                 ExitState_Move(UnitStateType.Attack);
                 return;
@@ -233,7 +174,7 @@ public class Unit_Raptor : Unit_Base, ISelecteble
                 }
                 else
                 {
-                    SetMoveTarget(transform.position + (transform.position - attacker.transform.position).normalized * attackDistance);
+                    SetMoveTarget(transform.position + (transform.position - attacker.transform.position).normalized * stats.attackDistance);
                     ExitState_Idle(UnitStateType.Move);
                     return;
                 }
@@ -262,7 +203,7 @@ public class Unit_Raptor : Unit_Base, ISelecteble
     protected void EnterState_Attack()
     {
         anim.PlayAnimation(GetAttackAnimation(m_attackTarget.DamageableGameObject.transform.position));
-        m_attackTimer = attacksDelay;
+        m_attackTimer = m_inAttackDelay ? m_attackTimer : stats.attackTime;
         m_isDamageApplied = false;
 
         m_seeker.enabled = false;
@@ -288,8 +229,10 @@ public class Unit_Raptor : Unit_Base, ISelecteble
             return;
         }
 
-        if (Vector2.Distance(transform.position, m_attackTarget.DamageableGameObject.transform.position) > attackDistance)
+        if (Vector2.Distance(transform.position, m_attackTarget.DamageableGameObject.transform.position) > stats.attackDistance)
         {
+            m_attackTimer = stats.attackTime;
+            m_inAttackDelay = false;
             m_pursuer.SetDestination(m_attackTarget.DamageableGameObject.transform.position);
             return;
         }
@@ -304,41 +247,55 @@ public class Unit_Raptor : Unit_Base, ISelecteble
         {
             if (attacker.unitType == UnitData.UnitType.Soldier)
             {
-                SetMoveTarget(transform.position + (transform.position - attacker.transform.position).normalized * attackDistance);
+                SetMoveTarget(transform.position + (transform.position - attacker.transform.position).normalized * stats.attackDistance);
                 ExitState_Attack(UnitStateType.Move);
                 return;
             }
         }
 
-        SpriteAnimatorData.AnimationType animType = GetAttackAnimation(m_attackTarget.DamageableGameObject.transform.position);
-
-        if (anim.CurrentAnimationType != animType)
+        if (m_inAttackDelay)
         {
-            anim.PlayAnimation(animType, false, false);
-        }
+            anim.PlayAnimation(GetIdleAnimation());
 
-        if (!m_isDamageApplied && m_attackTimer < attacksDelay / 2f)
-        {
-            m_isDamageApplied = true;
-
-            Vector2 lookDir = m_attackTarget.DamageableGameObject.transform.position - transform.position;
-            float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg;
-            Projectile instance = Instantiate(projectilePrefab, transform.position, Quaternion.AngleAxis(angle, Vector3.forward));
-            instance.Spawn(transform.position + Vector3.up, m_attackTarget.DamageableGameObject.transform.position + new Vector3(Random.insideUnitCircle.x * accuracy, Random.insideUnitCircle.y * accuracy, 0f), attackDamage, m_attackTarget, this);
-
-            if (!soundSource.isPlaying)
+            if (m_attackTimer <= 0f)
             {
-                soundSource.clip = attackClip;
-                soundSource.loop = false;
-                soundSource.Play();
+                m_inAttackDelay = false;
+                m_attackTimer = stats.attackTime;
             }
         }
-
-        if (m_attackTimer <= 0f)
+        else
         {
-            anim.PlayAnimation(animType, false, false);
-            m_isDamageApplied = false;
-            m_attackTimer = attacksDelay;
+            SpriteAnimatorData.AnimationType animType = GetAttackAnimation(m_attackTarget.DamageableGameObject.transform.position);
+
+            if (anim.CurrentAnimationType != animType)
+            {
+                anim.PlayAnimation(animType, false, false);
+            }
+
+            if (!m_isDamageApplied && m_attackTimer < stats.attackTime / 2f)
+            {
+                m_isDamageApplied = true;
+
+                Vector2 lookDir = m_attackTarget.DamageableGameObject.transform.position - transform.position;
+                float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg;
+                Projectile instance = Instantiate(projectilePrefab, transform.position, Quaternion.AngleAxis(angle, Vector3.forward));
+                instance.Spawn(transform.position + Vector3.up, m_attackTarget.DamageableGameObject.transform.position + new Vector3(Random.insideUnitCircle.x * accuracy, Random.insideUnitCircle.y * accuracy, 0f), stats.baseDamage, m_attackTarget, this);
+
+                if (!soundSource.isPlaying)
+                {
+                    soundSource.clip = attackClip;
+                    soundSource.loop = false;
+                    soundSource.Play();
+                }
+            }
+
+            if (m_attackTimer <= 0f)
+            {
+                anim.PlayAnimation(animType, false, false);
+                m_isDamageApplied = false;
+                m_attackTimer = stats.attackDelay;
+                m_inAttackDelay = true;
+            }
         }
 
         m_attackTimer -= Time.deltaTime;

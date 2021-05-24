@@ -26,6 +26,11 @@ public class SpriteAnimatorData : ScriptableObject
     [System.Serializable]
     public class SpriteAnimationFrames
     {
+#if UNITY_EDITOR
+        public Texture2D animTexture;
+        public float totalTime;
+#endif
+
         public Sprite[] frameSprites;
         public float frameTime;
 
@@ -41,7 +46,7 @@ public class SpriteAnimatorData : ScriptableObject
     {
         public AnimationType type;
         public SpriteAnimationFrames[] frames;
-        public float playbackSpeedModifier = 1.0f;
+        //public float playbackSpeedModifier = 1.0f;
     }
 
     public SpriteAnimation[] animations;
@@ -54,6 +59,33 @@ public class SpriteAnimatorData : ScriptableObject
             {
                 for (int j = 0; j < animations[i].frames.Length; j++)
                 {
+#if UNITY_EDITOR
+                    var frames = animations[i].frames[j];
+
+                    if(frames.animTexture == null && frames.frameSprites != null && frames.frameSprites.Length > 0) // Get tex from sprites
+                    {
+                        frames.animTexture = frames.frameSprites[0].texture;
+                    }
+                    else if(frames.animTexture != null && (frames.frameSprites == null || frames.frameSprites.Length == 0))
+                    {
+                        string texPath = AssetDatabase.GetAssetPath(frames.animTexture);
+                        Object[] spriteObjs = AssetDatabase.LoadAllAssetsAtPath(texPath);
+                        System.Collections.Generic.List<Sprite> foundSprites = new System.Collections.Generic.List<Sprite>();
+
+                        foreach (var obj in spriteObjs)
+                        {
+                            if(obj is Sprite s)
+                            {
+                                foundSprites.Add(s);
+                            }
+                        }
+
+                        frames.frameSprites = foundSprites.ToArray();
+                    }
+
+                    frames.totalTime = frames.frameSprites.Length * frames.frameTime;
+#endif
+
                     if(animations[i].frames[j].frameSprites != null)
                     {
                         animations[i].frames[j].frameCount = animations[i].frames[j].frameSprites.Length;

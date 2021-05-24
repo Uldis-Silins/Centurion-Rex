@@ -14,7 +14,7 @@ public class Building_Health : MonoBehaviour, IDamageable
     public SpriteRenderer[] fireSprites;
 
     [Range(1f, 5000f)] public float maxHealth;
-    public FactionType owningFaction;
+    public OwnerType owningFaction;
     public DamageableManager damageableManager;
 
     [SerializeField] private SpriteRenderer m_sprite;
@@ -28,7 +28,7 @@ public class Building_Health : MonoBehaviour, IDamageable
 
     public float CurrentHealth { get; protected set; }
     public GameObject DamageableGameObject { get { return m_damageableObject; } }
-    public FactionType Faction { get { return owningFaction; } }
+    public OwnerType Faction { get { return owningFaction; } }
     public float DamageableRadius { get { return m_damageableRadius; } }
 
     private void Start()

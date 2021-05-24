@@ -29,25 +29,25 @@ public class Building_CaptureTrigger : MonoBehaviour
 
             if (unitHealth != null)
             {
-                if(unitHealth.Faction == FactionType.Player)
+                if(unitHealth.Faction == OwnerType.Player)
                 {
                     playerUnitsInRange++;
                 }
-                else if(unitHealth.Faction == FactionType.Enemy)
+                else if(unitHealth.Faction == OwnerType.Enemy)
                 {
                     enemyUnitsInRange++;
                 }
             }
         }
 
-        if (playerUnitsInRange > 0 && playerUnitsInRange > enemyUnitsInRange && building.ownerFaction != FactionType.Player)
+        if (playerUnitsInRange > 0 && playerUnitsInRange > enemyUnitsInRange && building.ownerFaction != OwnerType.Player)
         {
-            building.SetOwner(FactionType.Player);
+            building.SetOwner(OwnerType.Player);
             audioSource.Play();
         }
-        else if(enemyUnitsInRange > 0 && enemyUnitsInRange > playerUnitsInRange && building.ownerFaction != FactionType.Enemy)
+        else if(enemyUnitsInRange > 0 && enemyUnitsInRange > playerUnitsInRange && building.ownerFaction != OwnerType.Enemy)
         {
-            building.SetOwner(FactionType.Enemy);
+            building.SetOwner(OwnerType.Enemy);
         }
     }
 }

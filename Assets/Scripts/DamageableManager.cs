@@ -72,7 +72,7 @@ public class DamageableManager : MonoBehaviour
         Assert.AreEqual(m_registeredObjects.Count, m_registeredDamageables.Count);
     }
 
-    public IEnumerable<IDamageable> GetAtPosition(Vector2 position, float radius, FactionType faction)
+    public IEnumerable<IDamageable> GetAtPosition(Vector2 position, float radius, OwnerType faction)
     {
         List<IDamageable> hits = new List<IDamageable>();
 

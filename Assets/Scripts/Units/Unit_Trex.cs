@@ -3,11 +3,6 @@ using UnityEngine;
 
 public class Unit_Trex : Unit_Base, ISelecteble
 {
-    public float attackDistance = 2f;
-    public float attackDamage = 5f;
-    public float attacksDelay = 0.5f;
-    public float attackTime = 2.6f;
-
     public Transform fireParticleParent;
     public ParticleSystem[] fireParticles;
 
@@ -30,11 +25,11 @@ public class Unit_Trex : Unit_Base, ISelecteble
     public bool IsSelected { get; private set; }
     public GameObject SelectableGameObject { get { return m_selectableObject; } }
     public Bounds SelectableBounds { get { return m_selectableBounds; } }
-    public override float AttackDistance { get { return attackDistance; } }
+    public override float AttackDistance { get { return stats.attackDistance; } }
 
-    protected override void Awake()
+    public override void Initialize(UnitStatsData statsData, NavigationController navigationController)
     {
-        base.Awake();
+        base.Initialize(statsData, navigationController);
 
         m_startColor = soldierRenderer.material.GetColor(m_colorPropID);
 
@@ -50,8 +45,8 @@ public class Unit_Trex : Unit_Base, ISelecteble
         m_states.Add(UnitStateType.Attack, EnterState_Attack);
         m_states.Add(UnitStateType.Die, EnterState_Die);
 
-        float ticks = (attackTime / 2.5f) / m_damageRate;
-        m_damagePerTick = attackDamage / ticks;
+        float ticks = (stats.attackTime / 2.5f) / m_damageRate;
+        m_damagePerTick = stats.baseDamage / ticks;
         Debug.Log("TRex T: " + ticks + "; DPT: " + m_damagePerTick);
     }
 
@@ -85,20 +80,18 @@ public class Unit_Trex : Unit_Base, ISelecteble
     public void Select()
     {
         IsSelected = true;
-        //m_soldierRenderer.material.SetColor(m_colorPropID, Color.green);
     }
 
     public void Deselect()
     {
         IsSelected = false;
-        //m_soldierRenderer.material.SetColor(m_colorPropID, m_startColor);
     }
 
     public override void SetAttackTarget(IDamageable target)
     {
         base.SetAttackTarget(target);
 
-        m_attackTimer = attacksDelay;
+        m_attackTimer = stats.attackDelay;
     }
 
     #region State Handlers
@@ -130,7 +123,7 @@ public class Unit_Trex : Unit_Base, ISelecteble
             }
             else
             {
-                SetMoveTarget(transform.position + (transform.position - attacker.transform.position).normalized * attackDistance);
+                SetMoveTarget(transform.position + (transform.position - attacker.transform.position).normalized * stats.attackDistance);
                 ExitState_Idle(UnitStateType.Move);
                 return;
             }
@@ -167,7 +160,7 @@ public class Unit_Trex : Unit_Base, ISelecteble
 
         if (HasAttackTarget)
         {
-            if (Vector2.Distance(transform.position, m_attackTarget.DamageableGameObject.transform.position) <= attackDistance + m_attackTarget.DamageableRadius)
+            if (Vector2.Distance(transform.position, m_attackTarget.DamageableGameObject.transform.position) <= stats.attackDistance + m_attackTarget.DamageableRadius)
             {
                 ExitState_Move(UnitStateType.Attack);
                 return;
@@ -178,7 +171,7 @@ public class Unit_Trex : Unit_Base, ISelecteble
             Unit_Base attacker = health.Attacker;
 
             // Move to attack only if not selected and ignore soldiers
-            if (!IsSelected && attacker != null && attacker.unitType != UnitData.UnitType.Soldier && Vector2.Distance(attacker.transform.position, transform.position) < attackDistance)
+            if (!IsSelected && attacker != null && attacker.unitType != UnitData.UnitType.Soldier && Vector2.Distance(attacker.transform.position, transform.position) < stats.attackDistance)
             {
                 SetAttackTarget(attacker.health);
                 ExitState_Move(UnitStateType.Attack);
@@ -208,7 +201,7 @@ public class Unit_Trex : Unit_Base, ISelecteble
     protected void EnterState_Attack()
     {
         anim.PlayAnimation(GetAttackAnimation(m_attackTarget.DamageableGameObject.transform.position));
-        m_attackTimer = m_inAttackDelay ? m_attackTimer : attackTime;
+        m_attackTimer = m_inAttackDelay ? m_attackTimer : stats.attackTime;
         m_isDamageApplied = false;
 
         m_seeker.enabled = false;
@@ -234,9 +227,9 @@ public class Unit_Trex : Unit_Base, ISelecteble
             return;
         }
 
-        if (Vector2.Distance(transform.position, m_attackTarget.DamageableGameObject.transform.position) > attackDistance)
+        if (Vector2.Distance(transform.position, m_attackTarget.DamageableGameObject.transform.position) > stats.attackDistance)
         {
-            m_attackTimer = attackTime;
+            m_attackTimer = stats.attackTime;
             m_inAttackDelay = false;
             m_pursuer.SetDestination(m_attackTarget.DamageableGameObject.transform.position);
             return;
@@ -252,7 +245,7 @@ public class Unit_Trex : Unit_Base, ISelecteble
         {
             if (attacker.unitType == UnitData.UnitType.Soldier)
             {
-                SetMoveTarget(transform.position + (transform.position - attacker.transform.position).normalized * attackDistance);
+                SetMoveTarget(transform.position + (transform.position - attacker.transform.position).normalized * stats.attackDistance);
                 ExitState_Attack(UnitStateType.Move);
                 return;
             }
@@ -265,6 +258,7 @@ public class Unit_Trex : Unit_Base, ISelecteble
             if(m_attackTimer <= 0f)
             {
                 m_inAttackDelay = false;
+                m_attackTimer = stats.attackTime;
             }
         }
         else
@@ -274,10 +268,10 @@ public class Unit_Trex : Unit_Base, ISelecteble
             if (anim.CurrentAnimationType != animType)
             {
                 anim.PlayAnimation(animType, false, false);
-                Debug.Log("animTime: " + anim.CurrentAnimationTotalTime + "; attackTime: " + attackTime);
+                Debug.Log("animTime: " + anim.CurrentAnimationTotalTime + "; attackTime: " + stats.attackTime);
             }
 
-            if (m_attackTimer < attackTime / 2.5f)
+            if (m_attackTimer < stats.attackTime / 2.5f)
             {
                 if(m_damageTimer <= 0f)
                 {
@@ -313,7 +307,7 @@ public class Unit_Trex : Unit_Base, ISelecteble
                 anim.PlayAnimation(animType, false, false);
 
                 m_isDamageApplied = false;
-                m_attackTimer = attacksDelay;
+                m_attackTimer = stats.attackDelay;
                 m_inAttackDelay = true;
             }
         }

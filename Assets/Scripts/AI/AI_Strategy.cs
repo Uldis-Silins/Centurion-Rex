@@ -102,7 +102,7 @@ public class AI_Strategy : MonoBehaviour
                 m_curResourceBuilding = m_resourceBuildingQueue.Dequeue();
                 AssignIdleUnits(UnitCommandType.GetResourceBuilding, 1f);
             }
-            else if(m_idleUnits.Count >= 10 && m_resourceBuildingQueue.Count > 0 && (m_curResourceBuilding == null || m_curResourceBuilding.ownerFaction != FactionType.Enemy))
+            else if(m_idleUnits.Count >= 10 && m_resourceBuildingQueue.Count > 0 && (m_curResourceBuilding == null || m_curResourceBuilding.ownerFaction != OwnerType.Enemy))
             {
                 m_curResourceBuilding = m_resourceBuildingQueue.Dequeue();
                 AssignIdleUnits(UnitCommandType.GetResourceBuilding, Mathf.Lerp(0.8f, 0.2f, (float)m_ownedResourceBuildings.Count / resourceBuildings.Count));
@@ -186,7 +186,7 @@ public class AI_Strategy : MonoBehaviour
 
                         if (!unit.HasAttackTarget)
                         {
-                            unit.SetMoveTarget((Vector2)enemyController.ownedBuildings[0].gameObject.transform.position + Random.insideUnitCircle * unit.visionDistance);
+                            unit.SetMoveTarget((Vector2)enemyController.ownedBuildings[0].gameObject.transform.position + Random.insideUnitCircle * unit.stats.visionDistance);
                             unit.SetState(Unit_Base.UnitStateType.Move);
                         }
                         break;
@@ -284,14 +284,14 @@ public class AI_Strategy : MonoBehaviour
         {
             if (!m_ownedResourceBuildings.Contains(resourceBuildings[i]))
             {
-                if (resourceBuildings[i].ownerFaction == FactionType.Enemy)
+                if (resourceBuildings[i].ownerFaction == OwnerType.Enemy)
                 {
                     m_ownedResourceBuildings.Add(resourceBuildings[i]);
                 }
             }
             else
             {
-                if (resourceBuildings[i].ownerFaction != FactionType.Enemy && !m_resourceBuildingQueue.Contains(resourceBuildings[i]))
+                if (resourceBuildings[i].ownerFaction != OwnerType.Enemy && !m_resourceBuildingQueue.Contains(resourceBuildings[i]))
                 {
                     m_resourceBuildingQueue.Enqueue(resourceBuildings[i]);
                 }

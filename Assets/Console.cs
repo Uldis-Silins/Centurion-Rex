@@ -35,7 +35,7 @@ public class Console : Sacristan.Ahhnold.Runtime.Console
     static void ImmortalUnitsAction(string[] args)
     {
         List<Unit_Health> units = new List<Unit_Health>(FindObjectsOfType<Unit_Health>());
-        units = units.FindAll(x => x.owningFaction == FactionType.Player);
+        units = units.FindAll(x => x.Faction == OwnerType.Player);
 
         for (int i = 0; i < units.Count; i++)
         {
@@ -48,7 +48,7 @@ public class Console : Sacristan.Ahhnold.Runtime.Console
     static void FasterUnitsAction(string[] args)
     {
         List<Unit_Health> units = new List<Unit_Health>(FindObjectsOfType<Unit_Health>());
-        units = units.FindAll(x => x.owningFaction == FactionType.Player);
+        units = units.FindAll(x => x.Faction == OwnerType.Player);
 
         for (int i = 0; i < units.Count; i++)
         {

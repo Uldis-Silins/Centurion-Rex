@@ -10,6 +10,7 @@ public abstract class Unit_Base : MonoBehaviour
 
     public SpriteAnimator anim;
     public Unit_Health health;
+    public UnitStatsData stats;
 
     public UnitData.UnitType unitType;
 
@@ -20,7 +21,6 @@ public abstract class Unit_Base : MonoBehaviour
     public AudioClip walkClip;
     public AudioClip attackClip;
 
-    public float visionDistance;
     public Transform fovTransform;
 
     [SerializeField] protected Agent m_agent;
@@ -60,19 +60,12 @@ public abstract class Unit_Base : MonoBehaviour
     public Vector3 MoveTarget { get { return m_moveTarget; } }
     public Separate Separator { get { return m_separator; } }
 
-    protected virtual void Awake()
+    private void Awake()
     {
         m_mainCam = Camera.main;
         m_rigidbody = circleCollider.GetComponent<Rigidbody2D>();
 
-        m_startScale = soldierRenderer.transform.localScale;
-
-        if (fovTransform != null)
-        {
-            fovTransform.localScale = new Vector3(visionDistance * 2f, visionDistance * 2f, 1f);
-        }
-
-        m_navigationController = GameObject.FindObjectOfType<NavigationController>();
+        m_startScale = soldierRenderer.transform.localScale;        
     }
 
     protected virtual void Update()
@@ -146,12 +139,24 @@ public abstract class Unit_Base : MonoBehaviour
             Gizmos.DrawLine(transform.position, m_moveTarget);
         }
 
-        Gizmos.DrawWireSphere(transform.position, visionDistance);
+        Gizmos.DrawWireSphere(transform.position, stats.visionDistance);
 
         Gizmos.color = prevColor;
     }
 
     public abstract void SetState(UnitStateType type);
+    public virtual void Initialize(UnitStatsData statsData, NavigationController navigationController)
+    {
+        stats = statsData;
+        m_navigationController = navigationController;
+
+        if (fovTransform != null)
+        {
+            fovTransform.localScale = new Vector3(stats.visionDistance * 2f, stats.visionDistance * 2f, 1f);
+        }
+
+        health.maxHealth = stats.maxHealth;
+    }
 
     public virtual void SetAttackTarget(IDamageable target)
     {
@@ -194,12 +199,7 @@ public abstract class Unit_Base : MonoBehaviour
 
     public bool CanSeeUnit(Unit_Base unit)
     {
-        return Vector3.SqrMagnitude(transform.position - unit.transform.position) < visionDistance * visionDistance;
-    }
-
-    public override int GetHashCode()
-    {
-        return name.GetHashCode();
+        return Vector3.SqrMagnitude(transform.position - unit.transform.position) < stats.visionDistance * stats.visionDistance;
     }
 
     private Vector2Int GetMoveDirection()

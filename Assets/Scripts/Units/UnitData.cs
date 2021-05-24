@@ -10,8 +10,11 @@ public class UnitData : ScriptableObject
 
     public FactionType faction;
     public UnitType type;
-    public GameObject unitPrefab;
+    public Unit_Base unitPrefab;
     public Sprite uiSprite;
+
     public float price;
     public float buildTime;
+
+    public UnitStatsData statsData;
 }

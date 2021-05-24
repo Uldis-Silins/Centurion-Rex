@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   faction: 1
   type: 1
-  unitPrefab: {fileID: 4220708611386460244, guid: 8c30d9658586116488050c4933ee6823,
+  unitPrefab: {fileID: 4220708611386460243, guid: 8c30d9658586116488050c4933ee6823,
     type: 3}
   uiSprite: {fileID: 0}
   price: 20
   buildTime: 2.5
+  statsData: {fileID: 11400000, guid: 391133a6951bf134cb5b017798e0d924, type: 2}

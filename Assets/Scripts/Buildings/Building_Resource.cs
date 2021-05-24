@@ -6,7 +6,7 @@ public class Building_Resource : Building_Base
     [System.Serializable]
     public class FactionSprite
     {
-        public FactionType type;
+        public OwnerType type;
         public Sprite sprite;
     }
 
@@ -15,7 +15,7 @@ public class Building_Resource : Building_Base
 
     public FactionSprite[] factionSprites;
 
-    public FactionType ownerFaction;
+    public OwnerType ownerFaction;
     public GameObject fovObject;
     public float captureRadius = 5f;
 
@@ -34,17 +34,17 @@ public class Building_Resource : Building_Base
 
     private void Start()
     {
-        if(ownerFaction == FactionType.None)
+        if(ownerFaction == OwnerType.None)
         {
             selectableManager.RegisterSelectable(this);
         }
 
-        if(ownerFaction != FactionType.Player)
+        if(ownerFaction != OwnerType.Player)
         {
             fovObject.SetActive(false);
         }
 
-        if(ownerFaction != FactionType.None)
+        if(ownerFaction != OwnerType.None)
         {
             SetOwner(ownerFaction);
         }
@@ -63,7 +63,7 @@ public class Building_Resource : Building_Base
         m_resourceTimer -= Time.deltaTime;
     }
 
-    public void SetOwner(FactionType faction)
+    public void SetOwner(OwnerType faction)
     {
         if (ownerFaction == faction) return;
 
@@ -81,12 +81,12 @@ public class Building_Resource : Building_Base
 
         for (int i = 0; i < playerControllers.Count; i++)
         {
-            if(playerControllers[i].ownedByPlayer && faction == FactionType.Player)
+            if(playerControllers[i].ownedByPlayer && faction == OwnerType.Player)
             {
                 fovObject.SetActive(true);
                 m_currentPlayerController = playerControllers[i];
             }
-            else if(!playerControllers[i].ownedByPlayer && faction == FactionType.Enemy)
+            else if(!playerControllers[i].ownedByPlayer && faction == OwnerType.Enemy)
             {
                 fovObject.SetActive(false);
                 m_currentPlayerController = playerControllers[i];
@@ -102,7 +102,7 @@ public class Building_Resource : Building_Base
         spriteRenderer.sprite = GetFactionSprite(faction);
     }
 
-    private Sprite GetFactionSprite(FactionType type)
+    private Sprite GetFactionSprite(OwnerType type)
     {
         for (int i = 0; i < factionSprites.Length; i++)
         {
