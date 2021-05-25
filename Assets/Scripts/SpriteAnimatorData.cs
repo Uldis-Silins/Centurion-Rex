@@ -66,7 +66,7 @@ public class SpriteAnimatorData : ScriptableObject
                     {
                         frames.animTexture = frames.frameSprites[0].texture;
                     }
-                    else if(frames.animTexture != null && (frames.frameSprites == null || frames.frameSprites.Length == 0))
+                    else if(frames.animTexture != null && (frames.frameSprites == null || frames.frameSprites.Length == 0)) // Get sprites from tex
                     {
                         string texPath = AssetDatabase.GetAssetPath(frames.animTexture);
                         Object[] spriteObjs = AssetDatabase.LoadAllAssetsAtPath(texPath);

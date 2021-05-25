@@ -17,6 +17,10 @@ public class Player_UnitSelectController : MonoBehaviour
     private readonly float m_dragThreshold = 5;
     private bool m_inDrag;
 
+    private float m_prevMouseUpTime;
+    private readonly float m_doubleClickDelay = 0.3f;
+    private ISelecteble m_prevClickedUnit;  // Cache mouse down unit for double click
+
     private void Awake()
     {
         m_mainCam = Camera.main;
@@ -61,6 +65,7 @@ public class Player_UnitSelectController : MonoBehaviour
                 if (unit != null && unit is ISelecteble s)
                 {
                     s.Select();
+                    m_prevClickedUnit = s;
                 }
             }
 
@@ -72,6 +77,27 @@ public class Player_UnitSelectController : MonoBehaviour
             {
                 selectionBox.gameObject.SetActive(false);
             }
+
+            if(!m_inDrag && (Time.time - m_prevMouseUpTime) < m_doubleClickDelay && m_prevClickedUnit != null)
+            {
+                Unit_Base clickedUnit = m_prevClickedUnit as Unit_Base;
+                var unitScreenPositions = selectableManager.GetAllScreenPositions();
+
+                for (int i = 0; i < unitScreenPositions.Length; i++)
+                {
+                    Vector2 pos = unitScreenPositions[i];
+                    ISelecteble selectable = selectableManager.GetSelectableAt(i);
+
+                    bool isVisible = pos.x > 0 && pos.x < Screen.width && pos.y > 0 && pos.y < Screen.height;
+
+                    if (isVisible && selectable is Unit_Base u && clickedUnit.unitType == u.unitType)
+                    {
+                        selectable.Select();
+                    }
+                }
+            }
+
+            m_prevMouseUpTime = Time.time;
 
             m_inDrag = false;
         }
@@ -122,27 +148,6 @@ public class Player_UnitSelectController : MonoBehaviour
                         }
                     }
                 }
-
-                //var unitScreenPositions = selectableManager.GetAllScreenPositions();
-
-                //for (int i = 0; i < unitScreenPositions.Length; i++)
-                //{
-                //    Vector2 pos = unitScreenPositions[i];
-                //    ISelecteble selectable = selectableManager.GetSelectableAt(i);
-
-                //    if (selectable is Unit_Base)
-                //    {
-                //        if(pos.x > min.x && pos.x < max.x && pos.y > min.y && pos.y < max.y)
-                //        {
-                //            selectable.Select();
-                //        }
-                //        else
-                //        {
-                //            selectable.Deselect();
-                //        }
-
-                //    }
-                //}
 
                 hudManager.OnSelectionChanged();
             }

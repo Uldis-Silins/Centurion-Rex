@@ -145,6 +145,7 @@ public abstract class Unit_Base : MonoBehaviour
     }
 
     public abstract void SetState(UnitStateType type);
+
     public virtual void Initialize(UnitStatsData statsData, NavigationController navigationController)
     {
         stats = statsData;
