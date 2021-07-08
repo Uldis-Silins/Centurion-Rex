@@ -7,6 +7,13 @@
       "dependencies": {},
       "hash": "d1606296695a80b6e2d14a79237a51faec5b147c"
     },
+    "com.sacristan.ahhnold.io": {
+      "version": "https://github.com/Sacristan/AhhnoldIO.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "b42743e41ce5ac43f43132645b9e06de0feb4c05"
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,
