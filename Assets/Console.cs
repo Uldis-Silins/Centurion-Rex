@@ -13,6 +13,9 @@ public class Console : Sacristan.Ahhnold.Runtime.Console
         new CommandRegistration("immortal", ImmortalUnitsAction, "Immortal player units"),
         new CommandRegistration("fast", FasterUnitsAction, "Faster player units"),
         new CommandRegistration("fastunits", FasterUnitsAction, "Faster player units"),
+        new CommandRegistration("save", SaveAction, "Saves Game"),
+        new CommandRegistration("load", LoadAction, "Loads Game"),
+
     };
 
 #region Command handlers
@@ -90,6 +93,16 @@ public class Console : Sacristan.Ahhnold.Runtime.Console
                 ConsoleController.LogError("param1 should be on or off");
             }
         }
+    }
+
+    static void SaveAction(string[] args)
+    {
+        CenturionRex.IO.GameIO.Save();
+    }
+
+    static void LoadAction(string[] args)
+    {
+        CenturionRex.IO.GameIO.Load();
     }
 
 #endregion
