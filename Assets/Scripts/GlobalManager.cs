@@ -1,8 +1,12 @@
 ﻿using Sacristan.Utils;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GlobalManager : Singleton<GlobalManager>
 {
+    public static bool IsGame => SceneName != "Menu";
+    private static string SceneName => SceneManager.GetActiveScene().name;
+
     protected override void Awake()
     {
         if (Instance != null)
@@ -19,4 +23,6 @@ public class GlobalManager : Singleton<GlobalManager>
             gameObject.AddComponent<Console>();
         #endif
     }
+
+
 }

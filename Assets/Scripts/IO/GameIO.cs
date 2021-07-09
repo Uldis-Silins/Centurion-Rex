@@ -30,14 +30,26 @@ namespace CenturionRex.IO
 
         static GameStateData gameStateData = new GameStateData();
 
-        public static void Save()
+        public static bool Save()
         {
+            if(!GlobalManager.IsGame) {
+                Debug.LogError("Cant save when not in game");
+                return false;
+            }
+
             GameStateIO.SaveGameProcessor.Save(gameStateData);
             Debug.Log("SAVE");
+
+            return true;
         }
 
-        public static void Load()
+        public static bool Load()
         {
+            if(!GlobalManager.IsGame) {
+                Debug.LogError("Cant save when not in game");
+                return false;
+            }
+
             if (GameStateIO.SaveGameProcessor.IsHashValid())
             {
                 gameStateData = GameStateIO.SaveGameProcessor.Load<GameStateData>();
@@ -49,6 +61,7 @@ namespace CenturionRex.IO
 
             //APPLY
             Debug.Log("LOAD");
+            return true;
         }
     }
 }

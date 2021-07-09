@@ -97,12 +97,14 @@ public class Console : Sacristan.Ahhnold.Runtime.Console
 
     static void SaveAction(string[] args)
     {
-        CenturionRex.IO.GameIO.Save();
+        if(CenturionRex.IO.GameIO.Save()) ConsoleController.Log("Game saved");
+        else ConsoleController.LogError("Game couldnt be saved!");
     }
 
     static void LoadAction(string[] args)
     {
-        CenturionRex.IO.GameIO.Load();
+        if(CenturionRex.IO.GameIO.Load()) ConsoleController.Log("Game loaded");
+        else ConsoleController.LogError("Game couldnt be loaded!");
     }
 
 #endregion
