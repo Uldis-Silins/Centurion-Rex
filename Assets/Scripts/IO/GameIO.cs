@@ -4,31 +4,35 @@ namespace CenturionRex.IO
 {
     public static class GameIO
     {
+        [System.Serializable]
         class GameStateData
         {
+            [System.Serializable]
             public class UnitData{
 
             }
 
+            [System.Serializable]
             public class BuildingData{
 
             }
 
+            [System.Serializable]
             public class ResourceData{
-
+                public float wine = 0;
             }
 
+            [System.Serializable]
             public class GameplayData{
 
             }
 
-            [SerializeField] public UnitData unitData;
-            [SerializeField] public BuildingData buildingData;
-            [SerializeField] public ResourceData resourceData;
-            [SerializeField] public GameplayData gameplayData; 
+            [SerializeField] public UnitData unitData = new UnitData();
+            [SerializeField] public BuildingData buildingData = new BuildingData();
+            [SerializeField] public ResourceData resourceData = new ResourceData();
+            [SerializeField] public GameplayData gameplayData = new GameplayData(); 
         }
 
-        static GameStateData gameStateData = new GameStateData();
 
         public static bool Save()
         {
@@ -37,6 +41,7 @@ namespace CenturionRex.IO
                 return false;
             }
 
+            GameStateData gameStateData = Pack();
             GameStateIO.SaveGameProcessor.Save(gameStateData);
             Debug.Log("SAVE");
 
@@ -50,6 +55,8 @@ namespace CenturionRex.IO
                 return false;
             }
 
+            GameStateData gameStateData = new GameStateData();
+
             if (GameStateIO.SaveGameProcessor.IsHashValid())
             {
                 gameStateData = GameStateIO.SaveGameProcessor.Load<GameStateData>();
@@ -59,9 +66,25 @@ namespace CenturionRex.IO
                 gameStateData = default(GameStateData);
             }
 
-            //APPLY
+            Unpack(gameStateData);
             Debug.Log("LOAD");
             return true;
+        }
+
+        private static GameStateData Pack(){
+
+            GameStateData gameStateData = new GameStateData();
+
+            Player_Controller playerController = GameObject.FindObjectOfType<Player_Controller>();
+            gameStateData.resourceData.wine = playerController.currentResources;
+
+            return gameStateData;
+        }
+
+        private static void Unpack(GameStateData gameStateData)
+        {
+            Player_Controller playerController = GameObject.FindObjectOfType<Player_Controller>();
+            playerController.currentResources = gameStateData.resourceData.wine;
         }
     }
 }
