@@ -6,7 +6,7 @@
         {
             protected override string Salt => "Y7fA7nEjt0Jl30M";
             protected override string FileName => "gs";
-            protected override string Extension => ".rex";
+            protected override string Extension => ".centurion.rex";
             public override SerializationType SaveFileSerializationType { get; set; } = SerializationType.JSON;
         }
 
