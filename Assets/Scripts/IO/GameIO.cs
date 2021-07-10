@@ -8,8 +8,12 @@ namespace CenturionRex.IO
         class GameStateData
         {
             [System.Serializable]
-            public class UnitData{
-
+            public class Unit
+            {
+                public UnitData.UnitType unitType;
+                public OwnerType ownerType;
+                public UnitData.FactionType factionType;
+                public float currentHealth;
             }
 
             [System.Serializable]
@@ -27,12 +31,11 @@ namespace CenturionRex.IO
 
             }
 
-            [SerializeField] public UnitData unitData = new UnitData();
-            [SerializeField] public BuildingData buildingData = new BuildingData();
+            [SerializeField] public Unit[] units = new Unit[0];
+            [SerializeField] public BuildingData[] buildingData = new BuildingData[0];
             [SerializeField] public ResourceData resourceData = new ResourceData();
             [SerializeField] public GameplayData gameplayData = new GameplayData(); 
         }
-
 
         public static bool Save()
         {
@@ -74,6 +77,18 @@ namespace CenturionRex.IO
         private static GameStateData Pack(){
 
             GameStateData gameStateData = new GameStateData();
+            
+            Unit_Base[] foundUnits = GameObject.FindObjectsOfType<Unit_Base>();
+            GameStateData.Unit[] units = new GameStateData.Unit[foundUnits.Length];
+
+            for(int i=0; i<foundUnits.Length; i++){
+                units[i] = new GameStateData.Unit();
+                units[i].unitType = foundUnits[i].unitType;
+                units[i].ownerType = foundUnits[i].health.Faction;                
+                units[i].currentHealth = foundUnits[i].health.CurrentHealth;                
+            }
+
+            gameStateData.units = units;
 
             Player_Controller playerController = GameObject.FindObjectOfType<Player_Controller>();
             gameStateData.resourceData.wine = playerController.currentResources;
