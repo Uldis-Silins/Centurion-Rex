@@ -1,28 +1,31 @@
 fileFormatVersion: 2
-guid: 3f4f4ad53e5221b4b9a30c9b1219d2ec
+guid: 442e6a8f2392f5140b2fce24af576998
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 274382378325286335
-    second: shark_civilian_idle2_56x44_0
+      213: 5666798145092697171
+    second: shark_civilian_walk_leftup_56x44png_0
   - first:
-      213: 55477912823963377
-    second: shark_civilian_idle2_56x44_1
+      213: 39164361047155510
+    second: shark_civilian_walk_leftup_56x44png_1
   - first:
-      213: 70793118167622407
-    second: shark_civilian_idle2_56x44_2
+      213: 6524295100019887754
+    second: shark_civilian_walk_leftup_56x44png_2
   - first:
-      213: -2425567801557634861
-    second: shark_civilian_idle2_56x44_3
+      213: -6045615902922947921
+    second: shark_civilian_walk_leftup_56x44png_3
   - first:
-      213: -5857164598446426870
-    second: shark_civilian_idle2_56x44_4
+      213: 3548694883123116466
+    second: shark_civilian_walk_leftup_56x44png_4
   - first:
-      213: 3683945624648371666
-    second: shark_civilian_idle2_56x44_5
+      213: -1931863883811436898
+    second: shark_civilian_walk_leftup_56x44png_5
   - first:
-      213: -2447704810279094620
-    second: shark_civilian_idle2_56x44_6
+      213: 5227656247410087114
+    second: shark_civilian_walk_leftup_56x44png_6
+  - first:
+      213: -9212924443006669741
+    second: shark_civilian_walk_leftup_56x44png_7
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -120,7 +123,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: shark_civilian_idle2_56x44_0
+      name: shark_civilian_walk_leftup_56x44png_0
       rect:
         serializedVersion: 2
         x: 0
@@ -134,14 +137,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fbd94b0c15dcec300800000000000000
-      internalID: 274382378325286335
+      spriteID: 35cb71493e284ae40800000000000000
+      internalID: 5666798145092697171
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: shark_civilian_idle2_56x44_1
+      name: shark_civilian_walk_leftup_56x44png_1
       rect:
         serializedVersion: 2
         x: 56
@@ -155,14 +158,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1fe90c62ed815c000800000000000000
-      internalID: 55477912823963377
+      spriteID: 633221467c32b8000800000000000000
+      internalID: 39164361047155510
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: shark_civilian_idle2_56x44_2
+      name: shark_civilian_walk_leftup_56x44png_2
       rect:
         serializedVersion: 2
         x: 112
@@ -176,14 +179,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7036ce447f18bf000800000000000000
-      internalID: 70793118167622407
+      spriteID: a8ec18683d3fa8a50800000000000000
+      internalID: 6524295100019887754
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: shark_civilian_idle2_56x44_3
+      name: shark_civilian_walk_leftup_56x44png_3
       rect:
         serializedVersion: 2
         x: 168
@@ -197,14 +200,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3d038898fe6a65ed0800000000000000
-      internalID: -2425567801557634861
+      spriteID: fa243d90e58a91ca0800000000000000
+      internalID: -6045615902922947921
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: shark_civilian_idle2_56x44_4
+      name: shark_civilian_walk_leftup_56x44png_4
       rect:
         serializedVersion: 2
         x: 224
@@ -218,14 +221,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a057b9e84db27bea0800000000000000
-      internalID: -5857164598446426870
+      spriteID: 2b9bcc4c13f7f3130800000000000000
+      internalID: 3548694883123116466
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: shark_civilian_idle2_56x44_5
+      name: shark_civilian_walk_leftup_56x44png_5
       rect:
         serializedVersion: 2
         x: 280
@@ -239,14 +242,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2dd4509f601002330800000000000000
-      internalID: 3683945624648371666
+      spriteID: e96430b7804a035e0800000000000000
+      internalID: -1931863883811436898
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: shark_civilian_idle2_56x44_6
+      name: shark_civilian_walk_leftup_56x44png_6
       rect:
         serializedVersion: 2
         x: 336
@@ -260,8 +263,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4a6bc4c8171080ed0800000000000000
-      internalID: -2447704810279094620
+      spriteID: ac4dab2e8ad5c8840800000000000000
+      internalID: 5227656247410087114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shark_civilian_walk_leftup_56x44png_7
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 0
+        width: 56
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35ce210080e152080800000000000000
+      internalID: -9212924443006669741
       vertices: []
       indices: 
       edges: []
@@ -269,7 +293,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: af65c800ce6d3d841963a6db1aa7ac17
+    spriteID: a4370625ba86f1940a8d6526479a5509
     internalID: 0
     vertices: []
     indices: 
